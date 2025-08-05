@@ -84,12 +84,12 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_AdvancedSetting"))).click()
         time.sleep(4)
  
-    def test_case020_Check_LightLevel(self):
-         #到advance頁面檢查LightLevel
+    def test_case024_Check_TDN_Sync(self):
+         #到advance頁面檢查TDN Sync
         self.go_to_advanced_page()
-        status = self.driver.find_element(By.ID, "select_AS_LightLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "Level 3", f"FilterMode is {status}, not Level 3")
-                  
+        checkbox = self.driver.find_element(By.ID, "AS_input_ICRSync")
+        self.assertFalse(checkbox.is_selected(), "TDN Sync is on")
+
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()

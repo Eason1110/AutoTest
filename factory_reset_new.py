@@ -218,6 +218,47 @@ class FactoryReset(unittest.TestCase):
         self.go_to_advanced_page()
         status = self.driver.find_element(By.ID, "select_AS_LightLevel_div").get_attribute("data-text")
         self.assertEqual(status, "Level 3", f"FilterMode is {status}, not Level 3")
+    
+    def test_case021_Check_DetectionInterval(self):
+         #到advance頁面檢查DetectionInterval
+        self.go_to_advanced_page()
+        status = self.driver.find_element(By.ID, "select_AS_DetectionInterval_div").text
+        self.assertEqual(status, "5s", f"FilterMode is {status}, not 5s")
+    
+    def test_case022_Check_SmartIR(self):
+         #到advance頁面檢查SmartIR
+        self.go_to_advanced_page()
+        checkbox = self.driver.find_element(By.ID, "AS_input_IRIntensityAuto")
+        self.assertTrue(checkbox.is_selected(), "SmartIR is off")
+    
+    def test_case023_Check_SmartIR_Value(self):
+         #到advance頁面檢查SmartIR關閉後的預設值
+        self.go_to_advanced_page()
+        checkbox = self.driver.find_element(By.ID, "AS_input_IRIntensityAuto")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "span.slider.round")     
+        #判斷是否開啟，有開的話要關閉
+        if checkbox.is_selected():
+            self.driver.execute_script("arguments[0].click();", checkbox)  # 使用javascript強制點擊 checkbox，因為checkbox和slider不能直接互動
+            WebDriverWait(self.driver, 10).until(
+            lambda x: not checkbox.is_selected()
+            )
+        time.sleep(2) #等待兩秒確定狀態已更新
+        SmartIR_Value =  self.driver.find_element(By.ID, "select_AS_IRIntensityValue_div").get_attribute("data-text")
+        self.assertEqual(SmartIR_Value, "50%" , f"Smart IR Value is not 50%, It's {SmartIR_Value}")
+        time.sleep(2) 
+        # 更新 checkbox 元素狀態
+        checkbox = self.driver.find_element(By.ID, "AS_input_IRIntensityAuto")
+        if not checkbox.is_selected(): #將slider還原
+            self.driver.execute_script("arguments[0].click();", checkbox)  # 使用javascript強制點擊 checkbox，因為checkbox和slider不能直接互動
+            WebDriverWait(self.driver, 10).until(
+            lambda x: checkbox.is_selected()
+            )
+    
+    def test_case024_Check_TDN_Sync(self):
+         #到advance頁面檢查TDN Sync
+        self.go_to_advanced_page()
+        checkbox = self.driver.find_element(By.ID, "AS_input_ICRSync")
+        self.assertFalse(checkbox.is_selected(), "TDN Sync is on")
 
     @classmethod
     def tearDownClass(cls):
