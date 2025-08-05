@@ -84,11 +84,14 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_AdvancedSetting"))).click()
         time.sleep(4)
  
-    def test_case024_Check_TDN_Sync(self):
-         #到advance頁面檢查TDN Sync
+    def test_case025_Check_ExposureMode(self):
+        #到advance->exposure頁面檢查Exposure Mode
         self.go_to_advanced_page()
-        checkbox = self.driver.find_element(By.ID, "AS_input_ICRSync")
-        self.assertFalse(checkbox.is_selected(), "TDN Sync is on")
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        status = self.driver.find_element(By.ID, "select_AS_ExposureMode_div").get_attribute("data-text")
+        self.assertEqual(status, "Auto", f"Exposure Mode is {status}, not Auto")
+        
 
     @classmethod
     def tearDownClass(cls):

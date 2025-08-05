@@ -245,20 +245,31 @@ class FactoryReset(unittest.TestCase):
         time.sleep(2) #等待兩秒確定狀態已更新
         SmartIR_Value =  self.driver.find_element(By.ID, "select_AS_IRIntensityValue_div").get_attribute("data-text")
         self.assertEqual(SmartIR_Value, "50%" , f"Smart IR Value is not 50%, It's {SmartIR_Value}")
-        time.sleep(2) 
-        # 更新 checkbox 元素狀態
+            # 更新 checkbox 元素狀態
         checkbox = self.driver.find_element(By.ID, "AS_input_IRIntensityAuto")
         if not checkbox.is_selected(): #將slider還原
             self.driver.execute_script("arguments[0].click();", checkbox)  # 使用javascript強制點擊 checkbox，因為checkbox和slider不能直接互動
             WebDriverWait(self.driver, 10).until(
             lambda x: checkbox.is_selected()
             )
-    
+        time.sleep(1)
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+
     def test_case024_Check_TDN_Sync(self):
          #到advance頁面檢查TDN Sync
         self.go_to_advanced_page()
         checkbox = self.driver.find_element(By.ID, "AS_input_ICRSync")
         self.assertFalse(checkbox.is_selected(), "TDN Sync is on")
+    
+    def test_case025_Check_ExposureMode(self):
+        #到advance->exposure頁面檢查Exposure Mode
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        status = self.driver.find_element(By.ID, "select_AS_ExposureMode_div").get_attribute("data-text")
+        self.assertEqual(status, "Auto", f"Exposure Mode is {status}, not Auto")
 
     @classmethod
     def tearDownClass(cls):
