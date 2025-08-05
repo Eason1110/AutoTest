@@ -270,6 +270,65 @@ class FactoryReset(unittest.TestCase):
         time.sleep(1)
         status = self.driver.find_element(By.ID, "select_AS_ExposureMode_div").get_attribute("data-text")
         self.assertEqual(status, "Auto", f"Exposure Mode is {status}, not Auto")
+    
+    def test_case026_Check_EV_Value(self):
+        #到advance->exposure頁面檢查EV Value
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
+        self.assertEqual(status, "0", f"Exposure Mode is {status}, not 0")
+    
+    def test_case027_Check_ExposureTime(self):
+        #到advance->exposure頁面檢查ExposureTime
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成manual
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Manual']").click()
+        time.sleep(3) #等待切換完成
+        #檢查ExposureTime
+        status = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
+        self.assertEqual(status, "1/60s", f"Exposure Mode is {status}, not 1/60s")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+    
+    def test_case028_Check_GainValue(self):
+        #到advance->exposure頁面檢查ExposureTime
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成manual
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Manual']").click()
+        time.sleep(3) #等待切換完成
+        #檢查Gain Value
+        status = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
+        self.assertEqual(status, "50%", f"Exposure Mode is {status}, not 50%")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+
+    def test_case029_Check_GainValue(self):
+        #到advance->exposure頁面檢查ExposureTime
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成manual
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Manual']").click()
+        time.sleep(3) #等待切換完成
+        #檢查EV Value
+        status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
+        self.assertEqual(status, "0", f"Exposure Mode is {status}, not 0")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
 
     @classmethod
     def tearDownClass(cls):
