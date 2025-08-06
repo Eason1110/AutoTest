@@ -76,7 +76,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Image")))
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_AdvancedSetting"))).click()
-        time.sleep(4)
+        time.sleep(4) #元素較多，等待時間拉長
 
     #case1~case8檢查image parameters頁面所有設定
     def test_case001_Check_Brightness(self):
@@ -152,21 +152,25 @@ class FactoryReset(unittest.TestCase):
         #Case9~Case12後開始檢查image config頁面的所有設定
     def test_case009_Check_RotateViewFlip(self):
         self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_Flip_div")))
         status = self.driver.find_element(By.ID, "select_ImagePara_Flip_div").get_attribute("data-text")
         self.assertEqual(status, "Off", f"Flip is not off, it's {status}")
 
     def test_case010_Check_VideoOrientation(self):
         self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_VideoOrientation_div")))
         status = self.driver.find_element(By.ID, "select_ImagePara_VideoOrientation_div").get_attribute("data-text")
         self.assertEqual(status, "0°", f"Video Orientation is not 0 degree, it's {status}")
 
     def test_case011_Check_DIS(self):
         self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "checkbox_DIS")))
         checkbox = self.driver.find_element(By.ID, "checkbox_DIS")
         self.assertFalse(checkbox.is_selected(), "DIS is ON")
 
     def test_case012_Check_PowerLineSequence(self):
         self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_PowerLineFrequency_div")))
         status = self.driver.find_element(By.ID, "select_ImagePara_PowerLineFrequency_div").get_attribute("data-text")
         self.assertEqual(status, "60Hz", f"Power line frequency is {status}, not 60Hz")
 
@@ -272,7 +276,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(status, "Auto", f"Exposure Mode is {status}, not Auto")
     
     def test_case026_Check_EV_Value(self):
-        #到advance->exposure頁面檢查EV Value
+        #到advance->exposure頁面檢查Auto的EV Value
         self.go_to_advanced_page()
         self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
@@ -289,6 +293,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.XPATH,"//li[@data-val='Manual']").click()
         time.sleep(3) #等待切換完成
         #檢查ExposureTime
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_ExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         self.assertEqual(status, "1/60s", f"Exposure Mode is {status}, not 1/60s")
         #儲存設定
@@ -297,7 +302,7 @@ class FactoryReset(unittest.TestCase):
         time.sleep(1)
     
     def test_case028_Check_GainValue(self):
-        #到advance->exposure頁面檢查ExposureTime
+        #到advance->exposure頁面檢查GainValue
         self.go_to_advanced_page()
         self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
@@ -306,6 +311,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.XPATH,"//li[@data-val='Manual']").click()
         time.sleep(3) #等待切換完成
         #檢查Gain Value
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_GainValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
         self.assertEqual(status, "50%", f"Exposure Mode is {status}, not 50%")
         #儲存設定
@@ -313,8 +319,8 @@ class FactoryReset(unittest.TestCase):
         SaveButton.click()
         time.sleep(1)
 
-    def test_case029_Check_GainValue(self):
-        #到advance->exposure頁面檢查ExposureTime
+    def test_case029_Check_EV_Value(self):
+        #到advance->exposure頁面檢查Manual的EV Value
         self.go_to_advanced_page()
         self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
@@ -323,8 +329,146 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.XPATH,"//li[@data-val='Manual']").click()
         time.sleep(3) #等待切換完成
         #檢查EV Value
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
         self.assertEqual(status, "0", f"Exposure Mode is {status}, not 0")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+    
+    def test_case030_Check_ExposureAuto(self):
+        #到advance->exposure->Priority頁面檢查ExposureAuto
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查ExposureAuto
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_ExposureAuto")))
+        checkbox = self.driver.find_element(By.ID, "AS_input_ExposureAuto")
+        self.assertTrue(checkbox.is_selected(), "ExposureAuto is off")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+    
+    def test_case031_Check_MinExposureTime(self):
+        #到advance->exposure->Priority頁面檢查Min. Exposure Time
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查MinExposureTime
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinExposureTime_div")))
+        status = self.driver.find_element(By.ID, "select_AS_MinExposureTime_div").get_attribute("data-text")
+        self.assertEqual(status, "1/60s", f"Min. Exposure Time is {status}, not 1/60s")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+    
+    def test_case032_Check_MaxExposureTime(self):
+        #到advance->exposure->Priority頁面檢查Max. Exposure Time
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查MaxExposureTime
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxExposureTime_div")))
+        status = self.driver.find_element(By.ID, "select_AS_MaxExposureTime_div").get_attribute("data-text")
+        self.assertEqual(status, "1/60s", f"Max. Exposure Time is {status}, not 1/60s")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+    
+    def test_case033_Check_GainAuto(self):
+        #到advance->exposure->Priority頁面檢查GainAuto
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查GainAuto
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_GainAuto")))
+        checkbox = self.driver.find_element(By.ID, "AS_input_GainAuto")
+        self.assertTrue(checkbox.is_selected(), "GainAuto is off")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+    
+    def test_case034_Check_MinGain(self):
+        #到advance->exposure->Priority頁面檢查Min. Gain
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查MinGain
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinGain_div")))
+        status = self.driver.find_element(By.ID, "select_AS_MinGain_div").get_attribute("data-text")
+        self.assertEqual(status, "0%", f"Min. Gain is {status}, not 0%")
+        time.sleep(2)
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+
+    def test_case035_Check_MaxGain(self):
+        #到advance->exposure->Priority頁面檢查Max. Gain
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查MaxGain
+        # 先定位可滾動的容器與目標元素
+        container = self.driver.find_element(By.ID, "AS_div_Exposure_Main")
+        target = self.driver.find_element(By.ID, "select_AS_MaxGain_div")
+        # 執行 JavaScript 讓容器捲動，目標元素出現在可見範圍
+        self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxGain_div")))
+        status = self.driver.find_element(By.ID, "select_AS_MaxGain_div").get_attribute("data-text")
+        self.assertEqual(status, "100%", f"Max. Gain is {status}, not 100%")
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton.click()
+        time.sleep(1)
+
+    def test_case036_Check_Priority_EV_Value(self):
+        #到advance->exposure->Priority頁面檢查EV Value
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #切換成Priority
+        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
+        time.sleep(3) #等待切換完成
+        #檢查EV value
+        # 先定位可滾動的容器與目標元素
+        container = self.driver.find_element(By.ID, "AS_div_Exposure_Main")
+        target = self.driver.find_element(By.ID, "select_AS_EVValue_div")
+        # 執行 JavaScript 讓容器捲動，目標元素出現在可見範圍
+        self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
+        status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
+        self.assertEqual(status, "0", f"EV Value is {status}, not 0")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -333,7 +477,6 @@ class FactoryReset(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
-
 
 if __name__ == '__main__':
     unittest.main(testRunner=HTMLTestRunner.HTMLTestRunner(output='D:/SeleniumProject/test_reports'))
