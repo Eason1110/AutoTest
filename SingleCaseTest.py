@@ -83,90 +83,42 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_AdvancedSetting"))).click()
         time.sleep(4)
-
-    def test_case033_Check_GainAuto(self):
-        #到advance->exposure->Priority頁面檢查GainAuto
-        self.go_to_advanced_page()
-        self.driver.find_element(By.ID, "AS_div_Exposure").click()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        time.sleep(3) #等待切換完成
-        #檢查GainAuto
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_GainAuto")))
-        checkbox = self.driver.find_element(By.ID, "AS_input_GainAuto")
-        self.assertTrue(checkbox.is_selected(), "GainAuto is off")
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
-        SaveButton.click()
-        time.sleep(1)
     
-    def test_case034_Check_MinGain(self):
-        #到advance->exposure->Priority頁面檢查Min. Gain
-        self.go_to_advanced_page()
-        self.driver.find_element(By.ID, "AS_div_Exposure").click()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        time.sleep(3) #等待切換完成
-        #檢查MinGain
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinGain_div")))
-        status = self.driver.find_element(By.ID, "select_AS_MinGain_div").get_attribute("data-text")
-        self.assertEqual(status, "0%", f"Min. Gain is {status}, not 0%")
-        time.sleep(2)
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
-        SaveButton.click()
-        time.sleep(1)
+    #到system頁面->Device頁面
+    def go_to_system_page(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
+        time.sleep(4)
+     
+    #case39開始確認camera information
+    def test_case039_Check_Manufacturer(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Manufacturer名稱
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_Brand")))
+        Manufacturer = self.driver.find_element(By.ID,"span_Device_Brand").text
+        self.assertEqual(Manufacturer, "Safe Fleet", f"Manufacturer is {Manufacturer}, not Safe Fleet")
+    
+    #確認model name
+    def test_case40_Check_Model(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位model名稱
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_Model")))
+        model = self.driver.find_element(By.ID,"span_Device_Model").text
+        self.assertEqual(model, "C5Q1PD104A", f"model is {model}, not C5Q1PD104A")
+    
+    #確認Firmware Version
+    def test_case41_Check_FirmwareVersion(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位firmware Version
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_FWVersion")))
+        model = self.driver.find_element(By.ID,"span_Device_FWVersion").text
+        self.assertEqual(model, "1.00.02.092", f"model is {model}, not 1.00.02.092")
 
-    def test_case035_Check_MaxGain(self):
-        #到advance->exposure->Priority頁面檢查Max. Gain
-        self.go_to_advanced_page()
-        self.driver.find_element(By.ID, "AS_div_Exposure").click()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        time.sleep(3) #等待切換完成
-        #檢查MaxGain
-        # 先定位可滾動的容器與目標元素
-        container = self.driver.find_element(By.ID, "AS_div_Exposure_Main")
-        target = self.driver.find_element(By.ID, "select_AS_MaxGain_div")
-        # 執行 JavaScript 讓容器捲動，目標元素出現在可見範圍
-        self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxGain_div")))
-        status = self.driver.find_element(By.ID, "select_AS_MaxGain_div").get_attribute("data-text")
-        self.assertEqual(status, "100%", f"Max. Gain is {status}, not 100%")
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
-        SaveButton.click()
-        time.sleep(1)
-
-    def test_case036_Check_Priority_EV_Value(self):
-        #到advance->exposure->Priority頁面檢查EV Value
-        self.go_to_advanced_page()
-        self.driver.find_element(By.ID, "AS_div_Exposure").click()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        time.sleep(3) #等待切換完成
-        #檢查EV value
-        # 先定位可滾動的容器與目標元素
-        container = self.driver.find_element(By.ID, "AS_div_Exposure_Main")
-        target = self.driver.find_element(By.ID, "select_AS_EVValue_div")
-        # 執行 JavaScript 讓容器捲動，目標元素出現在可見範圍
-        self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
-        status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"EV Value is {status}, not 0")
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
-        SaveButton.click()
-        time.sleep(1)
-        
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
