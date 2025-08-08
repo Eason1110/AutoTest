@@ -75,7 +75,14 @@ class FactoryReset(unittest.TestCase):
         elem = self.driver.find_element(By.ID, "a_Image")
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Image")))
         elem.click()
-        time.sleep(4)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
+    #到image_config頁面
+    def go_to_image_config_page(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Image")))
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_ImageConfigs"))).click()
+        time.sleep(2)
 
     #到advanced頁面
     def go_to_advanced_page(self):
@@ -91,33 +98,87 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
         time.sleep(4)
-     
-    #case39開始確認camera information
-    def test_case039_Check_Manufacturer(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Manufacturer名稱
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_Brand")))
-        Manufacturer = self.driver.find_element(By.ID,"span_Device_Brand").text
-        self.assertEqual(Manufacturer, "Safe Fleet", f"Manufacturer is {Manufacturer}, not Safe Fleet")
     
-    #確認model name
-    def test_case40_Check_Model(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位model名稱
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_Model")))
-        model = self.driver.find_element(By.ID,"span_Device_Model").text
-        self.assertEqual(model, "C5Q1PD104A", f"model is {model}, not C5Q1PD104A")
+    #到ALPR image頁面，等待所有元素就位
+    def go_to_ALPR_image_page(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Image")))
+        elem = self.driver.find_element(By.ID, "a_Image")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Image")))
+        elem.click()
+        #切換到ALPR cam
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "span_CameraSwitch_Camera")))
+        self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-    #確認Firmware Version
-    def test_case41_Check_FirmwareVersion(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位firmware Version
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_FWVersion")))
-        model = self.driver.find_element(By.ID,"span_Device_FWVersion").text
-        self.assertEqual(model, "1.00.02.092", f"model is {model}, not 1.00.02.092")
+    #到ALPR image configs頁面，等待所有元素就位
+    def go_to_ALPR_image_configs_page(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Image")))
+        elem = self.driver.find_element(By.ID, "a_Image")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Image")))
+        elem.click()
+        #切換到ALPR cam
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "span_CameraSwitch_Camera")))
+        self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
+        self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        #切換到Image configs頁面
+        self.driver.find_element(By.ID, "a_ImageConfigs").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
+    def test_case039_Check_ALPR_Auto_wb_Mode(self):  
+        self.go_to_ALPR_image_page()
+        checkbox = self.driver.find_element(By.ID, "WhiteBalanceAuto")
+        self.assertTrue(checkbox.is_selected(), "WhiteBalanceAuto is OFF")
+
+    def test_case040_Check_ALPR_Color_Temperature(self):
+        self.go_to_ALPR_image_page()
+        # 取消 Auto White Balance
+        checkbox = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#div_WhiteBalance input[type='checkbox']"))
+            )
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_WhiteBalance .slider")
+
+        if checkbox.is_selected():
+            slider.click()
+        #關閉白平衡後須等待兩秒，才能正常讀取value數值
+        time.sleep(2)
+        # 找到色溫滑桿
+        color_temp_slider = self.driver.find_element(By.ID, "slider_colorTemperature")
+        # 取得當前的 value 屬性
+        current_temp = color_temp_slider.get_attribute("value")
+        # 驗證是否為 5000K
+        if current_temp == "5000":
+            print("Color temperature is 5000K")
+        else:
+            self.fail(f"Color temperature is {current_temp}K, not 5000K")
+        #等待三秒後切換回為ON，不能馬上切換，否則會失敗
+        time.sleep(3)
+        # 再點回 ON（恢復勾選）
+        WebDriverWait(self.driver, 5).until(
+          EC.element_to_be_clickable((By.CSS_SELECTOR, "#div_WhiteBalance .slider"))
+        ).click()
+    
+    #Case 41~43 檢查image configs頁面的設定
+    def test_case041_Check_ALPR_RotateViewFlip(self):
+        self.go_to_ALPR_image_configs_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_Flip_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_Flip_div").get_attribute("data-text")
+        self.assertEqual(status, "Off", f"Flip is not off, it's {status}")
+
+    def test_case042_Check_ALPR_VideoOrientation(self):
+        self.go_to_ALPR_image_configs_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_VideoOrientation_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_VideoOrientation_div").get_attribute("data-text")
+        self.assertEqual(status, "0°", f"Video Orientation is not 0 degree, it's {status}")
+    
+    def test_case043_Check_Evidence_PowerLineSequence(self):
+        self.go_to_ALPR_image_configs_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_PowerLineFrequency_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_PowerLineFrequency_div").get_attribute("data-text")
+        self.assertEqual(status, "60Hz", f"Power line frequency is {status}, not 60Hz")
 
     @classmethod
     def tearDownClass(cls):
