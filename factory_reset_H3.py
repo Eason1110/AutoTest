@@ -933,7 +933,7 @@ class FactoryReset(unittest.TestCase):
         status = self.driver.find_element(By.ID, "select_AS_2DNRLevel_div").get_attribute("data-text")
         self.assertEqual(status, "50%", f"2D NR level is {status}, not Level 2")
 
-    #case80開始確認camera information
+    #case65開始確認camera information
     def test_case065_Check_Manufacturer(self):
         #進入system頁面
         self.go_to_system_page()
