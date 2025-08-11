@@ -959,6 +959,85 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_FWVersion")))
         model = self.driver.find_element(By.ID,"span_Device_FWVersion").text
         self.assertEqual(model, "VER_0.033.000", f"model is {model}, not VER_0.033.000")
+    
+    #確認Camera Name
+    def test_case068_Check_CameraName(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Camera Name欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraName")))
+        CameraName = self.driver.title #該camera name名稱是綁定driver.title名稱
+        self.assertEqual(CameraName, "Focus-25-00-01", f"CameraName is {CameraName}, not Focus-25-00-01")
+    
+    #確認Config Version 
+    def test_case069_Check_ConfigVersion(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Config Version 欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_ConfigVersion")))
+        ConfigVersion =  self.driver.find_element(By.ID, "input_ConfigVersion").get_attribute("value")
+        self.assertEqual(ConfigVersion, "1.0.0", f"Config Version is {ConfigVersion}, not 1.0.0")
+
+    #確認Date Format
+    def test_case070_Check_DateFormat(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Time Format 欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeFormat_div")))
+        DateFormat =  self.driver.find_element(By.ID, "select_Device_TimeFormat_div").get_attribute("data-text")
+        self.assertEqual(DateFormat, "MDY", f"Time Format is {DateFormat}, not MDY")
+    
+    #確認Time Format
+    def test_case071_Check_TimeFormat(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Time Format 欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Device_input_TimeFormat_12Hour")))
+        #該ratio button不是checkbox，因此不能用is_selected()
+        #是用圖判斷，圖是存在src屬性內，因此是判斷src屬性是哪一張圖。
+        radio_12 = self.driver.find_element(By.ID, "12hour")
+        src_value = radio_12.get_attribute("src")
+        print(src_value)
+        if "http://172.16.103.17/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
+            print("12-hour is selected")
+        else:
+            self.fail("12-hour is not selected")
+    
+    #確認Time Zone
+    def test_case072_Check_Timezone(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Time Zone 欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeZone_div")))
+        TimeZone =  self.driver.find_element(By.ID, "select_Device_TimeZone_div").get_attribute("data-text")
+        self.assertEqual(TimeZone, "(UTC±00:00) Coordinated Universal Time", f"Time Zone is {TimeZone}, not (UTC±00:00) Coordinated Universal Time")
+
+    #確認Daylight Saving
+    def test_case073_Check_DaylightSaving(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Daylight Saving欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
+        DaylightSaving = self.driver.find_element(By.ID, "Daylight")
+        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
+    
+    #確認Clock Sync	
+    def test_case074_Check_ClockSync(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Time Zone 欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_ClockSync_div")))
+        ClockSync =  self.driver.find_element(By.ID, "select_Device_ClockSync_div").get_attribute("data-text")
+        self.assertEqual(ClockSync, "Manual", f"Clock Sync is {ClockSync}, not Manual")
+    
+    #確認Recording Indicator LED
+    def test_case075_Check_RecordingIndicatorLED(self):
+        #進入system頁面
+        self.go_to_system_page()
+        #定位Recording Indicator LED欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_LEDIndicator_div")))
+        RecordingIndicatorLED =  self.driver.find_element(By.ID, "select_Device_LEDIndicator_div").get_attribute("data-text")
+        self.assertEqual(RecordingIndicatorLED, "Off", f"Recording Indicator LED is {RecordingIndicatorLED}, not Off")
         
     @classmethod
     def tearDownClass(cls):
