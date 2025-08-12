@@ -36,7 +36,7 @@ class FactoryReset(unittest.TestCase):
         )
         
         # 使用該設定開啟chrome
-        service = Service(ChromeDriverManager().install())
+        #service = Service(ChromeDriverManager().install())
         cls.driver = webdriver.Chrome()
         cls.driver.implicitly_wait(10)
         cls.driver.maximize_window()
@@ -97,6 +97,17 @@ class FactoryReset(unittest.TestCase):
         elem = self.driver.find_element(By.ID, "a_System")
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
+    #到system頁面->Stream Configs頁面
+    def go_to_stream_config_page(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        StreamConfig = self.driver.find_element(By.ID, "a_Stream")
+        StreamConfig.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
 
     
@@ -160,86 +171,54 @@ class FactoryReset(unittest.TestCase):
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_AdvancedSetting").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-    
-    #確認Camera Name
-    def test_case068_Check_CameraName(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Camera Name欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraName")))
-        CameraName = self.driver.title #該camera name名稱是綁定driver.title名稱
-        self.assertEqual(CameraName, "Focus-25-00-01", f"CameraName is {CameraName}, not Focus-25-00-01")
-    
-    #確認Config Version 
-    def test_case069_Check_ConfigVersion(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Config Version 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_ConfigVersion")))
-        ConfigVersion =  self.driver.find_element(By.ID, "input_ConfigVersion").get_attribute("value")
-        self.assertEqual(ConfigVersion, "1.0.0", f"Config Version is {ConfigVersion}, not 1.0.0")
 
-    #確認Date Format
-    def test_case070_Check_DateFormat(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Time Format 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeFormat_div")))
-        DateFormat =  self.driver.find_element(By.ID, "select_Device_TimeFormat_div").get_attribute("data-text")
-        self.assertEqual(DateFormat, "MDY", f"Time Format is {DateFormat}, not MDY")
-    
-    #確認Time Format
-    def test_case071_Check_TimeFormat(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Time Format 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Device_input_TimeFormat_12Hour")))
-        #該ratio button不是checkbox，因此不能用is_selected()
-        #是用圖判斷，圖是存在src屬性內，因此是判斷src屬性是哪一張圖。
-        radio_12 = self.driver.find_element(By.ID, "12hour")
-        src_value = radio_12.get_attribute("src")
-        print(src_value)
-        if "http://172.16.103.17/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
-            print("12-hour is selected")
-        else:
-            self.fail("12-hour is not selected")
-    
-    #確認Time Zone
-    def test_case072_Check_Timezone(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Time Zone 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeZone_div")))
-        TimeZone =  self.driver.find_element(By.ID, "select_Device_TimeZone_div").get_attribute("data-text")
-        self.assertEqual(TimeZone, "(UTC±00:00) Coordinated Universal Time", f"Time Zone is {TimeZone}, not (UTC±00:00) Coordinated Universal Time")
 
-    #確認Daylight Saving
-    def test_case073_Check_DaylightSaving(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Daylight Saving欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
-        DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
+    #確認Evidence Stream的Resolution
+    def test_case076_Check_Evidence_Resolution(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位resolution
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
+        resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
+        self.assertEqual(resolution, "1920x1080(16:9)", f"Resolution is {resolution}, not 1920x1080(16:9)")
     
-    #確認Clock Sync	
-    def test_case074_Check_ClockSync(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Time Zone 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_ClockSync_div")))
-        ClockSync =  self.driver.find_element(By.ID, "select_Device_ClockSync_div").get_attribute("data-text")
-        self.assertEqual(ClockSync, "Manual", f"Clock Sync is {ClockSync}, not Manual")
+    #確認Evidence Stream的Resolution
+    def test_case077_Check_Evidence_StreamFormat(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位StreamFormat
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
+        StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
+        self.assertEqual(StreamFormat, "H.264", f"Stream Format is {StreamFormat}, not H.264")
     
-    #確認Recording Indicator LED
-    def test_case075_Check_RecordingIndicatorLED(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Recording Indicator LED欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_LEDIndicator_div")))
-        RecordingIndicatorLED =  self.driver.find_element(By.ID, "select_Device_LEDIndicator_div").get_attribute("data-text")
-        self.assertEqual(RecordingIndicatorLED, "Off", f"Recording Indicator LED is {RecordingIndicatorLED}, not Off")
+    #確認Evidence Stream的FrameRate
+    def test_case078_Check_Evidence_FrameRate(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位FrameRate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
+        FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
+        self.assertEqual(FrameRate, "30", f"Stream Format is {FrameRate}, not 30")
     
+    #確認Evidence Stream的Overlay
+    def test_case079_Check_Evidence_Overlay(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位overlay
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay")))
+        Overlay= self.driver.find_element(By.ID, "switch_Overlay")
+        self.assertTrue(Overlay.is_selected(),"Overlay is not enabled")
+    
+    #確認Evidence Stream的URL String
+    def test_case080_Check_Evidence_URL_String(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位URL String
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
+        URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
+        self.assertEqual(URL_String, "stream1", f"URL Stream is {URL_String}, not stream1")
+
+
 
     @classmethod
     def tearDownClass(cls):
