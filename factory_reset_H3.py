@@ -1073,7 +1073,57 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
         URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
         self.assertEqual(URL_String, "stream1", f"URL Stream is {URL_String}, not stream1")
-        
+
+    #確認Evidence Stream的Audio Format
+    def test_case081_Check_Evidence_AudioFormat(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位Audio Format
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainAudioFormat_div")))
+        AudioFormat= self.driver.find_element(By.ID, "select_Stream_MainAudioFormat_div").get_attribute("data-text")
+        self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+    
+    #確認Evidence Stream的Rate Control
+    def test_case082_Check_Evidence_RateControl(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位Audio Format
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
+        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        bg_color = button.value_of_css_property("background-color")
+        print(bg_color)
+        if bg_color == "rgba(75, 93, 118, 1)":
+            print("Rate Control is CBR")
+        else:
+            self.fail("Rate Control is not CBR")
+    
+    #確認Evidence Stream的Target Rate
+    def test_case083_Check_Evidence_TargetRate(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位Target Rate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
+        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
+        self.assertEqual(TargetRate, "11264kbps", f"Target Rate is {TargetRate}, not 11264kbps")
+    
+    #確認Evidence Stream的GOP Length
+    def test_case084_Check_Evidence_GOP_Length(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位GOP Length
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
+        GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
+        self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+    
+    #確認Evidence Stream的Entropy Coding
+    def test_case085_Check_Evidence_EntropyCoding(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位Entropy Coding
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
+        EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
+        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC")    
+
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
