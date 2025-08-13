@@ -1122,7 +1122,127 @@ class FactoryReset(unittest.TestCase):
         #定位Entropy Coding
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
         EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
-        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC")    
+        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
+
+    #確認Evidence Live的Resolution
+    def test_case086_Check_Evidence_Live_Resolution(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位resolution
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
+        resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
+        self.assertEqual(resolution, "1280x720(16:9)", f"Resolution is {resolution}, not 1280x720(16:9)")
+    
+    
+    #確認Evidence Live的Stream format
+    def test_case087_Check_Evidence_Live_StreamFormat(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位StreamFormat
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
+        StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
+        self.assertEqual(StreamFormat, "H.264", f"Stream Format is {StreamFormat}, not H.264")
+    
+    #確認Evidence Live的FrameRate
+    def test_case088_Check_Evidence_Live_FrameRate(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        time.sleep(1) #等待更新
+        #定位FrameRate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
+        FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
+        self.assertEqual(FrameRate, "15", f"Stream Format is {FrameRate}, not 15")
+    
+    #確認Evidence Live的Overlay
+    def test_case089_Check_Evidence__Live_Overlay(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位overlay
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay")))
+        Overlay= self.driver.find_element(By.ID, "switch_Overlay")
+        self.assertTrue(Overlay.is_selected(),"Overlay is not enabled")
+    
+    #確認Evidence Live的URL String
+    def test_case090_Check_Evidence_Live_URL_String(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+         #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        time.sleep(1)  # 等待value更新，DOM 更新有延遲，加一個等待就能解決：
+        #定位URL String
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
+        URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
+        self.assertEqual(URL_String, "stream2", f"URL Stream is {URL_String}, not stream2")
+
+    #確認Evidence Live的Audio Format
+    def test_case091_Check_Evidence_Live_AudioFormat(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位Audio Format
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SC_span_AudioFormat")))
+        AudioFormat= self.driver.find_element(By.ID, "SC_span_AudioFormat").text
+        print(AudioFormat)
+        self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+    
+    #確認Evidence Live的Rate Control
+    def test_case092_Check_Evidence__Live_RateControl(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位Audio Format
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
+        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        bg_color = button.value_of_css_property("background-color")
+        print(bg_color)
+        if bg_color == "rgba(75, 93, 118, 1)":
+            print("Rate Control is CBR")
+        else:
+            self.fail("Rate Control is not CBR")
+    
+    #確認Evidence Live的Target Rate
+    def test_case093_Check_Evidence_Live_TargetRate(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        time.sleep(1)  # 等待value更新，DOM 更新有延遲，加一個等待就能解決：
+        #定位Target Rate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
+        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
+        self.assertEqual(TargetRate, "2048kbps", f"Target Rate is {TargetRate}, not 2048kbps")
+    
+    #確認Evidence Live的GOP Length
+    def test_case094_Check_Evidence_Live_GOP_Length(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位GOP Length
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
+        GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
+        self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+    
+    #確認Evidence Live的Entropy Coding
+    def test_case095_Check_Evidence_Live_EntropyCoding(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+         #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Second").click()
+        #定位Entropy Coding
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
+        EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
+        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC")       
 
     @classmethod
     def tearDownClass(cls):
