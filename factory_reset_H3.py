@@ -158,7 +158,6 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_AdvancedSetting").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-
     #case1~case8檢查image parameters頁面所有設定
     def test_case001_Check_Evidence_Brightness(self):
         self.go_to_image_page()
@@ -320,7 +319,9 @@ class FactoryReset(unittest.TestCase):
         #檢查ExposureTime
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_ExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
-        self.assertEqual(status, "1/60s", f"Exposure Mode is {status}, not 1/60s")
+        #使用subTest如果判斷結果是失敗，後續的程式碼也可以正常執行，才能正常點擊save按鈕
+        with self.subTest():
+            self.assertEqual(status, "1/60s", f"Exposure Mode is {status}, not 1/60s")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -338,7 +339,9 @@ class FactoryReset(unittest.TestCase):
         #檢查Gain Value
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_GainValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
-        self.assertEqual(status, "50%", f"Exposure Mode is {status}, not 50%")
+         #使用subTest如果判斷結果是失敗，後續的程式碼也可以正常執行，才能正常點擊save按鈕
+        with self.subTest():
+            self.assertEqual(status, "50%", f"Gain Value is {status}, not 50%")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -356,7 +359,9 @@ class FactoryReset(unittest.TestCase):
         #檢查EV Value
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"Exposure Mode is {status}, not 0")
+         #使用subTest如果判斷結果是失敗，後續的程式碼也可以正常執行，才能正常點擊save按鈕
+        with self.subTest():
+            self.assertEqual(status, "0", f"EV_Value is {status}, not 0")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -390,7 +395,8 @@ class FactoryReset(unittest.TestCase):
         #檢查MinExposureTime
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_MinExposureTime_div").get_attribute("data-text")
-        self.assertEqual(status, "1/60s", f"Min. Exposure Time is {status}, not 1/60s")
+        with self.subTest():
+            self.assertEqual(status, "1/60s", f"Min. Exposure Time is {status}, not 1/60s")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -407,7 +413,8 @@ class FactoryReset(unittest.TestCase):
         #檢查MaxExposureTime
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_MaxExposureTime_div").get_attribute("data-text")
-        self.assertEqual(status, "1/60s", f"Max. Exposure Time is {status}, not 1/60s")
+        with self.subTest():
+            self.assertEqual(status, "1/60s", f"Max. Exposure Time is {status}, not 1/60s")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -424,7 +431,8 @@ class FactoryReset(unittest.TestCase):
         #檢查GainAuto
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_GainAuto")))
         checkbox = self.driver.find_element(By.ID, "AS_input_GainAuto")
-        self.assertTrue(checkbox.is_selected(), "GainAuto is off")
+        with self.subTest():
+            self.assertTrue(checkbox.is_selected(), "GainAuto is off")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -441,7 +449,8 @@ class FactoryReset(unittest.TestCase):
         #檢查MinGain
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinGain_div")))
         status = self.driver.find_element(By.ID, "select_AS_MinGain_div").get_attribute("data-text")
-        self.assertEqual(status, "0%", f"Min. Gain is {status}, not 0%")
+        with self.subTest():
+            self.assertEqual(status, "0%", f"Min. Gain is {status}, not 0%")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -463,7 +472,8 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxGain_div")))
         status = self.driver.find_element(By.ID, "select_AS_MaxGain_div").get_attribute("data-text")
-        self.assertEqual(status, "100%", f"Max. Gain is {status}, not 100%")
+        with self.subTest():
+            self.assertEqual(status, "100%", f"Max. Gain is {status}, not 100%")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -485,7 +495,8 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"EV Value is {status}, not 0")
+        with self.subTest():
+            self.assertEqual(status, "0", f"EV Value is {status}, not 0")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -676,7 +687,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"Exposure Mode is {status}, not 0")
+        self.assertEqual(status, "0", f"EV_Value is {status}, not 0")
     
     def test_case052_Check_ALPR_ExposureTime(self):
         #到advance->exposure頁面檢查ExposureTime
@@ -1242,7 +1253,383 @@ class FactoryReset(unittest.TestCase):
         #定位Entropy Coding
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
         EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
-        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC")       
+        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
+
+   #確認ALPR stream開關
+    def test_case096_Check_ALPR_Stream_Switch(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        ALPR_Stream_Switch= self.driver.find_element(By.ID, "switch_StreamSwitch")
+        self.assertFalse(ALPR_Stream_Switch.is_selected(),"Switch is on")
+
+    #確認ALPR的Resolution
+    def test_case097_Check_ALPR_Resolution(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位   
+        #定位resolution
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
+        resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
+
+        #檢查解析度，若false，則蒐集錯誤，後續程式碼會繼續執行
+        try:
+            self.assertEqual(resolution,"2560x1920(4:3)",f"Resolution is {resolution}, not 2560x1920(4:3)")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        
+        #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+                slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+
+        # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
+    
+    #確認ALPR的Stream format
+    def test_case098_Check_ALPR_StreamFormat(self):
+
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位   
+        #定位StreamFormat並判斷
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
+        StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
+       
+       #檢查stream format，若false，則蒐集錯誤，程式碼會繼續執行
+        try:
+            self.assertEqual(StreamFormat,"H.264",f"StreamFormat is {StreamFormat}, not H.264")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+
+        #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+         # 點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+
+         # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    
+    #確認ALPR的FrameRate
+    def test_case099_Check_ALPR_FrameRate(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位   
+        #定位Frame Rate並判斷
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
+        FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
+       
+       #檢查Frame Rate，若false，則蒐集錯誤，程式碼會繼續執行
+        try:
+            self.assertEqual(FrameRate,"30",f"FrameRate is {FrameRate}, not 30")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+
+        #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+         # 點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+
+         # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    #確認ALPR的URL String
+    def test_case100_Check_ALPR_URL_String(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位   
+        #定位URL String
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
+        URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
+
+        #判斷是否為alpr，有false就蒐集
+        try:
+         self.assertEqual(URL_String, "alpr", f"URL Stream is {URL_String}, not alpr")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        
+        #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+
+         # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+
+    #確認ALPR的Audio Format
+    def test_case101_Check_ALPR_AudioFormat(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+         #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #定位Audio Format
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SC_span_AudioFormat")))
+        AudioFormat= self.driver.find_element(By.ID, "SC_span_AudioFormat").text
+        print(AudioFormat)
+        #判斷是否為AAC
+        try:
+            self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        
+         #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    #確認ALPR的Rate Control
+    def test_case102_Check_ALPR_RateControl(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #定位Rate Control
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
+        button = self.driver.find_element(By.ID, "MainStreamCBR")
+
+        try:
+            bg_color = button.value_of_css_property("background-color")
+            print(bg_color)
+            if bg_color == "rgba(75, 93, 118, 1)":
+                print("Rate Control is CBR")
+            else:
+                self.errors.append("Rate Control is not CBR")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+
+        #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    #確認ALPR的Target Rate
+    def test_case103_Check_ALPR_TargetRate(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #定位Target Rate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
+        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
+        #判斷target rate
+        try:
+            self.assertEqual(TargetRate, "25600kbps", f"Target Rate is {TargetRate}, not 25600kbps")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+
+         #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+
+    #確認ALPR的GOP Length
+    def test_case0104_Check_ALPR_GOP_Length(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence ALPR
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #定位GOP Length
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
+        GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
+        #判斷GOP
+        try:
+            self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))    
+         #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))   
+    
+    #確認ALPR的Entropy Coding
+    def test_case0105_Check_ALPR_EntropyCoding(self):
+        self.errors = []  # 一開始先建立 list
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+         #點擊evidence live
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        #開啟ALPR stream，預設是關閉
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #定位Entropy Coding
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
+        EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
+        try:
+            self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))       
+        #關閉ALPR stream並save
+        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))      
 
     @classmethod
     def tearDownClass(cls):
