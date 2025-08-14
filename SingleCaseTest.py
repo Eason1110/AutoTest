@@ -183,7 +183,8 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_Overlay").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-    def test_case0118_Check_Overlay_textOverlay_text1_FreeText(self):
+    #檢查Text Overlay text1的position
+    def test_case0122_Check_Overlay_textOverlay_text1_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -197,15 +198,15 @@ class FactoryReset(unittest.TestCase):
         if not checkbox.is_selected():
             slider.click()
         time.sleep(1)#等待元素就位
-        #檢查開關
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_1_FreeText_input")))
-        FreeText1= self.driver.find_element(By.ID, "Overlay_Text_1_FreeText_input").get_attribute("value")
+        #檢查position
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_1_Position_div")))
+        Position1= self.driver.find_element(By.ID, "select_Overlay_Text_1_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(FreeText1,"Free Text 1",f"Free Text is {FreeText1}, not Free Text 1")
+            self.assertEqual(Position1,"Bottom-Left",f"Position1 is {Position1}, not Bottom-Left")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
-        #關閉free text1並save
+        #關閉text1
         checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
         slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_1 .slider")
         if checkbox.is_selected():
@@ -219,29 +220,30 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))
     
-    def test_case0119_Check_Overlay_textOverlay_text2_FreeText(self):
+    #檢查Text Overlay text2的position
+    def test_case0123_Check_Overlay_textOverlay_text2_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #點擊text overlay tab
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
         self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
-        #開啟text2
+        #開啟text1
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
         checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
         slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_2 .slider")
         if not checkbox.is_selected():
             slider.click()
         time.sleep(1)#等待元素就位
-        #檢查開關
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_2_FreeText_input")))
-        FreeText2= self.driver.find_element(By.ID, "Overlay_Text_2_FreeText_input").get_attribute("value")
+        #檢查position
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_2_Position_div")))
+        Position2= self.driver.find_element(By.ID, "select_Overlay_Text_2_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(FreeText2,"Free Text 2",f"Free Text is {FreeText2}, not Free Text 2")
+            self.assertEqual(Position2,"Bottom-Left",f"Position2 is {Position2}, not Bottom-Left")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
-        #關閉free text1並save
+        #關閉text2
         checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
         slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_2 .slider")
         if checkbox.is_selected():
@@ -255,29 +257,30 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))
     
-    def test_case0120_Check_Overlay_textOverlay_text3_FreeText(self):
+    #檢查Text Overlay text3的position
+    def test_case0124_Check_Overlay_textOverlay_text3_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #點擊text overlay tab
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
         self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
-        #開啟text3
+        #開啟text1
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
         checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
         slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_3 .slider")
         if not checkbox.is_selected():
             slider.click()
         time.sleep(1)#等待元素就位
-        #檢查開關
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_3_FreeText_input")))
-        FreeText3= self.driver.find_element(By.ID, "Overlay_Text_3_FreeText_input").get_attribute("value")
+        #檢查position
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_3_Position_div")))
+        Position3= self.driver.find_element(By.ID, "select_Overlay_Text_3_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(FreeText3,"Free Text 3",f"Free Text is {FreeText3}, not Free Text 3")
+            self.assertEqual(Position3,"Bottom-Left",f"Position3 is {Position3}, not Bottom-Left")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
-        #關閉free text1並save
+        #關閉text3
         checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
         slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_3 .slider")
         if checkbox.is_selected():
@@ -291,7 +294,8 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))
     
-    def test_case0121_Check_Overlay_textOverlay_text4_FreeText(self):
+    #檢查Text Overlay text4的position
+    def test_case0125_Check_Overlay_textOverlay_text4_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -305,15 +309,15 @@ class FactoryReset(unittest.TestCase):
         if not checkbox.is_selected():
             slider.click()
         time.sleep(1)#等待元素就位
-        #檢查開關
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_4_FreeText_input")))
-        FreeText4= self.driver.find_element(By.ID, "Overlay_Text_4_FreeText_input").get_attribute("value")
+        #檢查position
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_4_Position_div")))
+        Position4= self.driver.find_element(By.ID, "select_Overlay_Text_4_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(FreeText4,"Free Text 4",f"Free Text is {FreeText4}, not Free Text 4")
+            self.assertEqual(Position4,"Bottom-Left",f"Position4 is {Position4}, not Bottom-Left")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
-        #關閉free text1並save
+        #關閉text3
         checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
         slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_4 .slider")
         if checkbox.is_selected():
@@ -326,7 +330,6 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
-    
     
     
     @classmethod
