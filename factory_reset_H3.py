@@ -158,6 +158,19 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_AdvancedSetting").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
+     #到System Overlay頁面，等待所有元素就位
+    def go_to_Systme_Overlay_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        #再切換到overlay頁面
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
+        self.driver.find_element(By.ID, "a_Overlay").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
     #case1~case8檢查image parameters頁面所有設定
     def test_case001_Check_Evidence_Brightness(self):
         self.go_to_image_page()
@@ -1269,7 +1282,7 @@ class FactoryReset(unittest.TestCase):
 
     #確認ALPR的Resolution
     def test_case097_Check_ALPR_Resolution(self):
-        self.errors = []  # 一開始先建立 list
+        self.errors = []  # 一開始先建立 list，用來暫存false
         #進入stream config頁面
         self.go_to_stream_config_page()
         #點擊ALPR
@@ -1629,7 +1642,272 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
         # 最後統一檢查是否有錯
         if self.errors:
-            raise AssertionError("\n".join(self.errors))      
+            raise AssertionError("\n".join(self.errors))
+    
+    #確認overlay front size
+    def test_case0106_Check_Overlay_FontSize(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_FontSize_div")))
+        FontSize= self.driver.find_element(By.ID, "select_Overlay_FontSize_div").get_attribute("data-text")
+        self.assertEqual(FontSize,"Medium",f"Font Size is {FontSize}, not Medium")
+    
+     #確認overlay Font Color開關
+    def test_case0107_Check_Overlay_FontColor(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay_Font")))
+        FontColor= self.driver.find_element(By.ID, "switch_Overlay_Font")
+        self.assertTrue(FontColor.is_selected(),"Front Color is not enabled")
+    
+    #確認overlay background Color開關
+    def test_case0108_Check_Overlay_BackgroundColor(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay_BackgroundColor")))
+        BackgroundColor= self.driver.find_element(By.ID, "switch_Overlay_BackgroundColor")
+        self.assertTrue(BackgroundColor.is_selected(),"Background Color is not enabled")
+    
+     #確認overlay Date and Time開關
+    def test_case0109_Check_Overlay_DateandTime_Switch(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "TimeEnable")))
+        DateandTime= self.driver.find_element(By.ID, "TimeEnable")
+        self.assertTrue(DateandTime.is_selected(),"Date and Time is not enabled")
+    
+    #確認overlay Date and Time的format
+    def test_case0110_Check_Overlay_DateandTime_Format(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_DateTimeFormat_div")))
+        DateandTime_Format= self.driver.find_element(By.ID, "select_Overlay_DateTimeFormat_div").get_attribute("data-text")
+        self.assertEqual(DateandTime_Format,"Date and Time",f"format is {DateandTime_Format},not Date and Time")
+        
+    #確認overlay Date and Time的Position
+    def test_case0111_Check_Overlay_DateandTime_Position(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_DataTimePosition_div")))
+        DateandTime_Position= self.driver.find_element(By.ID, "select_Overlay_DataTimePosition_div").get_attribute("data-text")
+        self.assertEqual(DateandTime_Position,"Bottom-Left",f"Date and Time Position is {DateandTime_Position},not Bottom-Left")
+    
+     #確認overlay Camera Name開關
+    def test_case0112_Check_Overlay_CameraName_Switch(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "TextEnable")))
+        CameraName= self.driver.find_element(By.ID, "TextEnable")
+        self.assertTrue(CameraName.is_selected(),"Camera Name is not enabled")
+    
+    #確認overlay Camera Name的Position
+    def test_case0113_Check_Overlay_CameraName_Position(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_CameraNamePosition_div")))
+        CameraName_Position= self.driver.find_element(By.ID, "select_Overlay_CameraNamePosition_div").get_attribute("data-text")
+        self.assertEqual(CameraName_Position,"Bottom-Left",f"Camera Name Position is {CameraName_Position},not Bottom-Left")
+    
+    #確認overlay Font Color text1開關
+    def test_case0114_Check_Overlay_textOverlay_text1(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_1")))
+        text1= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
+        self.assertFalse(text1.is_selected(),"text1 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case0115_Check_Overlay_textOverlay_text2(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
+        text2= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
+        self.assertFalse(text2.is_selected(),"text2 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case0116_Check_Overlay_textOverlay_text3(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
+        text3= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
+        self.assertFalse(text3.is_selected(),"text3 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case0117_Check_Overlay_textOverlay_text4(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
+        text4= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
+        self.assertFalse(text4.is_selected(),"text4 is enabled")
+    
+     #到System Overlay頁面，等待所有元素就位
+    def go_to_Systme_Overlay_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        #再切換到overlay頁面
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
+        self.driver.find_element(By.ID, "a_Overlay").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
+    def test_case0118_Check_Overlay_textOverlay_text1_FreeText(self):
+        self.errors = []  # 一開始先建立 list
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #點擊text overlay tab
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
+        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
+        #開啟text1
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_1")))
+        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_1 .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_1_FreeText_input")))
+        FreeText1= self.driver.find_element(By.ID, "Overlay_Text_1_FreeText_input").get_attribute("value")
+        try:
+            self.assertEqual(FreeText1,"Free Text 1",f"Free Text is {FreeText1}, not Free Text 1")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))  
+        #關閉free text1並save
+        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_1 .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    def test_case0119_Check_Overlay_textOverlay_text2_FreeText(self):
+        self.errors = []  # 一開始先建立 list
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #點擊text overlay tab
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
+        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
+        #開啟text2
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
+        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_2 .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_2_FreeText_input")))
+        FreeText2= self.driver.find_element(By.ID, "Overlay_Text_2_FreeText_input").get_attribute("value")
+        try:
+            self.assertEqual(FreeText2,"Free Text 2",f"Free Text is {FreeText2}, not Free Text 2")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))  
+        #關閉free text1並save
+        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_2 .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    def test_case0120_Check_Overlay_textOverlay_text3_FreeText(self):
+        self.errors = []  # 一開始先建立 list
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #點擊text overlay tab
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
+        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
+        #開啟text3
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
+        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_3 .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_3_FreeText_input")))
+        FreeText3= self.driver.find_element(By.ID, "Overlay_Text_3_FreeText_input").get_attribute("value")
+        try:
+            self.assertEqual(FreeText3,"Free Text 3",f"Free Text is {FreeText3}, not Free Text 3")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))  
+        #關閉free text1並save
+        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_3 .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
+    
+    def test_case0121_Check_Overlay_textOverlay_text4_FreeText(self):
+        self.errors = []  # 一開始先建立 list
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #點擊text overlay tab
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
+        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
+        #開啟text1
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
+        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_4 .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        time.sleep(1)#等待元素就位
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_4_FreeText_input")))
+        FreeText4= self.driver.find_element(By.ID, "Overlay_Text_4_FreeText_input").get_attribute("value")
+        try:
+            self.assertEqual(FreeText4,"Free Text 4",f"Free Text is {FreeText4}, not Free Text 4")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))  
+        #關閉free text1並save
+        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_4 .slider")
+        if checkbox.is_selected():
+             slider.click()
+        #點擊儲存按鈕
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
+        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
+        time.sleep(1)
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        # 最後統一檢查是否有錯
+        if self.errors:
+            raise AssertionError("\n".join(self.errors))
 
     @classmethod
     def tearDownClass(cls):
