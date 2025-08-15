@@ -42,7 +42,7 @@ class FactoryReset(unittest.TestCase):
 
         # 讀取配置文件
         config = configparser.ConfigParser()
-        config.read(r'D:/selenium project/config.ini')
+        config.read(r'D:/AutoTest/config.ini')
 
         URL = config['URL_Config']['URL']
 
@@ -51,7 +51,7 @@ class FactoryReset(unittest.TestCase):
         
         # 讀取配置文件
         config = configparser.ConfigParser()
-        config.read(r'D:/selenium project/config.ini')
+        config.read(r'D:/AutoTest/config.ini')
         username = config['Login_Config']['username']
         password = config['Login_Config']['password']
 
@@ -338,4 +338,4 @@ class FactoryReset(unittest.TestCase):
        
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HTMLTestRunner.HTMLTestRunner(output='D:/SeleniumProject/test_reports'))
+    unittest.main(testRunner=HTMLTestRunner.HTMLTestRunner(output='D:/AutoTest/test_reports'))
