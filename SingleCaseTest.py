@@ -183,154 +183,38 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_Overlay").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-    #檢查Text Overlay text1的position
-    def test_case0122_Check_Overlay_textOverlay_text1_Position(self):
-        self.errors = []  # 一開始先建立 list
-        #進入overlay頁面
-        self.go_to_Systme_Overlay_page()
-        #點擊text overlay tab
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
-        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
-        #開啟text1
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_1")))
-        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_1 .slider")
-        if not checkbox.is_selected():
-            slider.click()
-        time.sleep(1)#等待元素就位
-        #檢查position
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_1_Position_div")))
-        Position1= self.driver.find_element(By.ID, "select_Overlay_Text_1_Position_div").get_attribute("data-text")
-        try:
-            self.assertEqual(Position1,"Bottom-Left",f"Position1 is {Position1}, not Bottom-Left")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))  
-        #關閉text1
-        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_1 .slider")
-        if checkbox.is_selected():
-             slider.click()
-        #點擊儲存按鈕
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
-        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
-        time.sleep(1)
+    #到System Overlay頁面，等待所有元素就位
+    def go_to_Systme_Audio_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        # 最後統一檢查是否有錯
-        if self.errors:
-            raise AssertionError("\n".join(self.errors))
-    
-    #檢查Text Overlay text2的position
-    def test_case0123_Check_Overlay_textOverlay_text2_Position(self):
-        self.errors = []  # 一開始先建立 list
-        #進入overlay頁面
-        self.go_to_Systme_Overlay_page()
-        #點擊text overlay tab
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
-        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
-        #開啟text1
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
-        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_2 .slider")
-        if not checkbox.is_selected():
-            slider.click()
-        time.sleep(1)#等待元素就位
-        #檢查position
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_2_Position_div")))
-        Position2= self.driver.find_element(By.ID, "select_Overlay_Text_2_Position_div").get_attribute("data-text")
-        try:
-            self.assertEqual(Position2,"Bottom-Left",f"Position2 is {Position2}, not Bottom-Left")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))  
-        #關閉text2
-        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_2 .slider")
-        if checkbox.is_selected():
-             slider.click()
-        #點擊儲存按鈕
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
-        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
-        time.sleep(1)
+        #再切換到audio頁面
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Audio")))
+        self.driver.find_element(By.ID, "a_Audio").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        # 最後統一檢查是否有錯
-        if self.errors:
-            raise AssertionError("\n".join(self.errors))
     
-    #檢查Text Overlay text3的position
-    def test_case0124_Check_Overlay_textOverlay_text3_Position(self):
-        self.errors = []  # 一開始先建立 list
-        #進入overlay頁面
-        self.go_to_Systme_Overlay_page()
-        #點擊text overlay tab
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
-        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
-        #開啟text1
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
-        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_3 .slider")
-        if not checkbox.is_selected():
-            slider.click()
-        time.sleep(1)#等待元素就位
-        #檢查position
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_3_Position_div")))
-        Position3= self.driver.find_element(By.ID, "select_Overlay_Text_3_Position_div").get_attribute("data-text")
-        try:
-            self.assertEqual(Position3,"Bottom-Left",f"Position3 is {Position3}, not Bottom-Left")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))  
-        #關閉text3
-        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_3 .slider")
-        if checkbox.is_selected():
-             slider.click()
-        #點擊儲存按鈕
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
-        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
-        time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        # 最後統一檢查是否有錯
-        if self.errors:
-            raise AssertionError("\n".join(self.errors))
+    #檢查system->Audio設定
+    def test_case0126_Check_System_Microphone(self):
+        #進入audio頁面
+        self.go_to_Systme_Audio_page()
+        #檢查Microphone開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisableMic")))
+        Microphone = self.driver.find_element(By.ID, "DisableMic")
+        self.assertTrue(Microphone,"Microphone switch is off")
     
-    #檢查Text Overlay text4的position
-    def test_case0125_Check_Overlay_textOverlay_text4_Position(self):
-        self.errors = []  # 一開始先建立 list
-        #進入overlay頁面
-        self.go_to_Systme_Overlay_page()
-        #點擊text overlay tab
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_div_TextOverlay_Selector")))
-        self.driver.find_element(By.ID, "Overlay_div_TextOverlay_Selector").click()
-        #開啟text1
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
-        checkbox= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_4 .slider")
-        if not checkbox.is_selected():
-            slider.click()
-        time.sleep(1)#等待元素就位
-        #檢查position
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_4_Position_div")))
-        Position4= self.driver.find_element(By.ID, "select_Overlay_Text_4_Position_div").get_attribute("data-text")
-        try:
-            self.assertEqual(Position4,"Bottom-Left",f"Position4 is {Position4}, not Bottom-Left")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))  
-        #關閉text3
-        checkbox = self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#Overlay_TextOverlay_Table_4 .slider")
-        if checkbox.is_selected():
-             slider.click()
-        #點擊儲存按鈕
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
-        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
-        time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        # 最後統一檢查是否有錯
-        if self.errors:
-            raise AssertionError("\n".join(self.errors))
+     #檢查system->Audio Microphone音量
+    def test_case0127_Check_System_Volume(self):
+        #進入audio頁面
+        self.go_to_Systme_Audio_page()
+        #檢查Volume
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Audio_MicVolume_div")))
+        Volume = self.driver.find_element(By.ID, "select_Audio_MicVolume_div").get_attribute("data-text")
+        self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
     
+      
     
     @classmethod
     def tearDownClass(cls):

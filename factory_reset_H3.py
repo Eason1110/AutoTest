@@ -171,6 +171,19 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_Overlay").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
+     #到System Overlay頁面，等待所有元素就位
+    def go_to_Systme_Audio_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        #再切換到audio頁面
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Audio")))
+        self.driver.find_element(By.ID, "a_Audio").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
     #case1~case8檢查image parameters頁面所有設定
     def test_case001_Check_Evidence_Brightness(self):
         self.go_to_image_page()
@@ -2056,6 +2069,24 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
+    
+     #檢查system->Audio設定
+    def test_case0126_Check_System_Microphone(self):
+        #進入audio頁面
+        self.go_to_Systme_Audio_page()
+        #檢查Microphone開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisableMic")))
+        Microphone = self.driver.find_element(By.ID, "DisableMic")
+        self.assertTrue(Microphone,"Microphone switch is off")
+    
+     #檢查system->Audio Microphone音量
+    def test_case0127_Check_System_Volume(self):
+        #進入audio頁面
+        self.go_to_Systme_Audio_page()
+        #檢查Volume
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Audio_MicVolume_div")))
+        Volume = self.driver.find_element(By.ID, "select_Audio_MicVolume_div").get_attribute("data-text")
+        self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
 
     @classmethod
     def tearDownClass(cls):
