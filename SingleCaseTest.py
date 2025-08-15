@@ -196,6 +196,15 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_Audio").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
+      #到Network Basic頁面，等待所有元素就位
+    def go_to_Network_Basic_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Network")))
+        elem = self.driver.find_element(By.ID, "a_Network")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Network")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
     #檢查system->Audio設定
     def test_case0126_Check_System_Microphone(self):
         #進入audio頁面
@@ -213,6 +222,33 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Audio_MicVolume_div")))
         Volume = self.driver.find_element(By.ID, "select_Audio_MicVolume_div").get_attribute("data-text")
         self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
+    
+     #檢查system->basic的網路設定，檢查Type
+    def test_case0128_Check_Network_Basic_Type(self):
+        #進入basic頁面
+        self.go_to_Network_Basic_page()
+        #檢查Type
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Basic_NetworkType_div")))
+        Type = self.driver.find_element(By.ID, "select_Basic_NetworkType_div").get_attribute("data-text")
+        self.assertEqual(Type,"DHCP IPv4",f"Type is {Type}, not DHCP IPv4")
+    
+     #檢查system->basic的網路設定，檢查Retry Interval
+    def test_case0129_Check_Network_RetryInterval(self):
+        #進入basic頁面
+        self.go_to_Network_Basic_page()
+        #檢查Retry Interval
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "RetryInterval")))
+        RetryInterval = self.driver.find_element(By.ID, "RetryInterval").get_attribute("value")
+        self.assertEqual(RetryInterval,"20s",f"Retry Interval is {RetryInterval}, not 20s")
+    
+     #檢查system->basic的網路設定，檢查Fallback IP
+    def test_case0130_Check_Network_FallbackIP(self):
+        #進入basic頁面
+        self.go_to_Network_Basic_page()
+        #檢查Fallback IP
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Basic_DefaultIP_div")))
+        FallbackIP = self.driver.find_element(By.ID, "select_Basic_DefaultIP_div").get_attribute("data-text")
+        self.assertEqual(FallbackIP,"Use Static IP Address",f"Fallback IP {FallbackIP}, not Use Static IP Address")
     
       
     
