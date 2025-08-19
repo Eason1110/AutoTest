@@ -1592,7 +1592,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
 
     #確認ALPR的GOP Length
-    def test_case0104_Check_ALPR_GOP_Length(self):
+    def test_case104_Check_ALPR_GOP_Length(self):
         self.errors = []  # 一開始先建立 list
         #進入stream config頁面
         self.go_to_stream_config_page()
@@ -1630,7 +1630,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))   
     
     #確認ALPR的Entropy Coding
-    def test_case0105_Check_ALPR_EntropyCoding(self):
+    def test_case105_Check_ALPR_EntropyCoding(self):
         self.errors = []  # 一開始先建立 list
         #進入stream config頁面
         self.go_to_stream_config_page()
@@ -1667,7 +1667,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
     
     #確認overlay front size
-    def test_case0106_Check_Overlay_FontSize(self):
+    def test_case106_Check_Overlay_FontSize(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查
@@ -1676,7 +1676,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(FontSize,"Medium",f"Font Size is {FontSize}, not Medium")
     
      #確認overlay Font Color開關
-    def test_case0107_Check_Overlay_FontColor(self):
+    def test_case107_Check_Overlay_FontColor(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1685,7 +1685,7 @@ class FactoryReset(unittest.TestCase):
         self.assertTrue(FontColor.is_selected(),"Front Color is not enabled")
     
     #確認overlay background Color開關
-    def test_case0108_Check_Overlay_BackgroundColor(self):
+    def test_case108_Check_Overlay_BackgroundColor(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1694,7 +1694,7 @@ class FactoryReset(unittest.TestCase):
         self.assertTrue(BackgroundColor.is_selected(),"Background Color is not enabled")
     
      #確認overlay Date and Time開關
-    def test_case0109_Check_Overlay_DateandTime_Switch(self):
+    def test_case109_Check_Overlay_DateandTime_Switch(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1703,7 +1703,7 @@ class FactoryReset(unittest.TestCase):
         self.assertTrue(DateandTime.is_selected(),"Date and Time is not enabled")
     
     #確認overlay Date and Time的format
-    def test_case0110_Check_Overlay_DateandTime_Format(self):
+    def test_case110_Check_Overlay_DateandTime_Format(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查
@@ -1712,7 +1712,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(DateandTime_Format,"Date and Time",f"format is {DateandTime_Format},not Date and Time")
         
     #確認overlay Date and Time的Position
-    def test_case0111_Check_Overlay_DateandTime_Position(self):
+    def test_case111_Check_Overlay_DateandTime_Position(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查
@@ -1721,7 +1721,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(DateandTime_Position,"Bottom-Left",f"Date and Time Position is {DateandTime_Position},not Bottom-Left")
     
      #確認overlay Camera Name開關
-    def test_case0112_Check_Overlay_CameraName_Switch(self):
+    def test_case112_Check_Overlay_CameraName_Switch(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1730,7 +1730,7 @@ class FactoryReset(unittest.TestCase):
         self.assertTrue(CameraName.is_selected(),"Camera Name is not enabled")
     
     #確認overlay Camera Name的Position
-    def test_case0113_Check_Overlay_CameraName_Position(self):
+    def test_case113_Check_Overlay_CameraName_Position(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查
@@ -1739,7 +1739,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(CameraName_Position,"Bottom-Left",f"Camera Name Position is {CameraName_Position},not Bottom-Left")
     
     #確認overlay Font Color text1開關
-    def test_case0114_Check_Overlay_textOverlay_text1(self):
+    def test_case114_Check_Overlay_textOverlay_text1(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1748,7 +1748,7 @@ class FactoryReset(unittest.TestCase):
         self.assertFalse(text1.is_selected(),"text1 is enabled")
     
     #確認overlay Font Color開關
-    def test_case0115_Check_Overlay_textOverlay_text2(self):
+    def test_case115_Check_Overlay_textOverlay_text2(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1757,7 +1757,7 @@ class FactoryReset(unittest.TestCase):
         self.assertFalse(text2.is_selected(),"text2 is enabled")
     
     #確認overlay Font Color開關
-    def test_case0116_Check_Overlay_textOverlay_text3(self):
+    def test_case116_Check_Overlay_textOverlay_text3(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1766,7 +1766,7 @@ class FactoryReset(unittest.TestCase):
         self.assertFalse(text3.is_selected(),"text3 is enabled")
     
     #確認overlay Font Color開關
-    def test_case0117_Check_Overlay_textOverlay_text4(self):
+    def test_case117_Check_Overlay_textOverlay_text4(self):
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
         #檢查開關
@@ -1787,7 +1787,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "a_Overlay").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-    def test_case0118_Check_Overlay_textOverlay_text1_FreeText(self):
+    def test_case118_Check_Overlay_textOverlay_text1_FreeText(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -1823,7 +1823,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))
     
-    def test_case0119_Check_Overlay_textOverlay_text2_FreeText(self):
+    def test_case119_Check_Overlay_textOverlay_text2_FreeText(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -1859,7 +1859,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))
     
-    def test_case0120_Check_Overlay_textOverlay_text3_FreeText(self):
+    def test_case120_Check_Overlay_textOverlay_text3_FreeText(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -1895,7 +1895,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))
     
-    def test_case0121_Check_Overlay_textOverlay_text4_FreeText(self):
+    def test_case121_Check_Overlay_textOverlay_text4_FreeText(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -1932,7 +1932,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
     
     #檢查Text Overlay text1的position
-    def test_case0122_Check_Overlay_textOverlay_text1_Position(self):
+    def test_case122_Check_Overlay_textOverlay_text1_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -1969,7 +1969,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
     
     #檢查Text Overlay text2的position
-    def test_case0123_Check_Overlay_textOverlay_text2_Position(self):
+    def test_case123_Check_Overlay_textOverlay_text2_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -2006,7 +2006,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
     
     #檢查Text Overlay text3的position
-    def test_case0124_Check_Overlay_textOverlay_text3_Position(self):
+    def test_case124_Check_Overlay_textOverlay_text3_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -2043,7 +2043,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
     
     #檢查Text Overlay text4的position
-    def test_case0125_Check_Overlay_textOverlay_text4_Position(self):
+    def test_case125_Check_Overlay_textOverlay_text4_Position(self):
         self.errors = []  # 一開始先建立 list
         #進入overlay頁面
         self.go_to_Systme_Overlay_page()
@@ -2080,7 +2080,7 @@ class FactoryReset(unittest.TestCase):
             raise AssertionError("\n".join(self.errors))
     
      #檢查system->Audio設定
-    def test_case0126_Check_System_Microphone(self):
+    def test_case126_Check_System_Microphone(self):
         #進入audio頁面
         self.go_to_Systme_Audio_page()
         #檢查Microphone開關
@@ -2089,7 +2089,7 @@ class FactoryReset(unittest.TestCase):
         self.assertTrue(Microphone,"Microphone switch is off")
     
      #檢查system->Audio Microphone音量
-    def test_case0127_Check_System_Volume(self):
+    def test_case127_Check_System_Volume(self):
         #進入audio頁面
         self.go_to_Systme_Audio_page()
         #檢查Volume
@@ -2098,7 +2098,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
     
      #檢查system->basic的網路設定，檢查Type
-    def test_case0128_Check_Network_Basic_Type(self):
+    def test_case128_Check_Network_Basic_Type(self):
         #進入basic頁面
         self.go_to_Network_Basic_page()
         #檢查Type
@@ -2107,7 +2107,7 @@ class FactoryReset(unittest.TestCase):
         self.assertEqual(Type,"DHCP IPv4",f"Type is {Type}, not DHCP IPv4")
     
      #檢查system->basic的網路設定，檢查Retry Interval
-    def test_case0129_Check_Network_RetryInterval(self):
+    def test_case129_Check_Network_RetryInterval(self):
         #進入basic頁面
         self.go_to_Network_Basic_page()
         #檢查Retry Interval
@@ -2115,8 +2115,8 @@ class FactoryReset(unittest.TestCase):
         RetryInterval = self.driver.find_element(By.ID, "RetryInterval").get_attribute("value")
         self.assertEqual(RetryInterval,"20s",f"Retry Interval is {RetryInterval}, not 20s")
     
-    #檢查system->basic的網路設定，檢查Fallback IP
-    def test_case0130_Check_Network_FallbackIP(self):
+     #檢查system->basic的網路設定，檢查Fallback IP
+    def test_case130_Check_Network_FallbackIP(self):
         #進入basic頁面
         self.go_to_Network_Basic_page()
         #檢查Fallback IP
