@@ -236,41 +236,18 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-    #檢查system->Notification設定，檢查Log File Size
-    def test_case136_Check_Notification_LogFileSize(self):
-        #進入Notification頁面
-        self.go_to_Notification_page()
-        #檢查Log File Size
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_Size")))
-        Size = self.driver.find_element(By.ID, "CameraLog_input_Size").get_attribute("value")
-        self.assertEqual(Size,"32",f"Port is not 32, it's {Size}")
-    
-    #檢查Notification設定，檢查Device log
-    def test_case137_Check_Notification_Devicelog(self):
-        #進入Notification頁面
-        self.go_to_Notification_page()
-        #檢查Device log
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_DeviceLog")))
-        checkbox = self.driver.find_element(By.ID, "CameraLog_input_DeviceLog")
-        self.assertFalse(checkbox.is_selected(),"Device log is enabled")
-    
-    #檢查Notification設定，檢查Access log
-    def test_case138_Check_Notification_Accesslog(self):
-        #進入Notification頁面
-        self.go_to_Notification_page()
-        #檢查Access Log
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_AccessLog")))
-        checkbox = self.driver.find_element(By.ID, "CameraLog_input_AccessLog")
-        self.assertFalse(checkbox.is_selected(),"Access log is enabled")
-    
-    #檢查Storage設定，檢查Auto Format
-    def test_case139_Check_Storage_AutoFormat(self):
-        #進入storage頁面
-        self.go_to_Storage_page()
-        #檢查Auto Format
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "checkbox_AutoFormat")))
-        checkbox = self.driver.find_element(By.ID, "checkbox_AutoFormat")
-        self.assertTrue(checkbox.is_selected(),"Auto Format is disabled")
+   #確認Firmware Version
+    def test_case067_Check_FirmwareVersion(self):   
+        #讀取config ini檔
+        config = configparser.ConfigParser()
+        config.read(r'D:/AutoTest/config.ini')
+        Version = config['Version_Config']['version']
+        #進入system頁面
+        self.go_to_system_page()
+        #定位firmware Version
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_FWVersion")))
+        FirmwareVersion = self.driver.find_element(By.ID,"span_Device_FWVersion").text
+        self.assertEqual(FirmwareVersion, Version, f"FirmwareVersion is {FirmwareVersion}, not {Version}")
       
     
     @classmethod
