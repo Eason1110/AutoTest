@@ -13,6 +13,7 @@ import cv2
 import numpy as np
 import HTMLTestRunner # type: ignore
 import os
+import sys
 import configparser
 
 class FactoryReset(unittest.TestCase):
@@ -205,51 +206,71 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-    #檢查system->Audio設定
-    def test_case0126_Check_System_Microphone(self):
-        #進入audio頁面
-        self.go_to_Systme_Audio_page()
-        #檢查Microphone開關
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisableMic")))
-        Microphone = self.driver.find_element(By.ID, "DisableMic")
-        self.assertTrue(Microphone,"Microphone switch is off")
+    # 到Network Advanced頁面，等待所有元素就位
+    def go_to_Network_Advanced_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Network")))
+        elem = self.driver.find_element(By.ID, "a_Network")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Network")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Advanced")))
+        self.driver.find_element(By.ID, "a_Advanced").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-     #檢查system->Audio Microphone音量
-    def test_case0127_Check_System_Volume(self):
-        #進入audio頁面
-        self.go_to_Systme_Audio_page()
-        #檢查Volume
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Audio_MicVolume_div")))
-        Volume = self.driver.find_element(By.ID, "select_Audio_MicVolume_div").get_attribute("data-text")
-        self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
+    # 到Notification頁面，等待所有元素就位
+    def go_to_Notification_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Notification")))
+        elem = self.driver.find_element(By.ID, "a_Notification")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Notification")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-     #檢查system->basic的網路設定，檢查Type
-    def test_case0128_Check_Network_Basic_Type(self):
-        #進入basic頁面
-        self.go_to_Network_Basic_page()
-        #檢查Type
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Basic_NetworkType_div")))
-        Type = self.driver.find_element(By.ID, "select_Basic_NetworkType_div").get_attribute("data-text")
-        self.assertEqual(Type,"DHCP IPv4",f"Type is {Type}, not DHCP IPv4")
+    # 到Storage頁面，等待所有元素就位
+    def go_to_Storage_page(self):
+        #切換到Storage頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Storage")))
+        elem = self.driver.find_element(By.ID, "a_Storage")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Storage")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-     #檢查system->basic的網路設定，檢查Retry Interval
-    def test_case0129_Check_Network_RetryInterval(self):
-        #進入basic頁面
-        self.go_to_Network_Basic_page()
-        #檢查Retry Interval
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "RetryInterval")))
-        RetryInterval = self.driver.find_element(By.ID, "RetryInterval").get_attribute("value")
-        self.assertEqual(RetryInterval,"20s",f"Retry Interval is {RetryInterval}, not 20s")
+    #檢查system->Notification設定，檢查Log File Size
+    def test_case136_Check_Notification_LogFileSize(self):
+        #進入Notification頁面
+        self.go_to_Notification_page()
+        #檢查Log File Size
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_Size")))
+        Size = self.driver.find_element(By.ID, "CameraLog_input_Size").get_attribute("value")
+        self.assertEqual(Size,"32",f"Port is not 32, it's {Size}")
     
-     #檢查system->basic的網路設定，檢查Fallback IP
-    def test_case0130_Check_Network_FallbackIP(self):
-        #進入basic頁面
-        self.go_to_Network_Basic_page()
-        #檢查Fallback IP
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Basic_DefaultIP_div")))
-        FallbackIP = self.driver.find_element(By.ID, "select_Basic_DefaultIP_div").get_attribute("data-text")
-        self.assertEqual(FallbackIP,"Use Static IP Address",f"Fallback IP {FallbackIP}, not Use Static IP Address")
+    #檢查Notification設定，檢查Device log
+    def test_case137_Check_Notification_Devicelog(self):
+        #進入Notification頁面
+        self.go_to_Notification_page()
+        #檢查Device log
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_DeviceLog")))
+        checkbox = self.driver.find_element(By.ID, "CameraLog_input_DeviceLog")
+        self.assertFalse(checkbox.is_selected(),"Device log is enabled")
     
+    #檢查Notification設定，檢查Access log
+    def test_case138_Check_Notification_Accesslog(self):
+        #進入Notification頁面
+        self.go_to_Notification_page()
+        #檢查Access Log
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_AccessLog")))
+        checkbox = self.driver.find_element(By.ID, "CameraLog_input_AccessLog")
+        self.assertFalse(checkbox.is_selected(),"Access log is enabled")
+    
+    #檢查Storage設定，檢查Auto Format
+    def test_case139_Check_Storage_AutoFormat(self):
+        #進入storage頁面
+        self.go_to_Storage_page()
+        #檢查Auto Format
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "checkbox_AutoFormat")))
+        checkbox = self.driver.find_element(By.ID, "checkbox_AutoFormat")
+        self.assertTrue(checkbox.is_selected(),"Auto Format is disabled")
       
     
     @classmethod
