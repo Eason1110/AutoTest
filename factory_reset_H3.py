@@ -214,6 +214,15 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
+    # 到Storage頁面，等待所有元素就位
+    def go_to_Storage_page(self):
+        #切換到Storage頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Storage")))
+        elem = self.driver.find_element(By.ID, "a_Storage")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Storage")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+    
     #case1~case8檢查image parameters頁面所有設定
     def test_case001_Check_Evidence_Brightness(self):
         self.go_to_image_page()
