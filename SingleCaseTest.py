@@ -236,19 +236,54 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
-   #確認Firmware Version
-    def test_case067_Check_FirmwareVersion(self):   
-        #讀取config ini檔
+     # 到Administration頁面，等待所有元素就位
+    def go_to_Administration_page(self):
+        #切換到Administration頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Administration")))
+        elem = self.driver.find_element(By.ID, "a_Administration")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Administration")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(5)
+    
+    #檢查Administration設定，檢查SSH Server
+    def test_case140_Check_SSH_Server(self):
+        #進入Administration頁面
+        self.go_to_Administration_page()
+        #檢查SSH
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
+        checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
+        self.assertTrue(checkbox.is_selected(),"SSH Server is disabled")
+    
+    #檢查Administration設定，檢查SSH Server Port
+    def test_case141_Check_SSH_Server_Port(self):
+        #進入Administration頁面
+        self.go_to_Administration_page()
+        #檢查SSH
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_Port")))
+        Port = self.driver.find_element(By.ID, "Admin_input_Port").get_attribute("value")
+        self.assertEqual(Port,"49155",f"SSH Server port is {Port}, not 49155")
+    
+    #確認Auth. Method
+    def test_case142_Check_SSH_AuthMethod(self):
+        #進入Administration頁面
+        self.go_to_Administration_page()
+        #定位欄位
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SSHServer_Password")))
+        # 讀取配置文件
         config = configparser.ConfigParser()
         config.read(r'D:/AutoTest/config.ini')
-        Version = config['Version_Config']['version']
-        #進入system頁面
-        self.go_to_system_page()
-        #定位firmware Version
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "span_Device_FWVersion")))
-        FirmwareVersion = self.driver.find_element(By.ID,"span_Device_FWVersion").text
-        self.assertEqual(FirmwareVersion, Version, f"FirmwareVersion is {FirmwareVersion}, not {Version}")
-      
+        URL = config['URL_Config']['URL']
+        #該ratio button不是checkbox，因此不能用is_selected()
+        #是用圖判斷，圖是存在src屬性內，因此是判斷src屬性是哪一張圖。
+        password = self.driver.find_element(By.ID, "SSHServer_Password")
+        src_value = password.get_attribute("src")
+        print(src_value)
+        if URL + "/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
+            print("password is selected")
+        else:
+            self.fail("password is not selected")
+        
     
     @classmethod
     def tearDownClass(cls):
