@@ -246,43 +246,76 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
         time.sleep(5)
     
-    #檢查Administration設定，檢查SSH Server
-    def test_case140_Check_SSH_Server(self):
-        #進入Administration頁面
-        self.go_to_Administration_page()
-        #檢查SSH
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
-        checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
-        self.assertTrue(checkbox.is_selected(),"SSH Server is disabled")
-    
-    #檢查Administration設定，檢查SSH Server Port
-    def test_case141_Check_SSH_Server_Port(self):
-        #進入Administration頁面
-        self.go_to_Administration_page()
-        #檢查SSH
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_Port")))
-        Port = self.driver.find_element(By.ID, "Admin_input_Port").get_attribute("value")
-        self.assertEqual(Port,"49155",f"SSH Server port is {Port}, not 49155")
-    
-    #確認Auth. Method
-    def test_case142_Check_SSH_AuthMethod(self):
-        #進入Administration頁面
-        self.go_to_Administration_page()
-        #定位欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SSHServer_Password")))
-        # 讀取配置文件
-        config = configparser.ConfigParser()
-        config.read(r'D:/AutoTest/config.ini')
-        URL = config['URL_Config']['URL']
-        #該ratio button不是checkbox，因此不能用is_selected()
-        #是用圖判斷，圖是存在src屬性內，因此是判斷src屬性是哪一張圖。
-        password = self.driver.find_element(By.ID, "SSHServer_Password")
-        src_value = password.get_attribute("src")
-        print(src_value)
-        if URL + "/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
-            print("password is selected")
+    #case1~case8檢查image parameters頁面所有設定
+    def test_case001_Check_Evidence_Brightness(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Brightness")))
+        value = self.driver.find_element(By.ID, "input_Brightness").get_attribute('value')
+        self.assertEqual(value, "60%", f"Brightness not 60%: {value}")
+
+    def test_case002_Check_Evidence_Contrast(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Contrast")))
+        value = self.driver.find_element(By.ID, "input_Contrast").get_attribute('value')
+        self.assertEqual(value, "60%", f"Contrast not 60%: {value}")
+
+    def test_case003_Check_Evidence_Saturation(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Saturation")))
+        value = self.driver.find_element(By.ID, "input_Saturation").get_attribute('value')
+        self.assertEqual(value, "60%", f"Saturation not 60%: {value}")
+
+    def test_case004_Check_Evidence_Sharpness(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Sharpness")))
+        value = self.driver.find_element(By.ID, "input_Sharpness").get_attribute('value')
+        self.assertEqual(value, "60%", f"Sharpness not 60%: {value}")
+
+    def test_case005_Check_Evidence_Gamma(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Gamma")))
+        value = self.driver.find_element(By.ID, "input_Gamma").get_attribute('value')
+        self.assertEqual(value, "60%", f"Gamma not 60%: {value}")
+
+    def test_case006_Check_Evidence_Auto_wb_Mode(self):
+        self.go_to_image_page()
+        time.sleep(2)
+        checkbox = self.driver.find_element(By.ID, "WhiteBalanceAuto")
+        self.assertFalse(checkbox.is_selected(), "WhiteBalanceAuto is ON")
+
+    def test_case007_Check_Evidence_Color_Temperature(self):
+        self.go_to_image_page()
+
+        # 取消 Auto White Balance
+        checkbox = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#div_WhiteBalance input[type='checkbox']"))
+            )
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_WhiteBalance .slider")
+
+        if checkbox.is_selected():
+            slider.click()
+        #關閉白平衡後須等待兩秒，才能正常讀取value數值
+        time.sleep(2)
+        # 找到色溫滑桿
+        color_temp_slider = self.driver.find_element(By.ID, "slider_colorTemperature")
+        # 取得當前的 value 屬性
+        current_temp = color_temp_slider.get_attribute("value")
+        # 驗證是否為 5000K
+        if current_temp == "8000":
+            print("Color temperature is 8000K")
         else:
-            self.fail("password is not selected")
+            self.fail(f"Color temperature is {current_temp}K, not 8000K")
+        #等待三秒後切換回為ON，不能馬上切換，否則會失敗
+        time.sleep(3)
+        # 再點回 ON（恢復勾選）
+       # WebDriverWait(self.driver, 5).until(
+        #  EC.element_to_be_clickable((By.CSS_SELECTOR, "#div_WhiteBalance .slider"))
+        #).click()
+
+    def test_case008_Check_Evidence_LDC(self):
+        self.go_to_image_page()
+        checkbox = self.driver.find_element(By.ID, "LDC")
+        self.assertTrue(checkbox.is_selected(), "LDC is OFF") 
         
     
     @classmethod

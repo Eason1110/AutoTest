@@ -254,37 +254,37 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Brightness")))
         value = self.driver.find_element(By.ID, "input_Brightness").get_attribute('value')
-        self.assertEqual(value, "50%", f"Brightness not 50%: {value}")
+        self.assertEqual(value, "60%", f"Brightness not 60%: {value}")
 
     def test_case002_Check_Evidence_Contrast(self):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Contrast")))
         value = self.driver.find_element(By.ID, "input_Contrast").get_attribute('value')
-        self.assertEqual(value, "50%", f"Contrast not 50%: {value}")
+        self.assertEqual(value, "60%", f"Contrast not 60%: {value}")
 
     def test_case003_Check_Evidence_Saturation(self):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Saturation")))
         value = self.driver.find_element(By.ID, "input_Saturation").get_attribute('value')
-        self.assertEqual(value, "50%", f"Saturation not 50%: {value}")
+        self.assertEqual(value, "60%", f"Saturation not 60%: {value}")
 
     def test_case004_Check_Evidence_Sharpness(self):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Sharpness")))
         value = self.driver.find_element(By.ID, "input_Sharpness").get_attribute('value')
-        self.assertEqual(value, "50%", f"Sharpness not 50%: {value}")
+        self.assertEqual(value, "60%", f"Sharpness not 60%: {value}")
 
     def test_case005_Check_Evidence_Gamma(self):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Gamma")))
         value = self.driver.find_element(By.ID, "input_Gamma").get_attribute('value')
-        self.assertEqual(value, "50%", f"Gamma not 50%: {value}")
+        self.assertEqual(value, "60%", f"Gamma not 60%: {value}")
 
     def test_case006_Check_Evidence_Auto_wb_Mode(self):
         self.go_to_image_page()
         time.sleep(2)
         checkbox = self.driver.find_element(By.ID, "WhiteBalanceAuto")
-        self.assertTrue(checkbox.is_selected(), "WhiteBalanceAuto is OFF")
+        self.assertFalse(checkbox.is_selected(), "WhiteBalanceAuto is ON")
 
     def test_case007_Check_Evidence_Color_Temperature(self):
         self.go_to_image_page()
@@ -304,22 +304,24 @@ class FactoryReset(unittest.TestCase):
         # 取得當前的 value 屬性
         current_temp = color_temp_slider.get_attribute("value")
         # 驗證是否為 5000K
-        if current_temp == "5000":
-            print("Color temperature is 5000K")
+        if current_temp == "8000":
+            print("Color temperature is 8000K")
         else:
-            self.fail(f"Color temperature is {current_temp}K, not 5000K")
+            self.fail(f"Color temperature is {current_temp}K, not 8000K")
         #等待三秒後切換回為ON，不能馬上切換，否則會失敗
         time.sleep(3)
         # 再點回 ON（恢復勾選）
-        WebDriverWait(self.driver, 5).until(
-          EC.element_to_be_clickable((By.CSS_SELECTOR, "#div_WhiteBalance .slider"))
-        ).click()
+        #WebDriverWait(self.driver, 5).until(
+          #EC.element_to_be_clickable((By.CSS_SELECTOR, "#div_WhiteBalance .slider"))
+        #).click()
 
     def test_case008_Check_Evidence_LDC(self):
         self.go_to_image_page()
         checkbox = self.driver.find_element(By.ID, "LDC")
-        self.assertFalse(checkbox.is_selected(), "LDC is ON")
+        self.assertTrue(checkbox.is_selected(), "LDC is OFF") 
          
+    #-----------------------2025/08/21----------------------------------------
+
     #Case9~Case12後開始檢查image config頁面的所有設定
     def test_case009_Check_Evidence_RotateViewFlip(self):
         self.go_to_image_config_page()
@@ -1833,6 +1835,19 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
         text4= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
         self.assertFalse(text4.is_selected(),"text4 is enabled")
+    
+     #到System Overlay頁面，等待所有元素就位
+    def go_to_Systme_Overlay_page(self):
+        #切換到system頁面
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
+        elem = self.driver.find_element(By.ID, "a_System")
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
+        elem.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        #再切換到overlay頁面
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
+        self.driver.find_element(By.ID, "a_Overlay").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
     def test_case118_Check_Overlay_textOverlay_text1_FreeText(self):
         self.errors = []  # 一開始先建立 list
