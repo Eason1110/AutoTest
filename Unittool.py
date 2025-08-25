@@ -412,16 +412,17 @@ class App(tk.Tk):
     def export_unittest_plan(self):
         selected_cases_by_module = {}
 
+        hardcoded_report_dir = 'D:/AutoTest/test_reports'
+
         for py_file_path, file_cases in self.selected_cases_by_file.items():
             file_info = self.py_files[py_file_path]
             module_name = os.path.splitext(os.path.basename(py_file_path))[0]
             test_class_name = file_info['test_class_name'] if file_info['test_class_name'] else "MyTestCase"
-            report_dir = file_info['report_dir'] if file_info.get('report_dir') else 'D:/SeleniumProject/test_reports'
 
             for case_name, var in file_cases.items():
                 if var.get():
                     if module_name not in selected_cases_by_module:
-                        selected_cases_by_module[module_name] = {'class_name': test_class_name, 'cases': [], 'report_dir': report_dir}
+                        selected_cases_by_module[module_name] = {'class_name': test_class_name, 'cases': []}
                     selected_cases_by_module[module_name]['cases'].append(case_name)
 
         if not selected_cases_by_module:
@@ -455,8 +456,8 @@ class App(tk.Tk):
         output_content.append("else:\n")
         output_content.append("    current_script_dir = os.path.dirname(os.path.abspath(__file__))\n")
         output_content.append("\n")
-        output_content.append("     html_test_runner_dir = os.path.join(current_script_dir, '_internal')\n")
-        output_content.append("     sys.path.insert(0, html_test_runner_dir)\n")
+        output_content.append("html_test_runner_dir = os.path.join(current_script_dir, '_internal')\n")
+        output_content.append("sys.path.insert(0, html_test_runner_dir)\n")
         output_content.append("\n")
         output_content.append("try:\n")
         output_content.append("    import HTMLTestRunner\n")
@@ -469,10 +470,13 @@ class App(tk.Tk):
             output_content.append(f"from {mod_name} import {info['class_name']}\n")
 
         output_content.append("\nif __name__ == '__main__':\n")
+        
+        # 確保報告根目錄存在
+        output_content.append(f"    report_dir = r'{hardcoded_report_dir}'\n")
+        output_content.append("    os.makedirs(report_dir, exist_ok=True)\n")
 
         for mod_name, info in sorted(selected_cases_by_module.items()):
             current_class_name = info['class_name']
-            current_report_dir = info['report_dir']
 
             if not info['cases']:
                 continue
@@ -487,25 +491,48 @@ class App(tk.Tk):
 
             for case_name in info['cases']:
                 output_content.append(f"    suite.addTest({current_class_name}('{case_name}'))\n")
-            output_content.append(f"    report_path = os.path.join(r'{current_report_dir}', "
-                                f"f'{current_class_name}_{{datetime.now().strftime(\"%Y%m%d_%H%M%S\")}}.html')\n")
-            output_content.append(f"    with open(report_path, 'w', encoding='utf-8') as f:\n")
-            output_content.append(f"        runner = HTMLTestRunner.HTMLTestRunner(\n")
-            output_content.append(f"            verbosity=2,\n")
-            output_content.append(f"            title=f'Test Report for {current_class_name} ({mod_name})',\n")
-            output_content.append(f"        )\n")
-            output_content.append(f"        runner.run(suite)\n")
-            output_content.append(f"    print(f'Test report saved to: {{report_path}}')\n\n")
+            
+            # 這裡生成檔案名稱
+            output_content.append(
+                f"    report_file_name = f'{mod_name}_{current_class_name}_{{datetime.now().strftime(\"%Y%m%d_%H%M%S\")}}.html'\n"
+            )
+            # 這裡生成檔案名稱
+        output_content.append(
+            f"    report_file_name = f'{mod_name}_{current_class_name}_{{datetime.now().strftime(\"%Y%m%d_%H%M%S\")}}.html'\n"
+        )
+        output_content.append(f"    report_full_path = os.path.join(report_dir, report_file_name)\n")
+
+        # 建立一個暫存資料夾
+        output_content.append("    temp_output_dir = os.path.join(report_dir, 'temp')\n")
+        output_content.append("    os.makedirs(temp_output_dir, exist_ok=True)\n")
+
+        # 讓 HTMLTestRunner 輸出到 temp 資料夾
+        output_content.append(f"    runner = HTMLTestRunner.HTMLTestRunner(\n")
+        output_content.append(f"        verbosity=2,\n")
+        output_content.append(f"        output=temp_output_dir,\n")
+        output_content.append(f"        title=f'Test Report for {current_class_name} ({mod_name})',\n")
+        output_content.append(f"    )\n")
+        output_content.append(f"    runner.run(suite)\n")
+
+        # 找到 temp 資料夾裡生成的最新報告檔案，搬移到目標檔名
+        output_content.append("    generated_files = sorted(\n")
+        output_content.append("        [os.path.join(temp_output_dir, f) for f in os.listdir(temp_output_dir)],\n")
+        output_content.append("        key=os.path.getmtime,\n")
+        output_content.append("        reverse=True\n")
+        output_content.append("    )\n")
+        output_content.append("    if generated_files:\n")
+        output_content.append("        os.replace(generated_files[0], report_full_path)\n")
+        output_content.append("        print(f'Test report saved to: {report_full_path}')\n\n")
+
 
         output_content.append("    print(\"\\n--- All selected test suites have been executed and reported. ---\")\n")
 
         try:
             with open(file_path, "w", encoding="utf-8") as f:
                 f.writelines(output_content)
-            self.show_status_message(f"Unittest Plan successfully exported to '{os.path.basename(file_path)}' in 'D:/SeleniumProject/test_reports'. You can open the PY folder.", "success")
+            self.show_status_message(f"Unittest Plan successfully exported to '{os.path.basename(file_path)}' in 'D:/AutoTest/test_reports'. You can open the PY folder.", "success")
         except Exception as e:
             self.show_status_message(f"Error occurred while exporting file: {e}", "error")
-
 
     def load_testplan(self):
         excel_file_paths = filedialog.askopenfilenames(
