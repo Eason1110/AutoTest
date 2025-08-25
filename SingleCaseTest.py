@@ -236,6 +236,14 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
     
+    #到exposure_mode頁面
+    def go_to_exposure_mode_page(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_Image")))
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_ExposureMode"))).click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))#等待loading消失
+        time.sleep(0.5)
+    
      # 到Administration頁面，等待所有元素就位
     def go_to_Administration_page(self):
         #切換到Administration頁面
@@ -246,146 +254,75 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
         time.sleep(5)
     
-    def test_case0143_Check_Evidence_Priority_ExposureAuto_off_ExposureTime(self):
+    def test_case0147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
-        #到advance->exposure->Priority頁面檢查
-        self.go_to_advanced_page()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        #檢查ExposureAuto並關閉它
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_ExposureAuto")))
-        checkbox = self.driver.find_element(By.ID, "AS_input_ExposureAuto")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#AS_input_ExposureAuto + .slider")
-        if checkbox.is_selected():
-            slider.click()
-        #檢查Exposure Time
-        ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
-        try:
-            self.assertEqual(ExposureTime,"1/60s",f"Exposure Time is {ExposureTime}, not 1/60s" )
+        #到Exposure頁面檢查ExposureMode
+        self.go_to_exposure_mode_page()
+        #開啟ExposureMode選項
+        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
+        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
+        blc_option_clickable = WebDriverWait(self.driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
+        blc_option_clickable.click()
+        #判斷BLC的SIZE是否正確
+        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
+        print(BLC.size)
+        width = BLC.size["width"]
+        height = BLC.size["height"]
+        try: 
+            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
+             print("is 128x128")
+            else:
+             self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
-
-         #假設沒關閉，將exposure auto給開啟   
-        if not checkbox.is_selected():
-            slider.click()
         #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
         SaveButton.click()
         time.sleep(1)
-
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
     
-    def test_case0144_Check_Evidence_Priority_GainAuto_off_GainValue(self):
+    def test_case0148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
-        #到advance->exposure->Priority頁面檢查
-        self.go_to_advanced_page()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        #檢查ExposureAuto並關閉它
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_GainAuto")))
-        checkbox = self.driver.find_element(By.ID, "AS_input_GainAuto")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#AS_input_GainAuto + .slider")
-        if checkbox.is_selected():
-            slider.click()
-        #檢查Gain Value
-        GainValue = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
+        #到Exposure頁面檢查ExposureMode
+        self.go_to_ALPR_ExposureMode_page()
+        #點擊OK button開啟alpr stream
         try:
-            self.assertEqual(GainValue,"50%",f"Gain Value is {GainValue}, not 50%" )
+            button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
+            button.click()
+            time.sleep(3)
+        except TimeoutException:
+            print("button not exist")
+        #開啟ExposureMode選項
+        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
+        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
+        blc_option_clickable = WebDriverWait(self.driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
+        blc_option_clickable.click()
+        #判斷BLC的SIZE是否正確
+        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
+        print(BLC.size)
+        width = BLC.size["width"]
+        height = BLC.size["height"]
+        try: 
+            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
+                print("is 128x128")
+            else:
+                self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
-
-         #假設沒關閉，將exposure auto給開啟   
-        if not checkbox.is_selected():
-            slider.click()
         #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
+        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
         SaveButton.click()
         time.sleep(1)
-
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
         
-    def test_case0145_Check_ALPR_Priority_ExposureAuto_off_ExposureTime(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到advance->exposure->Priority頁面檢查
-        self.go_to_ALPR_AdvancedSetting_page()
-        time.sleep(1)
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        #檢查ExposureAuto並關閉它
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_ExposureAuto")))
-        checkbox = self.driver.find_element(By.ID, "AS_input_ExposureAuto")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#AS_input_ExposureAuto + .slider")
-        if checkbox.is_selected():
-            slider.click()
-        #檢查Exposure Time
-        ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
-        try:
-            self.assertEqual(ExposureTime,"1/60s",f"Exposure Time is {ExposureTime}, not 1/60s" )
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
-
-         #假設沒關閉，將exposure auto給開啟   
-        if not checkbox.is_selected():
-            slider.click()
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
-        SaveButton.click()
-        time.sleep(1)
-
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
-    
-    def test_case0146_Check_ALPR_Priority_GainAuto_off_GainValue(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到advance->exposure->Priority頁面檢查
-        self.go_to_ALPR_AdvancedSetting_page()
-        time.sleep(1)
-
-        #切換成Priority
-        self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
-        self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        #檢查ExposureAuto並關閉它
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "AS_input_GainAuto")))
-        checkbox = self.driver.find_element(By.ID, "AS_input_GainAuto")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#AS_input_GainAuto + .slider")
-        if checkbox.is_selected():
-            slider.click()
-        #檢查Gain Value
-        GainValue = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
-        try:
-            self.assertEqual(GainValue,"50%",f"Gain Value is {GainValue}, not 50%" )
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
-
-         #假設沒關閉，將exposure auto給開啟   
-        if not checkbox.is_selected():
-            slider.click()
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
-        SaveButton.click()
-        time.sleep(1)
-
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
 
     @classmethod
     def tearDownClass(cls):

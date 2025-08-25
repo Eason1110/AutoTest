@@ -2430,6 +2430,75 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
+    
+    def test_case0147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
+        self.errors = []  # 一開始先建立 list，用來暫存false
+        #到Exposure頁面檢查ExposureMode
+        self.go_to_exposure_mode_page()
+        #開啟ExposureMode選項
+        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
+        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
+        blc_option_clickable = WebDriverWait(self.driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
+        blc_option_clickable.click()
+        #判斷BLC的SIZE是否正確
+        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
+        print(BLC.size)
+        width = BLC.size["width"]
+        height = BLC.size["height"]
+        try: 
+            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
+             print("is 128x128")
+            else:
+             self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
+        SaveButton.click()
+        time.sleep(1)
+        # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
+    
+    def test_case0148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
+        self.errors = []  # 一開始先建立 list，用來暫存false
+        #到Exposure頁面檢查ExposureMode
+        self.go_to_ALPR_ExposureMode_page()
+        #點擊OK button開啟alpr stream
+        try:
+            button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
+            button.click()
+            time.sleep(3)
+        except TimeoutException:
+            print("button not exist")
+        #開啟ExposureMode選項
+        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
+        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
+        blc_option_clickable = WebDriverWait(self.driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
+        blc_option_clickable.click()
+        #判斷BLC的SIZE是否正確
+        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
+        print(BLC.size)
+        width = BLC.size["width"]
+        height = BLC.size["height"]
+        try: 
+            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
+                print("is 128x128")
+            else:
+                self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
+        SaveButton.click()
+        time.sleep(1)
+        # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
       
 
     @classmethod
