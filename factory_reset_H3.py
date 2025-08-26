@@ -56,7 +56,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Image")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
 
     #到image_config頁面
     def go_to_image_config_page(self):
@@ -64,7 +64,7 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_ImageConfigs"))).click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到exposure_mode頁面
     def go_to_exposure_mode_page(self):
@@ -72,7 +72,7 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_ExposureMode"))).click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))#等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
 
     #到advanced頁面
     def go_to_advanced_page(self):
@@ -80,7 +80,7 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_AdvancedSetting"))).click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到system頁面->Device頁面
     def go_to_system_page(self):
@@ -89,7 +89,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
      #到system頁面->Stream Configs頁面
     def go_to_stream_config_page(self):
@@ -98,10 +98,11 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         StreamConfig = self.driver.find_element(By.ID, "a_Stream")
         StreamConfig.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR image頁面，等待所有元素就位
     def go_to_ALPR_image_page(self):
@@ -111,11 +112,12 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         #切換到ALPR cam
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
+        time.sleep(1)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "span_CameraSwitch_Camera")))
         self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
         self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR image configs頁面，等待所有元素就位
     def go_to_ALPR_image_configs_page(self):
@@ -125,6 +127,7 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         #切換到ALPR cam
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "span_CameraSwitch_Camera")))
         self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
         self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
@@ -132,7 +135,7 @@ class FactoryReset(unittest.TestCase):
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_ImageConfigs").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR exposure Mode頁面，等待所有元素就位
     def go_to_ALPR_ExposureMode_page(self):
@@ -142,14 +145,16 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         #切換到ALPR cam
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "span_CameraSwitch_Camera")))
         self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
         self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_ExposureMode").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR_AdvancedSetting頁面，等待所有元素就位
     def go_to_ALPR_AdvancedSetting_page(self):
@@ -159,14 +164,16 @@ class FactoryReset(unittest.TestCase):
         elem.click()
         #切換到ALPR cam
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "span_CameraSwitch_Camera")))
         self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
         self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_AdvancedSetting").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
      #到System Overlay頁面，等待所有元素就位
     def go_to_Systme_Overlay_page(self):
@@ -176,11 +183,12 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         #再切換到overlay頁面
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
         self.driver.find_element(By.ID, "a_Overlay").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
      #到System Overlay頁面，等待所有元素就位
     def go_to_Systme_Audio_page(self):
@@ -190,11 +198,12 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         #再切換到audio頁面
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Audio")))
         self.driver.find_element(By.ID, "a_Audio").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到Network Basic頁面，等待所有元素就位
     def go_to_Network_Basic_page(self):
@@ -204,7 +213,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Network")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Network Advanced頁面，等待所有元素就位
     def go_to_Network_Advanced_page(self):
@@ -214,10 +223,11 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Network")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Advanced")))
         self.driver.find_element(By.ID, "a_Advanced").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Notification頁面，等待所有元素就位
     def go_to_Notification_page(self):
@@ -227,7 +237,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Notification")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Storage頁面，等待所有元素就位
     def go_to_Storage_page(self):
@@ -237,7 +247,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Storage")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Administration頁面，等待所有元素就位
     def go_to_Administration_page(self):
@@ -2290,7 +2300,7 @@ class FactoryReset(unittest.TestCase):
         else:
             self.fail("password is not selected")
         
-    def test_case0143_Check_Evidence_Priority_ExposureAuto_off_ExposureTime(self):
+    def test_case143_Check_Evidence_Priority_ExposureAuto_off_ExposureTime(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到advance->exposure->Priority頁面檢查
         self.go_to_advanced_page()
@@ -2325,7 +2335,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
          raise AssertionError("\n".join(self.errors))
     
-    def test_case0144_Check_Evidence_Priority_GainAuto_off_GainValue(self):
+    def test_case144_Check_Evidence_Priority_GainAuto_off_GainValue(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到advance->exposure->Priority頁面檢查
         self.go_to_advanced_page()
@@ -2360,7 +2370,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
          raise AssertionError("\n".join(self.errors))
         
-    def test_case0145_Check_ALPR_Priority_ExposureAuto_off_ExposureTime(self):
+    def test_case145_Check_ALPR_Priority_ExposureAuto_off_ExposureTime(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到advance->exposure->Priority頁面檢查
         self.go_to_ALPR_AdvancedSetting_page()
@@ -2395,12 +2405,11 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
          raise AssertionError("\n".join(self.errors))
     
-    def test_case0146_Check_ALPR_Priority_GainAuto_off_GainValue(self):
+    def test_case146_Check_ALPR_Priority_GainAuto_off_GainValue(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到advance->exposure->Priority頁面檢查
         self.go_to_ALPR_AdvancedSetting_page()
         time.sleep(1)
-
         #切換成Priority
         self.driver.find_element(By.ID, "select_AS_ExposureMode_div").click()
         self.driver.find_element(By.XPATH,"//li[@data-val='Priority']").click()
@@ -2426,12 +2435,11 @@ class FactoryReset(unittest.TestCase):
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
-
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
     
-    def test_case0147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
+    def test_case147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到Exposure頁面檢查ExposureMode
         self.go_to_exposure_mode_page()
@@ -2441,19 +2449,15 @@ class FactoryReset(unittest.TestCase):
         blc_option_clickable = WebDriverWait(self.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
         blc_option_clickable.click()
-        #判斷BLC的SIZE是否正確
-        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
-        print(BLC.size)
-        width = BLC.size["width"]
-        height = BLC.size["height"]
-        try: 
-            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
-             print("is 128x128")
-            else:
-             self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
+        time.sleep(2)
+        #判斷BLC的SIZE是否正確       
+        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
+        style = elem.get_attribute("style")
+        # 判斷 style 內是否包含 width 與 height
+        if "width: 128px" in style and "height: 128px" in style:
+            print("is 128x128)")
+        else:
+            self.errors.append(f"not 128x128")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
         SaveButton.click()
@@ -2462,7 +2466,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
          raise AssertionError("\n".join(self.errors))
     
-    def test_case0148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
+    def test_case148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到Exposure頁面檢查ExposureMode
         self.go_to_ALPR_ExposureMode_page()
@@ -2470,7 +2474,8 @@ class FactoryReset(unittest.TestCase):
         try:
             button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
             button.click()
-            time.sleep(3)
+            WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+            time.sleep(1)
         except TimeoutException:
             print("button not exist")
         #開啟ExposureMode選項
@@ -2479,19 +2484,16 @@ class FactoryReset(unittest.TestCase):
         blc_option_clickable = WebDriverWait(self.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
         blc_option_clickable.click()
+        time.sleep(2)
         #判斷BLC的SIZE是否正確
-        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
-        print(BLC.size)
-        width = BLC.size["width"]
-        height = BLC.size["height"]
-        try: 
-            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
-                print("is 128x128")
-            else:
-                self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
+        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
+        style = elem.get_attribute("style")
+        # 判斷 style 內是否包含 width 與 height
+        if "width: 128px" in style and "height: 128px" in style:
+            print("is 128x128)")
+        else:
+            self.errors.append(f"not 128x128")
+
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
         SaveButton.click()
@@ -2500,7 +2502,6 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
          raise AssertionError("\n".join(self.errors))
       
-
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
