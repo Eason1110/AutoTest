@@ -254,68 +254,157 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
         time.sleep(5)
     
-    def test_case147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
+      #case1~case8檢查image parameters頁面所有設定
+    def test_case001_Check_Evidence_Brightness(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Brightness")))
+        value = self.driver.find_element(By.ID, "input_Brightness").get_attribute('value')
+        self.assertEqual(value, "60%", f"Brightness not 60%: {value}")
+
+    def test_case002_Check_Evidence_Contrast(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Contrast")))
+        value = self.driver.find_element(By.ID, "input_Contrast").get_attribute('value')
+        self.assertEqual(value, "60%", f"Contrast not 60%: {value}")
+
+    def test_case003_Check_Evidence_Saturation(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Saturation")))
+        value = self.driver.find_element(By.ID, "input_Saturation").get_attribute('value')
+        self.assertEqual(value, "60%", f"Saturation not 60%: {value}")
+
+    def test_case004_Check_Evidence_Sharpness(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Sharpness")))
+        value = self.driver.find_element(By.ID, "input_Sharpness").get_attribute('value')
+        self.assertEqual(value, "60%", f"Sharpness not 60%: {value}")
+
+    def test_case005_Check_Evidence_Gamma(self):
+        self.go_to_image_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Gamma")))
+        value = self.driver.find_element(By.ID, "input_Gamma").get_attribute('value')
+        self.assertEqual(value, "60%", f"Gamma not 60%: {value}")
+
+    def test_case006_Check_Evidence_Auto_wb_Mode(self):
+        self.go_to_image_page()
+        time.sleep(2)
+        checkbox = self.driver.find_element(By.ID, "WhiteBalanceAuto")
+        self.assertFalse(checkbox.is_selected(), "WhiteBalanceAuto is ON")
+
+    def test_case007_Check_Evidence_Color_Temperature(self):
+        self.go_to_image_page()
+
+        # 取消 Auto White Balance
+        checkbox = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#div_WhiteBalance input[type='checkbox']"))
+            )
+        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_WhiteBalance .slider")
+
+        if checkbox.is_selected():
+            slider.click()
+        #關閉白平衡後須等待兩秒，才能正常讀取value數值
+        time.sleep(2)
+        # 找到色溫滑桿
+        color_temp_slider = self.driver.find_element(By.ID, "slider_colorTemperature")
+        # 取得當前的 value 屬性
+        current_temp = color_temp_slider.get_attribute("value")
+        # 驗證是否為 5000K
+        if current_temp == "8000":
+            print("Color temperature is 8000K")
+        else:
+            self.fail(f"Color temperature is {current_temp}K, not 8000K")
+        #等待三秒後切換回為ON，不能馬上切換，否則會失敗
+        time.sleep(3)
+        # 再點回 ON（恢復勾選）
+        #WebDriverWait(self.driver, 5).until(
+          #EC.element_to_be_clickable((By.CSS_SELECTOR, "#div_WhiteBalance .slider"))
+        #).click()
+
+    def test_case008_Check_Evidence_LDC(self):
+        self.go_to_image_page()
+        checkbox = self.driver.find_element(By.ID, "LDC")
+        self.assertTrue(checkbox.is_selected(), "LDC is OFF") 
+         
+    #-----------------------2025/08/21----------------------------------------
+
+    #Case9~Case12後開始檢查image config頁面的所有設定
+    def test_case009_Check_Evidence_RotateViewFlip(self):
+        self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_Flip_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_Flip_div").get_attribute("data-text")
+        self.assertEqual(status, "Horizontal", f"Flip is not Horizontal, it's {status}")
+
+    def test_case010_Check_Evidence_VideoOrientation(self):
+        self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_VideoOrientation_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_VideoOrientation_div").get_attribute("data-text")
+        self.assertEqual(status, "180°", f"Video Orientation is not 180 degree, it's {status}")
+    
+    def test_case011_Check_Evidence_ViewAngle(self):
+        self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_ViewAngle_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_ViewAngle_div").get_attribute("data-text")
+        self.assertEqual(status, "Wide", f"View Angle is {status}, not Wide")
+
+    def test_case012_Check_Evidence_PowerLineSequence(self):
+        self.go_to_image_config_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_PowerLineFrequency_div")))
+        status = self.driver.find_element(By.ID, "select_ImagePara_PowerLineFrequency_div").get_attribute("data-text")
+        self.assertEqual(status, "50Hz", f"Power line frequency is {status}, not 50Hz")
+
+    #case13開始檢查exposure mode頁面的設定
+    def test_case013_Check_Evidence_ExposureMode(self):
         #到Exposure頁面檢查ExposureMode
         self.go_to_exposure_mode_page()
-        #開啟ExposureMode選項
-        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
-        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
-        blc_option_clickable = WebDriverWait(self.driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
-        blc_option_clickable.click()
-        time.sleep(2)
-        #判斷BLC的SIZE是否正確       
-        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
-        style = elem.get_attribute("style")
-        # 判斷 style 內是否包含 width 與 height
-        if "width: 128px" in style and "height: 128px" in style:
-            print("is 128x128)")
-        else:
-            self.errors.append(f"not 128x128")
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
-        SaveButton.click()
-        time.sleep(1)
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
-    
-    def test_case148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到Exposure頁面檢查ExposureMode
-        self.go_to_ALPR_ExposureMode_page()
-        #點擊OK button開啟alpr stream
-        try:
-            button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
-            button.click()
-            WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-            time.sleep(1)
-        except TimeoutException:
-            print("button not exist")
-        #開啟ExposureMode選項
-        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
-        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
-        blc_option_clickable = WebDriverWait(self.driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
-        blc_option_clickable.click()
-        time.sleep(2)
-        #判斷BLC的SIZE是否正確
-        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
-        style = elem.get_attribute("style")
-        # 判斷 style 內是否包含 width 與 height
-        if "width: 128px" in style and "height: 128px" in style:
-            print("is 128x128)")
-        else:
-            self.errors.append(f"not 128x128")
+        status = self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_div").get_attribute("data-text")
+        self.assertEqual(status, "Center Metering", f"Exposure Mode is {status}, not Center Metering")
 
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
-        SaveButton.click()
+    def test_case014_Check_Evidence_AESpeed(self):
+        #到Exposure頁面檢查AESpeed
+        self.go_to_exposure_mode_page()
+        status = self.driver.find_element(By.ID, "select_ExposureMode_AESpeed_div").get_attribute("data-text")
+        self.assertEqual(status, "60%", f"AE Speed is {status}, not 60%")
+
+    def test_case015_Check_Evidence_AESensitivity(self):
+        #到Exposure頁面檢查AESensitivity
+        self.go_to_exposure_mode_page()
+        status = self.driver.find_element(By.ID, "select_ExposureMode_AESensitivity_div").get_attribute("data-text")
+        self.assertEqual(status, "60%", f"AE Sensitivity is {status}, not 60%")
+    
+    def test_case016_Check_Evidence_HDR_WDR(self):
+        #到advance頁面檢查HDR/WDR
+        self.go_to_advanced_page()
+        status = self.driver.find_element(By.ID, "select_Image_WDRAndHDR_div").get_attribute("data-text")
+        self.assertEqual(status, "WDR Only", f"HDR/WDR is {status}, not WDR Only")
+    
+    def test_case017_Check_Evidence_DigitalNoiseReduction(self):
+        #到advance頁面檢查Digital Noise Reduction
+        self.go_to_advanced_page()
+        status = self.driver.find_element(By.ID, "select_Image_DigitalNoiseReduction_div").get_attribute("data-text")
+        self.assertEqual(status, "2D NR", f"Digital Noise Reduction is {status}, not 2D NR")
+    
+    def test_case018_Check_Evidence_FilterMode(self):
+        #到advance頁面檢查FilterMode
+        self.go_to_advanced_page()
+        status = self.driver.find_element(By.ID, "select_AS_FilterMode_div").get_attribute("data-text")
+        self.assertEqual(status, "Auto", f"FilterMode is {status}, not Auto")
+
+    def test_case019_Check_Evidence_ExposureMode(self):
+        #到advance->exposure頁面檢查ExposureMode
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
+        status = self.driver.find_element(By.ID, "select_AS_ExposureMode_div").get_attribute("data-text")
+        self.assertEqual(status, "Manual", f"Exposure Mode is {status}, not Manual")
+    
+    def test_case020_Check_Evidence_EV_Value(self):
+        #到advance->exposure頁面檢查Auto的EV Value
+        self.go_to_advanced_page()
+        self.driver.find_element(By.ID, "AS_div_Exposure").click()
+        time.sleep(1)
+        #檢查EV
+        status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text") 
+        self.assertEqual(status, "-2", f"EV Value is {status}, not -2")
         
 
     @classmethod
