@@ -254,7 +254,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
         time.sleep(5)
     
-    def test_case0147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
+    def test_case147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到Exposure頁面檢查ExposureMode
         self.go_to_exposure_mode_page()
@@ -264,19 +264,15 @@ class FactoryReset(unittest.TestCase):
         blc_option_clickable = WebDriverWait(self.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
         blc_option_clickable.click()
-        #判斷BLC的SIZE是否正確
-        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
-        print(BLC.size)
-        width = BLC.size["width"]
-        height = BLC.size["height"]
-        try: 
-            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
-             print("is 128x128")
-            else:
-             self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
+        time.sleep(2)
+        #判斷BLC的SIZE是否正確       
+        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
+        style = elem.get_attribute("style")
+        # 判斷 style 內是否包含 width 與 height
+        if "width: 128px" in style and "height: 128px" in style:
+            print("is 128x128)")
+        else:
+            self.errors.append(f"not 128x128")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
         SaveButton.click()
@@ -285,7 +281,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
          raise AssertionError("\n".join(self.errors))
     
-    def test_case0148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
+    def test_case148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
         #到Exposure頁面檢查ExposureMode
         self.go_to_ALPR_ExposureMode_page()
@@ -293,7 +289,8 @@ class FactoryReset(unittest.TestCase):
         try:
             button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
             button.click()
-            time.sleep(3)
+            WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+            time.sleep(1)
         except TimeoutException:
             print("button not exist")
         #開啟ExposureMode選項
@@ -302,19 +299,16 @@ class FactoryReset(unittest.TestCase):
         blc_option_clickable = WebDriverWait(self.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
         blc_option_clickable.click()
+        time.sleep(2)
         #判斷BLC的SIZE是否正確
-        BLC = self.driver.find_element(By.ID, "ExMode_dragg1")
-        print(BLC.size)
-        width = BLC.size["width"]
-        height = BLC.size["height"]
-        try: 
-            if abs(width - 128) <= 3 and abs(height - 128) <= 3:
-                print("is 128x128")
-            else:
-                self.errors.append(f"not 128x128, is {BLC.size['width']}x{BLC.size['height']}")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
+        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
+        style = elem.get_attribute("style")
+        # 判斷 style 內是否包含 width 與 height
+        if "width: 128px" in style and "height: 128px" in style:
+            print("is 128x128)")
+        else:
+            self.errors.append(f"not 128x128")
+
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
         SaveButton.click()
