@@ -400,8 +400,6 @@ class FactoryReset(unittest.TestCase):
         #檢查EV
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text") 
         self.assertEqual(status, "-2", f"EV Value is {status}, not -2")
-
-    #----------------2025/08/26--------------------------------------------------------------------------
     
     def test_case021_Check_Evidence_ExposureTime(self):
         #到advance->exposure頁面檢查ExposureTime
@@ -417,7 +415,7 @@ class FactoryReset(unittest.TestCase):
         status = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         #使用subTest如果判斷結果是失敗，後續的程式碼也可以正常執行，才能正常點擊save按鈕
         with self.subTest():
-            self.assertEqual(status, "1/60s", f"Exposure Mode is {status}, not 1/60s")
+            self.assertEqual(status, "1/640s", f"Exposure Mode is {status}, not 1/640s")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -437,7 +435,7 @@ class FactoryReset(unittest.TestCase):
         status = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
          #使用subTest如果判斷結果是失敗，後續的程式碼也可以正常執行，才能正常點擊save按鈕
         with self.subTest():
-            self.assertEqual(status, "50%", f"Gain Value is {status}, not 50%")
+            self.assertEqual(status, "60%", f"Gain Value is {status}, not 60%")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -457,12 +455,12 @@ class FactoryReset(unittest.TestCase):
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
          #使用subTest如果判斷結果是失敗，後續的程式碼也可以正常執行，才能正常點擊save按鈕
         with self.subTest():
-            self.assertEqual(status, "0", f"EV_Value is {status}, not 0")
+            self.assertEqual(status, "-2", f"EV_Value is {status}, not -2")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
-    
+   
     def test_case024_Check_Evidence_ExposureAuto(self):
         #到advance->exposure->Priority頁面檢查ExposureAuto
         self.go_to_advanced_page()
@@ -492,7 +490,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_MinExposureTime_div").get_attribute("data-text")
         with self.subTest():
-            self.assertEqual(status, "1/60s", f"Min. Exposure Time is {status}, not 1/60s")
+            self.assertEqual(status, "1/800s", f"Min. Exposure Time is {status}, not 1/60s")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -510,7 +508,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_MaxExposureTime_div").get_attribute("data-text")
         with self.subTest():
-            self.assertEqual(status, "1/60s", f"Max. Exposure Time is {status}, not 1/60s")
+            self.assertEqual(status, "1/640s", f"Max. Exposure Time is {status}, not 1/60s")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -546,7 +544,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinGain_div")))
         status = self.driver.find_element(By.ID, "select_AS_MinGain_div").get_attribute("data-text")
         with self.subTest():
-            self.assertEqual(status, "0%", f"Min. Gain is {status}, not 0%")
+            self.assertEqual(status, "10%", f"Min. Gain is {status}, not 10%")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -569,7 +567,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxGain_div")))
         status = self.driver.find_element(By.ID, "select_AS_MaxGain_div").get_attribute("data-text")
         with self.subTest():
-            self.assertEqual(status, "100%", f"Max. Gain is {status}, not 100%")
+            self.assertEqual(status, "90%", f"Max. Gain is {status}, not 90%")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
@@ -592,12 +590,13 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
         with self.subTest():
-            self.assertEqual(status, "0", f"EV Value is {status}, not 0")
+            self.assertEqual(status, "-2", f"EV Value is {status}, not -2")
         #儲存設定
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
-    
+     #----------------2025/08/26--------------------------------------------------------------------------
+
     def test_case031_Check_Evidence_HDR_WDR_Level(self):
         #到advance->exposure->Levels頁面HDR/WDR_Level
         self.go_to_advanced_page()
@@ -2326,7 +2325,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Exposure Time
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
-            self.assertEqual(ExposureTime,"1/60s",f"Exposure Time is {ExposureTime}, not 1/60s" )
+            self.assertEqual(ExposureTime,"1/100s",f"Exposure Time is {ExposureTime}, not 1/60s" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2361,7 +2360,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Gain Value
         GainValue = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
         try:
-            self.assertEqual(GainValue,"50%",f"Gain Value is {GainValue}, not 50%" )
+            self.assertEqual(GainValue,"70%",f"Gain Value is {GainValue}, not 70%" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
