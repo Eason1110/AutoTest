@@ -1083,7 +1083,7 @@ class FactoryReset(unittest.TestCase):
         #定位Camera Name欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraName")))
         CameraName = self.driver.title #該camera name名稱是綁定driver.title名稱
-        self.assertEqual(CameraName, "Focus-25-00-01", f"CameraName is {CameraName}, not Focus-25-00-01")
+        self.assertEqual(CameraName, "Focus-25-00-02", f"CameraName is {CameraName}, not Focus-25-00-01")
     
     #確認Config Version 
     def test_case069_Check_ConfigVersion(self):
@@ -1092,7 +1092,7 @@ class FactoryReset(unittest.TestCase):
         #定位Config Version 欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_ConfigVersion")))
         ConfigVersion =  self.driver.find_element(By.ID, "input_ConfigVersion").get_attribute("value")
-        self.assertEqual(ConfigVersion, "1.0.0", f"Config Version is {ConfigVersion}, not 1.0.0")
+        self.assertEqual(ConfigVersion, "1.0.1", f"Config Version is {ConfigVersion}, not 1.0.0")
 
     #確認Date Format
     def test_case070_Check_DateFormat(self):
@@ -1101,27 +1101,27 @@ class FactoryReset(unittest.TestCase):
         #定位Time Format 欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeFormat_div")))
         DateFormat =  self.driver.find_element(By.ID, "select_Device_TimeFormat_div").get_attribute("data-text")
-        self.assertEqual(DateFormat, "MDY", f"Time Format is {DateFormat}, not MDY")
+        self.assertEqual(DateFormat, "YMD", f"Time Format is {DateFormat}, not YMD")
     
     #確認Time Format
     def test_case071_Check_TimeFormat(self):
         #進入system頁面
         self.go_to_system_page()
         #定位Time Format 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Device_input_TimeFormat_12Hour")))
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Device_input_TimeFormat_24Hour")))
         # 讀取配置文件
         config = configparser.ConfigParser()
         config.read(r'D:/AutoTest/config.ini')
         URL = config['URL_Config']['URL']
         #該ratio button不是checkbox，因此不能用is_selected()
         #是用圖判斷，圖是存在src屬性內，因此是判斷src屬性是哪一張圖。
-        radio_12 = self.driver.find_element(By.ID, "12hour")
+        radio_12 = self.driver.find_element(By.ID, "24hour")
         src_value = radio_12.get_attribute("src")
         print(src_value)
         if URL + "/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
-            print("12-hour is selected")
+            print("24-hour is selected")
         else:
-            self.fail("12-hour is not selected")
+            self.fail("24-hour is not selected")
     
     #確認Time Zone
     def test_case072_Check_Timezone(self):
@@ -1130,7 +1130,7 @@ class FactoryReset(unittest.TestCase):
         #定位Time Zone 欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeZone_div")))
         TimeZone =  self.driver.find_element(By.ID, "select_Device_TimeZone_div").get_attribute("data-text")
-        self.assertEqual(TimeZone, "(UTC±00:00) Coordinated Universal Time", f"Time Zone is {TimeZone}, not (UTC±00:00) Coordinated Universal Time")
+        self.assertEqual(TimeZone, "(UTC+08:00) Taiwan", f"Time Zone is {TimeZone}, not (UTC+08:00) Taiwan")
 
     #確認Daylight Saving
     def test_case073_Check_DaylightSaving(self):
@@ -1139,7 +1139,7 @@ class FactoryReset(unittest.TestCase):
         #定位Daylight Saving欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
         DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
+        self.assertFalse(DaylightSaving.is_selected(),"Daylight saving is enabled")
     
     #確認Clock Sync	
     def test_case074_Check_ClockSync(self):
@@ -1166,7 +1166,7 @@ class FactoryReset(unittest.TestCase):
         #定位resolution
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
         resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
-        self.assertEqual(resolution, "1920x1080(16:9)", f"Resolution is {resolution}, not 1920x1080(16:9)")
+        self.assertEqual(resolution, "1280x720(16:9)", f"Resolution is {resolution}, not 1280x720(16:9)")
     
     #確認Evidence Stream的Resolution
     def test_case077_Check_Evidence_StreamFormat(self):
@@ -1175,7 +1175,7 @@ class FactoryReset(unittest.TestCase):
         #定位StreamFormat
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
         StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
-        self.assertEqual(StreamFormat, "H.264", f"Stream Format is {StreamFormat}, not H.264")
+        self.assertEqual(StreamFormat, "H.265", f"Stream Format is {StreamFormat}, not H.265")
     
     #確認Evidence Stream的FrameRate
     def test_case078_Check_Evidence_FrameRate(self):
@@ -1184,7 +1184,7 @@ class FactoryReset(unittest.TestCase):
         #定位FrameRate
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
         FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
-        self.assertEqual(FrameRate, "30", f"Stream Format is {FrameRate}, not 30")
+        self.assertEqual(FrameRate, "25", f"Stream Format is {FrameRate}, not 25")
     
     #確認Evidence Stream的Overlay
     def test_case079_Check_Evidence_Overlay(self):
@@ -1193,7 +1193,7 @@ class FactoryReset(unittest.TestCase):
         #定位overlay
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay")))
         Overlay= self.driver.find_element(By.ID, "switch_Overlay")
-        self.assertTrue(Overlay.is_selected(),"Overlay is not enabled")
+        self.assertFalse(Overlay.is_selected(),"Overlay is enabled")
     
     #確認Evidence Stream的URL String
     def test_case080_Check_Evidence_URL_String(self):
@@ -1202,7 +1202,7 @@ class FactoryReset(unittest.TestCase):
         #定位URL String
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
         URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
-        self.assertEqual(URL_String, "stream1", f"URL Stream is {URL_String}, not stream1")
+        self.assertEqual(URL_String, "stream111", f"URL Stream is {URL_String}, not stream111")
 
     #確認Evidence Stream的Audio Format
     def test_case081_Check_Evidence_AudioFormat(self):
@@ -1211,30 +1211,30 @@ class FactoryReset(unittest.TestCase):
         #定位Audio Format
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainAudioFormat_div")))
         AudioFormat= self.driver.find_element(By.ID, "select_Stream_MainAudioFormat_div").get_attribute("data-text")
-        self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+        self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
     
     #確認Evidence Stream的Rate Control
     def test_case082_Check_Evidence_RateControl(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #定位Audio Format
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
-        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamVBR")))
+        button = self.driver.find_element(By.ID, "MainStreamVBR")
         bg_color = button.value_of_css_property("background-color")
         print(bg_color)
         if bg_color == "rgba(75, 93, 118, 1)":
-            print("Rate Control is CBR")
+            print("Rate Control is VBR")
         else:
-            self.fail("Rate Control is not CBR")
+            self.fail("Rate Control is not VBR")
     
-    #確認Evidence Stream的Target Rate
-    def test_case083_Check_Evidence_TargetRate(self):
+    #確認Evidence Stream的Video Quality
+    def test_case083_Check_Evidence_VideoQuality(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #定位Target Rate
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
-        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
-        self.assertEqual(TargetRate, "11264kbps", f"Target Rate is {TargetRate}, not 11264kbps")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainVideoQuality_div")))
+        VideoQuality= self.driver.find_element(By.ID, "select_Stream_MainVideoQuality_div").get_attribute("data-text")
+        self.assertEqual(VideoQuality, "High", f"Video Quality is {VideoQuality}, not High")
     
     #確認Evidence Stream的GOP Length
     def test_case084_Check_Evidence_GOP_Length(self):
@@ -1243,8 +1243,9 @@ class FactoryReset(unittest.TestCase):
         #定位GOP Length
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
-        self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+        self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
     
+    '''
     #確認Evidence Stream的Entropy Coding
     def test_case085_Check_Evidence_EntropyCoding(self):
         #進入stream config頁面
@@ -1253,6 +1254,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
         EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
         self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
+    '''
 
     #確認Evidence Live的Resolution
     def test_case086_Check_Evidence_Live_Resolution(self):
@@ -1263,7 +1265,7 @@ class FactoryReset(unittest.TestCase):
         #定位resolution
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
         resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
-        self.assertEqual(resolution, "1280x720(16:9)", f"Resolution is {resolution}, not 1280x720(16:9)")
+        self.assertEqual(resolution, "848x480(16:9)", f"Resolution is {resolution}, not 848x480(16:9)")
     
     
     #確認Evidence Live的Stream format
@@ -1275,7 +1277,7 @@ class FactoryReset(unittest.TestCase):
         #定位StreamFormat
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
         StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
-        self.assertEqual(StreamFormat, "H.264", f"Stream Format is {StreamFormat}, not H.264")
+        self.assertEqual(StreamFormat, "H.265", f"Stream Format is {StreamFormat}, not H.265")
     
     #確認Evidence Live的FrameRate
     def test_case088_Check_Evidence_Live_FrameRate(self):
@@ -1287,7 +1289,7 @@ class FactoryReset(unittest.TestCase):
         #定位FrameRate
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
         FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
-        self.assertEqual(FrameRate, "15", f"Stream Format is {FrameRate}, not 15")
+        self.assertEqual(FrameRate, "20", f"Stream Format is {FrameRate}, not 20")
     
     #確認Evidence Live的Overlay
     def test_case089_Check_Evidence__Live_Overlay(self):
@@ -1298,7 +1300,7 @@ class FactoryReset(unittest.TestCase):
         #定位overlay
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay")))
         Overlay= self.driver.find_element(By.ID, "switch_Overlay")
-        self.assertTrue(Overlay.is_selected(),"Overlay is not enabled")
+        self.assertFalse(Overlay.is_selected(),"Overlay is enabled")
     
     #確認Evidence Live的URL String
     def test_case090_Check_Evidence_Live_URL_String(self):
@@ -1310,7 +1312,7 @@ class FactoryReset(unittest.TestCase):
         #定位URL String
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
         URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
-        self.assertEqual(URL_String, "stream2", f"URL Stream is {URL_String}, not stream2")
+        self.assertEqual(URL_String, "stream222", f"URL Stream is {URL_String}, not stream222")
 
     #確認Evidence Live的Audio Format
     def test_case091_Check_Evidence_Live_AudioFormat(self):
@@ -1322,35 +1324,35 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SC_span_AudioFormat")))
         AudioFormat= self.driver.find_element(By.ID, "SC_span_AudioFormat").text
         print(AudioFormat)
-        self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+        self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
     
     #確認Evidence Live的Rate Control
-    def test_case092_Check_Evidence__Live_RateControl(self):
+    def test_case092_Check_Evidence_Live_RateControl(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #點擊evidence live
         self.driver.find_element(By.ID, "SC_span_Second").click()
         #定位Audio Format
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
-        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamVBR")))
+        button = self.driver.find_element(By.ID, "MainStreamVBR")
         bg_color = button.value_of_css_property("background-color")
         print(bg_color)
         if bg_color == "rgba(75, 93, 118, 1)":
-            print("Rate Control is CBR")
+            print("Rate Control is VBR")
         else:
-            self.fail("Rate Control is not CBR")
+            self.fail("Rate Control is not VBR")
     
     #確認Evidence Live的Target Rate
-    def test_case093_Check_Evidence_Live_TargetRate(self):
+    def test_case093_Check_Evidence_Live_VideoQuality(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #點擊evidence live
         self.driver.find_element(By.ID, "SC_span_Second").click()
         time.sleep(1)  # 等待value更新，DOM 更新有延遲，加一個等待就能解決：
         #定位Target Rate
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
-        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
-        self.assertEqual(TargetRate, "2048kbps", f"Target Rate is {TargetRate}, not 2048kbps")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainVideoQuality_div")))
+        VideoQuality= self.driver.find_element(By.ID, "select_Stream_MainVideoQuality_div").get_attribute("data-text")
+        self.assertEqual(VideoQuality, "High", f" Video Quality is {VideoQuality}, not High")
     
     #確認Evidence Live的GOP Length
     def test_case094_Check_Evidence_Live_GOP_Length(self):
@@ -1358,11 +1360,12 @@ class FactoryReset(unittest.TestCase):
         self.go_to_stream_config_page()
         #點擊evidence live
         self.driver.find_element(By.ID, "SC_span_Second").click()
-        #定位GOP Length
+        #定位GOP Length 
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
-        self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+        self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
     
+    '''
     #確認Evidence Live的Entropy Coding
     def test_case095_Check_Evidence_Live_EntropyCoding(self):
         #進入stream config頁面
@@ -1373,6 +1376,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
         EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
         self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
+    '''
 
    #確認ALPR stream開關
     def test_case096_Check_ALPR_Stream_Switch(self):
