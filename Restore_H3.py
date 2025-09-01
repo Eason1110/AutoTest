@@ -56,7 +56,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Image")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
 
     #到image_config頁面
     def go_to_image_config_page(self):
@@ -64,7 +64,7 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_ImageConfigs"))).click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到exposure_mode頁面
     def go_to_exposure_mode_page(self):
@@ -72,7 +72,7 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_ExposureMode"))).click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))#等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
 
     #到advanced頁面
     def go_to_advanced_page(self):
@@ -80,7 +80,7 @@ class FactoryReset(unittest.TestCase):
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_AdvancedSetting"))).click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到system頁面->Device頁面
     def go_to_system_page(self):
@@ -89,7 +89,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
      #到system頁面->Stream Configs頁面
     def go_to_stream_config_page(self):
@@ -101,7 +101,7 @@ class FactoryReset(unittest.TestCase):
         StreamConfig = self.driver.find_element(By.ID, "a_Stream")
         StreamConfig.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR image頁面，等待所有元素就位
     def go_to_ALPR_image_page(self):
@@ -115,7 +115,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "span_CameraSwitch_Camera").click()
         self.driver.find_element(By.XPATH,"//li[@data-val='ALPR_Camera']").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading"))) #等待loading消失
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR image configs頁面，等待所有元素就位
     def go_to_ALPR_image_configs_page(self):
@@ -132,7 +132,7 @@ class FactoryReset(unittest.TestCase):
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_ImageConfigs").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR exposure Mode頁面，等待所有元素就位
     def go_to_ALPR_ExposureMode_page(self):
@@ -149,7 +149,7 @@ class FactoryReset(unittest.TestCase):
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_ExposureMode").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到ALPR_AdvancedSetting頁面，等待所有元素就位
     def go_to_ALPR_AdvancedSetting_page(self):
@@ -166,7 +166,7 @@ class FactoryReset(unittest.TestCase):
         #切換到Image configs頁面
         self.driver.find_element(By.ID, "a_AdvancedSetting").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
      #到System Overlay頁面，等待所有元素就位
     def go_to_Systme_Overlay_page(self):
@@ -180,7 +180,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
         self.driver.find_element(By.ID, "a_Overlay").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
      #到System Overlay頁面，等待所有元素就位
     def go_to_Systme_Audio_page(self):
@@ -194,7 +194,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Audio")))
         self.driver.find_element(By.ID, "a_Audio").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     #到Network Basic頁面，等待所有元素就位
     def go_to_Network_Basic_page(self):
@@ -204,7 +204,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Network")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Network Advanced頁面，等待所有元素就位
     def go_to_Network_Advanced_page(self):
@@ -217,7 +217,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Advanced")))
         self.driver.find_element(By.ID, "a_Advanced").click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Notification頁面，等待所有元素就位
     def go_to_Notification_page(self):
@@ -227,7 +227,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Notification")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Storage頁面，等待所有元素就位
     def go_to_Storage_page(self):
@@ -237,7 +237,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Storage")))
         elem.click()
         WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        time.sleep(0.5)
+        time.sleep(1)
     
     # 到Administration頁面，等待所有元素就位
     def go_to_Administration_page(self):
@@ -417,6 +417,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "1/640s", f"Exposure Mode is {status}, not 1/640s")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -437,6 +438,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "60%", f"Gain Value is {status}, not 60%")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -457,6 +459,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "-2", f"EV_Value is {status}, not -2")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -474,6 +477,7 @@ class FactoryReset(unittest.TestCase):
         checkbox = self.driver.find_element(By.ID, "AS_input_ExposureAuto")
         self.assertTrue(checkbox.is_selected(), "ExposureAuto is off")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -492,6 +496,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "1/800s", f"Min. Exposure Time is {status}, not 1/60s")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -510,6 +515,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "1/640s", f"Max. Exposure Time is {status}, not 1/60s")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -528,6 +534,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertTrue(checkbox.is_selected(), "GainAuto is off")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -546,6 +553,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "10%", f"Min. Gain is {status}, not 10%")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -569,6 +577,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "90%", f"Max. Gain is {status}, not 90%")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -592,6 +601,7 @@ class FactoryReset(unittest.TestCase):
         with self.subTest():
             self.assertEqual(status, "-2", f"EV Value is {status}, not -2")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -610,7 +620,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_WDRAndHDRLevel_div")))
         status = self.driver.find_element(By.ID, "select_AS_WDRAndHDRLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "Level 2", f"EV Value is {status}, not Level 2")       
+        self.assertEqual(status, "Level 1", f"EV Value is {status}, not Level 2")       
     
     def test_case032_Check_Evidence_3DNR_Level(self):
         #到advance->exposure->Levels頁面HDR/WDR_Level
@@ -626,7 +636,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_3DNRLevel_div")))
         status = self.driver.find_element(By.ID, "select_AS_3DNRLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "Level 2", f"3D NR level is {status}, not Level 2")
+        self.assertEqual(status, "Level 1", f"3D NR level is {status}, not Level 2")
 
     def test_case033_Check_Evidence_2DNR_Level(self):
         #到advance->exposure->Levels頁面HDR/WDR_Level
@@ -642,47 +652,47 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_2DNRLevel_div")))
         status = self.driver.find_element(By.ID, "select_AS_2DNRLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "50%", f"2D NR level is {status}, not Level 2")
+        self.assertEqual(status, "60%", f"2D NR level is {status}, not 60%")
     
     def test_case034_Check_ALPR_Brightness(self):
         self.go_to_ALPR_image_page()
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Brightness")))
         value = self.driver.find_element(By.ID, "input_Brightness").get_attribute('value')
-        self.assertEqual(value, "50%", f"Brightness not 50%: {value}")
+        self.assertEqual(value, "40%", f"Brightness not 40%: {value}")
 
     def test_case035_Check_ALPR_Contrast(self):
         self.go_to_ALPR_image_page()
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Contrast")))
         value = self.driver.find_element(By.ID, "input_Contrast").get_attribute('value')
-        self.assertEqual(value, "50%", f"Contrast not 50%: {value}")
+        self.assertEqual(value, "40%", f"Contrast not 40%: {value}")
 
     def test_case036_Check_ALPR_Saturation(self):
         self.go_to_ALPR_image_page()
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Saturation")))
         value = self.driver.find_element(By.ID, "input_Saturation").get_attribute('value')
-        self.assertEqual(value, "50%", f"Saturation not 50%: {value}")
+        self.assertEqual(value, "40%", f"Saturation not 40%: {value}")
 
     def test_case037_Check_ALPR_Sharpness(self):
         self.go_to_ALPR_image_page()
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Sharpness")))
         value = self.driver.find_element(By.ID, "input_Sharpness").get_attribute('value')
-        self.assertEqual(value, "50%", f"Sharpness not 50%: {value}")
+        self.assertEqual(value, "40%", f"Sharpness not 40%: {value}")
 
     def test_case038_Check_ALPR_Gamma(self):
         self.go_to_ALPR_image_page()
         self.go_to_image_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Gamma")))
         value = self.driver.find_element(By.ID, "input_Gamma").get_attribute('value')
-        self.assertEqual(value, "50%", f"Gamma not 50%: {value}")
+        self.assertEqual(value, "40%", f"Gamma not 40%: {value}")
     
     def test_case039_Check_ALPR_Auto_wb_Mode(self):  
         self.go_to_ALPR_image_page()
         checkbox = self.driver.find_element(By.ID, "WhiteBalanceAuto")
-        self.assertTrue(checkbox.is_selected(), "WhiteBalanceAuto is OFF")
+        self.assertFalse(checkbox.is_selected(), "WhiteBalanceAuto is ON")
 
     def test_case040_Check_ALPR_Color_Temperature(self):
         self.go_to_ALPR_image_page()
@@ -701,10 +711,10 @@ class FactoryReset(unittest.TestCase):
         # 取得當前的 value 屬性
         current_temp = color_temp_slider.get_attribute("value")
         # 驗證是否為 5000K
-        if current_temp == "5000":
-            print("Color temperature is 5000K")
+        if current_temp == "4000":
+            print("Color temperature is 4000K")
         else:
-            self.fail(f"Color temperature is {current_temp}K, not 5000K")
+            self.fail(f"Color temperature is {current_temp}K, not 4000K")
         #等待三秒後切換回為ON，不能馬上切換，否則會失敗
         time.sleep(3)
         # 再點回 ON（恢復勾選）
@@ -717,50 +727,50 @@ class FactoryReset(unittest.TestCase):
         self.go_to_ALPR_image_configs_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_Flip_div")))
         status = self.driver.find_element(By.ID, "select_ImagePara_Flip_div").get_attribute("data-text")
-        self.assertEqual(status, "Off", f"Flip is not off, it's {status}")
+        self.assertEqual(status, "Vertical", f"Flip is not Vertical, it's {status}")
 
     def test_case042_Check_ALPR_VideoOrientation(self):
         self.go_to_ALPR_image_configs_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_VideoOrientation_div")))
         status = self.driver.find_element(By.ID, "select_ImagePara_VideoOrientation_div").get_attribute("data-text")
-        self.assertEqual(status, "0°", f"Video Orientation is not 0 degree, it's {status}")
+        self.assertEqual(status, "90°", f"Video Orientation is not 90 degree, it's {status}")
     
     def test_case043_Check_ALPR_PowerLineSequence(self):
         self.go_to_ALPR_image_configs_page()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_PowerLineFrequency_div")))
         status = self.driver.find_element(By.ID, "select_ImagePara_PowerLineFrequency_div").get_attribute("data-text")
-        self.assertEqual(status, "60Hz", f"Power line frequency is {status}, not 60Hz")
+        self.assertEqual(status, "50Hz", f"Power line frequency is {status}, not 50Hz")
 
     #case44開始檢查exposure mode頁面的設定
     def test_case044_Check_ALPR_ExposureMode(self):
         #到Exposure頁面檢查ExposureMode
         self.go_to_ALPR_ExposureMode_page()
         status = self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_div").get_attribute("data-text")
-        self.assertEqual(status, "Multi Metering", f"Exposure Mode is {status}, not Multi Metering")
+        self.assertEqual(status, "Center Metering", f"Exposure Mode is {status}, not Center Metering")
 
     def test_case045_Check_ALPR_AESpeed(self):
         #到Exposure頁面檢查AESpeed
         self.go_to_ALPR_ExposureMode_page()
         status = self.driver.find_element(By.ID, "select_ExposureMode_AESpeed_div").get_attribute("data-text")
-        self.assertEqual(status, "50%", f"AE Speed is {status}, not 50%")
+        self.assertEqual(status, "40%", f"AE Speed is {status}, not 50%")
 
     def test_case046_Check_ALPR_AESensitivity(self):
         #到Exposure頁面檢查AESensitivity
         self.go_to_ALPR_ExposureMode_page()
         status = self.driver.find_element(By.ID, "select_ExposureMode_AESensitivity_div").get_attribute("data-text")
-        self.assertEqual(status, "50%", f"AE Sensitivity is {status}, not 50%")
+        self.assertEqual(status, "40%", f"AE Sensitivity is {status}, not 50%")
         
     def test_case047_Check_ALPR_Evidence_HDR_WDR(self):
         #到advance頁面檢查HDR/WDR
         self.go_to_ALPR_AdvancedSetting_page()
         status = self.driver.find_element(By.ID, "select_Image_WDRAndHDR_div").get_attribute("data-text")
-        self.assertEqual(status, "Both Off", f"HDR/WDR is {status}, not Both Off")
+        self.assertEqual(status, "WDR Only", f"HDR/WDR is {status}, not WDR Only")
     
     def test_case048_Check_ALPR_DigitalNoiseReduction(self):
         #到advance頁面檢查Digital Noise Reduction
         self.go_to_ALPR_AdvancedSetting_page()
         status = self.driver.find_element(By.ID, "select_Image_DigitalNoiseReduction_div").get_attribute("data-text")
-        self.assertEqual(status, "3D NR", f"Digital Noise Reduction is {status}, not 3D NR")
+        self.assertEqual(status, "2D NR", f"Digital Noise Reduction is {status}, not 3D NR")
     
     def test_case049_Check_ALPR_FilterMode(self):
         #到advance頁面檢查FilterMode
@@ -774,7 +784,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
         status = self.driver.find_element(By.ID, "select_AS_ExposureMode_div").get_attribute("data-text")
-        self.assertEqual(status, "Auto", f"Exposure Mode is {status}, not Auto")
+        self.assertEqual(status, "Manual", f"Exposure Mode is {status}, not Manual")
     
     def test_case051_Check_ALPR_EV_Value(self):
         #到advance->exposure頁面檢查Auto的EV Value
@@ -782,7 +792,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.find_element(By.ID, "AS_div_Exposure").click()
         time.sleep(1)
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"EV_Value is {status}, not 0")
+        self.assertEqual(status, "-1", f"EV_Value is {status}, not -1")
     
     def test_case052_Check_ALPR_ExposureTime(self):
         #到advance->exposure頁面檢查ExposureTime
@@ -797,8 +807,9 @@ class FactoryReset(unittest.TestCase):
         #檢查ExposureTime
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_ExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
-        self.assertEqual(status, "1/60s", f"Exposure Mode is {status}, not 1/60s")
+        self.assertEqual(status, "1/1000s", f"Exposure Mode is {status}, not 1/1000s")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -816,8 +827,9 @@ class FactoryReset(unittest.TestCase):
         #檢查Gain Value
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_GainValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
-        self.assertEqual(status, "50%", f"Exposure Mode is {status}, not 50%")
+        self.assertEqual(status, "40%", f"Exposure Mode is {status}, not 40%")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -835,8 +847,9 @@ class FactoryReset(unittest.TestCase):
         #檢查EV Value
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"Exposure Mode is {status}, not 0")
+        self.assertEqual(status, "-1", f"Exposure Mode is {status}, not -1")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -855,6 +868,7 @@ class FactoryReset(unittest.TestCase):
         checkbox = self.driver.find_element(By.ID, "AS_input_ExposureAuto")
         self.assertTrue(checkbox.is_selected(), "ExposureAuto is off")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -871,8 +885,9 @@ class FactoryReset(unittest.TestCase):
         #檢查MinExposureTime
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_MinExposureTime_div").get_attribute("data-text")
-        self.assertEqual(status, "1/60s", f"Min. Exposure Time is {status}, not 1/60s")
+        self.assertEqual(status, "1/200s", f"Min. Exposure Time is {status}, not 1/200s")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -889,8 +904,9 @@ class FactoryReset(unittest.TestCase):
         #檢查MaxExposureTime
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxExposureTime_div")))
         status = self.driver.find_element(By.ID, "select_AS_MaxExposureTime_div").get_attribute("data-text")
-        self.assertEqual(status, "1/60s", f"Max. Exposure Time is {status}, not 1/60s")
+        self.assertEqual(status, "1/100s", f"Max. Exposure Time is {status}, not 1/60s")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -909,6 +925,7 @@ class FactoryReset(unittest.TestCase):
         checkbox = self.driver.find_element(By.ID, "AS_input_GainAuto")
         self.assertTrue(checkbox.is_selected(), "GainAuto is off")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -925,9 +942,10 @@ class FactoryReset(unittest.TestCase):
         #檢查MinGain
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MinGain_div")))
         status = self.driver.find_element(By.ID, "select_AS_MinGain_div").get_attribute("data-text")
-        self.assertEqual(status, "0%", f"Min. Gain is {status}, not 0%")
+        self.assertEqual(status, "20%", f"Min. Gain is {status}, not 20%")
         time.sleep(2)
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -949,8 +967,9 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_MaxGain_div")))
         status = self.driver.find_element(By.ID, "select_AS_MaxGain_div").get_attribute("data-text")
-        self.assertEqual(status, "100%", f"Max. Gain is {status}, not 100%")
+        self.assertEqual(status, "80%", f"Max. Gain is {status}, not 80%")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -972,8 +991,9 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_EVValue_div")))
         status = self.driver.find_element(By.ID, "select_AS_EVValue_div").get_attribute("data-text")
-        self.assertEqual(status, "0", f"EV Value is {status}, not 0")
+        self.assertEqual(status, "-1", f"EV Value is {status}, not -1")
         #儲存設定
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "AS_button_Save")))
         SaveButton =  self.driver.find_element(By.ID, "AS_button_Save")
         SaveButton.click()
         time.sleep(1)
@@ -991,7 +1011,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_WDRAndHDRLevel_div")))
         status = self.driver.find_element(By.ID, "select_AS_WDRAndHDRLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "Level 2", f"EV Value is {status}, not Level 2")
+        self.assertEqual(status, "Level 1", f"EV Value is {status}, not Level 2")
     
     def test_case063_Check_ALPR_3DNR_Level(self):
         #到advance->exposure->Levels頁面HDR/WDR_Level
@@ -1007,7 +1027,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_3DNRLevel_div")))
         status = self.driver.find_element(By.ID, "select_AS_3DNRLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "Level 2", f"3D NR level is {status}, not Level 2")
+        self.assertEqual(status, "Level 1", f"3D NR level is {status}, not Level 2")
 
     def test_case064_Check_ALPR_2DNR_Level(self):
         #到advance->exposure->Levels頁面HDR/WDR_Level
@@ -1023,7 +1043,7 @@ class FactoryReset(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollTop = arguments[1].offsetTop;", container, target)
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_AS_2DNRLevel_div")))
         status = self.driver.find_element(By.ID, "select_AS_2DNRLevel_div").get_attribute("data-text")
-        self.assertEqual(status, "50%", f"2D NR level is {status}, not Level 2")
+        self.assertEqual(status, "40%", f"2D NR level is {status}, not 40%")
 
     #case65開始確認camera information
     def test_case065_Check_Manufacturer(self):
@@ -1063,7 +1083,7 @@ class FactoryReset(unittest.TestCase):
         #定位Camera Name欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraName")))
         CameraName = self.driver.title #該camera name名稱是綁定driver.title名稱
-        self.assertEqual(CameraName, "Focus-25-00-01", f"CameraName is {CameraName}, not Focus-25-00-01")
+        self.assertEqual(CameraName, "Focus-25-00-02", f"CameraName is {CameraName}, not Focus-25-00-01")
     
     #確認Config Version 
     def test_case069_Check_ConfigVersion(self):
@@ -1072,7 +1092,7 @@ class FactoryReset(unittest.TestCase):
         #定位Config Version 欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_ConfigVersion")))
         ConfigVersion =  self.driver.find_element(By.ID, "input_ConfigVersion").get_attribute("value")
-        self.assertEqual(ConfigVersion, "1.0.0", f"Config Version is {ConfigVersion}, not 1.0.0")
+        self.assertEqual(ConfigVersion, "1.0.1", f"Config Version is {ConfigVersion}, not 1.0.0")
 
     #確認Date Format
     def test_case070_Check_DateFormat(self):
@@ -1081,27 +1101,27 @@ class FactoryReset(unittest.TestCase):
         #定位Time Format 欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeFormat_div")))
         DateFormat =  self.driver.find_element(By.ID, "select_Device_TimeFormat_div").get_attribute("data-text")
-        self.assertEqual(DateFormat, "MDY", f"Time Format is {DateFormat}, not MDY")
+        self.assertEqual(DateFormat, "YMD", f"Time Format is {DateFormat}, not YMD")
     
     #確認Time Format
     def test_case071_Check_TimeFormat(self):
         #進入system頁面
         self.go_to_system_page()
         #定位Time Format 欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Device_input_TimeFormat_12Hour")))
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "Device_input_TimeFormat_24Hour")))
         # 讀取配置文件
         config = configparser.ConfigParser()
         config.read(r'D:/AutoTest/config.ini')
         URL = config['URL_Config']['URL']
         #該ratio button不是checkbox，因此不能用is_selected()
         #是用圖判斷，圖是存在src屬性內，因此是判斷src屬性是哪一張圖。
-        radio_12 = self.driver.find_element(By.ID, "12hour")
+        radio_12 = self.driver.find_element(By.ID, "24hour")
         src_value = radio_12.get_attribute("src")
         print(src_value)
         if URL + "/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
-            print("12-hour is selected")
+            print("24-hour is selected")
         else:
-            self.fail("12-hour is not selected")
+            self.fail("24-hour is not selected")
     
     #確認Time Zone
     def test_case072_Check_Timezone(self):
@@ -1110,7 +1130,7 @@ class FactoryReset(unittest.TestCase):
         #定位Time Zone 欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Device_TimeZone_div")))
         TimeZone =  self.driver.find_element(By.ID, "select_Device_TimeZone_div").get_attribute("data-text")
-        self.assertEqual(TimeZone, "(UTC±00:00) Coordinated Universal Time", f"Time Zone is {TimeZone}, not (UTC±00:00) Coordinated Universal Time")
+        self.assertEqual(TimeZone, "(UTC+08:00) Taiwan", f"Time Zone is {TimeZone}, not (UTC+08:00) Taiwan")
 
     #確認Daylight Saving
     def test_case073_Check_DaylightSaving(self):
@@ -1119,7 +1139,7 @@ class FactoryReset(unittest.TestCase):
         #定位Daylight Saving欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
         DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
+        self.assertFalse(DaylightSaving.is_selected(),"Daylight saving is enabled")
     
     #確認Clock Sync	
     def test_case074_Check_ClockSync(self):
@@ -1146,7 +1166,7 @@ class FactoryReset(unittest.TestCase):
         #定位resolution
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
         resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
-        self.assertEqual(resolution, "1920x1080(16:9)", f"Resolution is {resolution}, not 1920x1080(16:9)")
+        self.assertEqual(resolution, "1280x720(16:9)", f"Resolution is {resolution}, not 1280x720(16:9)")
     
     #確認Evidence Stream的Resolution
     def test_case077_Check_Evidence_StreamFormat(self):
@@ -1155,7 +1175,7 @@ class FactoryReset(unittest.TestCase):
         #定位StreamFormat
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
         StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
-        self.assertEqual(StreamFormat, "H.264", f"Stream Format is {StreamFormat}, not H.264")
+        self.assertEqual(StreamFormat, "H.265", f"Stream Format is {StreamFormat}, not H.265")
     
     #確認Evidence Stream的FrameRate
     def test_case078_Check_Evidence_FrameRate(self):
@@ -1164,7 +1184,7 @@ class FactoryReset(unittest.TestCase):
         #定位FrameRate
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
         FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
-        self.assertEqual(FrameRate, "30", f"Stream Format is {FrameRate}, not 30")
+        self.assertEqual(FrameRate, "25", f"Stream Format is {FrameRate}, not 25")
     
     #確認Evidence Stream的Overlay
     def test_case079_Check_Evidence_Overlay(self):
@@ -1173,7 +1193,7 @@ class FactoryReset(unittest.TestCase):
         #定位overlay
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay")))
         Overlay= self.driver.find_element(By.ID, "switch_Overlay")
-        self.assertTrue(Overlay.is_selected(),"Overlay is not enabled")
+        self.assertFalse(Overlay.is_selected(),"Overlay is enabled")
     
     #確認Evidence Stream的URL String
     def test_case080_Check_Evidence_URL_String(self):
@@ -1182,7 +1202,7 @@ class FactoryReset(unittest.TestCase):
         #定位URL String
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
         URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
-        self.assertEqual(URL_String, "stream1", f"URL Stream is {URL_String}, not stream1")
+        self.assertEqual(URL_String, "stream111", f"URL Stream is {URL_String}, not stream111")
 
     #確認Evidence Stream的Audio Format
     def test_case081_Check_Evidence_AudioFormat(self):
@@ -1191,30 +1211,30 @@ class FactoryReset(unittest.TestCase):
         #定位Audio Format
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainAudioFormat_div")))
         AudioFormat= self.driver.find_element(By.ID, "select_Stream_MainAudioFormat_div").get_attribute("data-text")
-        self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+        self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
     
     #確認Evidence Stream的Rate Control
     def test_case082_Check_Evidence_RateControl(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #定位Audio Format
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
-        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamVBR")))
+        button = self.driver.find_element(By.ID, "MainStreamVBR")
         bg_color = button.value_of_css_property("background-color")
         print(bg_color)
         if bg_color == "rgba(75, 93, 118, 1)":
-            print("Rate Control is CBR")
+            print("Rate Control is VBR")
         else:
-            self.fail("Rate Control is not CBR")
+            self.fail("Rate Control is not VBR")
     
-    #確認Evidence Stream的Target Rate
-    def test_case083_Check_Evidence_TargetRate(self):
+    #確認Evidence Stream的Video Quality
+    def test_case083_Check_Evidence_VideoQuality(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #定位Target Rate
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
-        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
-        self.assertEqual(TargetRate, "11264kbps", f"Target Rate is {TargetRate}, not 11264kbps")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainVideoQuality_div")))
+        VideoQuality= self.driver.find_element(By.ID, "select_Stream_MainVideoQuality_div").get_attribute("data-text")
+        self.assertEqual(VideoQuality, "High", f"Video Quality is {VideoQuality}, not High")
     
     #確認Evidence Stream的GOP Length
     def test_case084_Check_Evidence_GOP_Length(self):
@@ -1223,8 +1243,9 @@ class FactoryReset(unittest.TestCase):
         #定位GOP Length
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
-        self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+        self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
     
+    '''
     #確認Evidence Stream的Entropy Coding
     def test_case085_Check_Evidence_EntropyCoding(self):
         #進入stream config頁面
@@ -1233,6 +1254,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
         EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
         self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
+    '''
 
     #確認Evidence Live的Resolution
     def test_case086_Check_Evidence_Live_Resolution(self):
@@ -1243,7 +1265,7 @@ class FactoryReset(unittest.TestCase):
         #定位resolution
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainResolution_div")))
         resolution= self.driver.find_element(By.ID, "select_Stream_MainResolution_div").get_attribute("data-text")
-        self.assertEqual(resolution, "1280x720(16:9)", f"Resolution is {resolution}, not 1280x720(16:9)")
+        self.assertEqual(resolution, "848x480(16:9)", f"Resolution is {resolution}, not 848x480(16:9)")
     
     
     #確認Evidence Live的Stream format
@@ -1255,7 +1277,7 @@ class FactoryReset(unittest.TestCase):
         #定位StreamFormat
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainStreamFormat_div")))
         StreamFormat= self.driver.find_element(By.ID, "select_Stream_MainStreamFormat_div").get_attribute("data-text")
-        self.assertEqual(StreamFormat, "H.264", f"Stream Format is {StreamFormat}, not H.264")
+        self.assertEqual(StreamFormat, "H.265", f"Stream Format is {StreamFormat}, not H.265")
     
     #確認Evidence Live的FrameRate
     def test_case088_Check_Evidence_Live_FrameRate(self):
@@ -1267,7 +1289,7 @@ class FactoryReset(unittest.TestCase):
         #定位FrameRate
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
         FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
-        self.assertEqual(FrameRate, "15", f"Stream Format is {FrameRate}, not 15")
+        self.assertEqual(FrameRate, "20", f"Stream Format is {FrameRate}, not 20")
     
     #確認Evidence Live的Overlay
     def test_case089_Check_Evidence__Live_Overlay(self):
@@ -1278,7 +1300,7 @@ class FactoryReset(unittest.TestCase):
         #定位overlay
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay")))
         Overlay= self.driver.find_element(By.ID, "switch_Overlay")
-        self.assertTrue(Overlay.is_selected(),"Overlay is not enabled")
+        self.assertFalse(Overlay.is_selected(),"Overlay is enabled")
     
     #確認Evidence Live的URL String
     def test_case090_Check_Evidence_Live_URL_String(self):
@@ -1290,7 +1312,7 @@ class FactoryReset(unittest.TestCase):
         #定位URL String
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_URLString")))
         URL_String= self.driver.find_element(By.ID, "input_Stream_URLString").get_attribute("value")
-        self.assertEqual(URL_String, "stream2", f"URL Stream is {URL_String}, not stream2")
+        self.assertEqual(URL_String, "stream222", f"URL Stream is {URL_String}, not stream222")
 
     #確認Evidence Live的Audio Format
     def test_case091_Check_Evidence_Live_AudioFormat(self):
@@ -1302,35 +1324,35 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SC_span_AudioFormat")))
         AudioFormat= self.driver.find_element(By.ID, "SC_span_AudioFormat").text
         print(AudioFormat)
-        self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+        self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
     
     #確認Evidence Live的Rate Control
-    def test_case092_Check_Evidence__Live_RateControl(self):
+    def test_case092_Check_Evidence_Live_RateControl(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #點擊evidence live
         self.driver.find_element(By.ID, "SC_span_Second").click()
         #定位Audio Format
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
-        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamVBR")))
+        button = self.driver.find_element(By.ID, "MainStreamVBR")
         bg_color = button.value_of_css_property("background-color")
         print(bg_color)
         if bg_color == "rgba(75, 93, 118, 1)":
-            print("Rate Control is CBR")
+            print("Rate Control is VBR")
         else:
-            self.fail("Rate Control is not CBR")
+            self.fail("Rate Control is not VBR")
     
     #確認Evidence Live的Target Rate
-    def test_case093_Check_Evidence_Live_TargetRate(self):
+    def test_case093_Check_Evidence_Live_VideoQuality(self):
         #進入stream config頁面
         self.go_to_stream_config_page()
         #點擊evidence live
         self.driver.find_element(By.ID, "SC_span_Second").click()
         time.sleep(1)  # 等待value更新，DOM 更新有延遲，加一個等待就能解決：
         #定位Target Rate
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
-        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
-        self.assertEqual(TargetRate, "2048kbps", f"Target Rate is {TargetRate}, not 2048kbps")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainVideoQuality_div")))
+        VideoQuality= self.driver.find_element(By.ID, "select_Stream_MainVideoQuality_div").get_attribute("data-text")
+        self.assertEqual(VideoQuality, "High", f" Video Quality is {VideoQuality}, not High")
     
     #確認Evidence Live的GOP Length
     def test_case094_Check_Evidence_Live_GOP_Length(self):
@@ -1338,11 +1360,12 @@ class FactoryReset(unittest.TestCase):
         self.go_to_stream_config_page()
         #點擊evidence live
         self.driver.find_element(By.ID, "SC_span_Second").click()
-        #定位GOP Length
+        #定位GOP Length 
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
-        self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+        self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
     
+    '''
     #確認Evidence Live的Entropy Coding
     def test_case095_Check_Evidence_Live_EntropyCoding(self):
         #進入stream config頁面
@@ -1353,6 +1376,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
         EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
         self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
+    '''
 
    #確認ALPR stream開關
     def test_case096_Check_ALPR_Stream_Switch(self):
@@ -1387,7 +1411,7 @@ class FactoryReset(unittest.TestCase):
 
         #檢查解析度，若false，則蒐集錯誤，後續程式碼會繼續執行
         try:
-            self.assertEqual(resolution,"2560x1920(4:3)",f"Resolution is {resolution}, not 2560x1920(4:3)")
+            self.assertEqual(resolution,"1920x1080(16:9)",f"Resolution is {resolution}, not 1920x1080(16:9)")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1429,7 +1453,7 @@ class FactoryReset(unittest.TestCase):
        
        #檢查stream format，若false，則蒐集錯誤，程式碼會繼續執行
         try:
-            self.assertEqual(StreamFormat,"H.264",f"StreamFormat is {StreamFormat}, not H.264")
+            self.assertEqual(StreamFormat,"H.265",f"StreamFormat is {StreamFormat}, not H.265")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1471,7 +1495,7 @@ class FactoryReset(unittest.TestCase):
        
        #檢查Frame Rate，若false，則蒐集錯誤，程式碼會繼續執行
         try:
-            self.assertEqual(FrameRate,"30",f"FrameRate is {FrameRate}, not 30")
+            self.assertEqual(FrameRate,"20",f"FrameRate is {FrameRate}, not 20")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1512,7 +1536,7 @@ class FactoryReset(unittest.TestCase):
 
         #判斷是否為alpr，有false就蒐集
         try:
-         self.assertEqual(URL_String, "alpr", f"URL Stream is {URL_String}, not alpr")
+         self.assertEqual(URL_String, "alpr333", f"URL Stream is {URL_String}, not alpr333")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1553,7 +1577,7 @@ class FactoryReset(unittest.TestCase):
         print(AudioFormat)
         #判斷是否為AAC
         try:
-            self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+            self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1588,16 +1612,16 @@ class FactoryReset(unittest.TestCase):
             slider.click()
         time.sleep(1)#等待元素就位
         #定位Rate Control
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
-        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamVBR")))
+        button = self.driver.find_element(By.ID, "MainStreamVBR")
 
         try:
             bg_color = button.value_of_css_property("background-color")
             print(bg_color)
             if bg_color == "rgba(75, 93, 118, 1)":
-                print("Rate Control is CBR")
+                print("Rate Control is VBR")
             else:
-                self.errors.append("Rate Control is not CBR")
+                self.errors.append("Rate Control is not VBR")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1615,7 +1639,7 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
-    
+    '''
     #確認ALPR的Target Rate
     def test_case103_Check_ALPR_TargetRate(self):
         self.errors = []  # 一開始先建立 list
@@ -1654,6 +1678,18 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
+    '''
+    #確認ALPR stream的Video Quality
+    def test_case103_Check_ALPR_VideoQuality(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        time.sleep(1)  # 等待value更新，DOM 更新有延遲，加一個等待就能解決：
+        #定位Target Rate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainVideoQuality_div")))
+        VideoQuality= self.driver.find_element(By.ID, "select_Stream_MainVideoQuality_div").get_attribute("data-text")
+        self.assertEqual(VideoQuality, "High", f" Video Quality is {VideoQuality}, not High")
 
     #確認ALPR的GOP Length
     def test_case104_Check_ALPR_GOP_Length(self):
@@ -1675,7 +1711,7 @@ class FactoryReset(unittest.TestCase):
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
         #判斷GOP
         try:
-            self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+            self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))    
@@ -1693,6 +1729,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))   
     
+    '''
     #確認ALPR的Entropy Coding
     def test_case105_Check_ALPR_EntropyCoding(self):
         self.errors = []  # 一開始先建立 list
@@ -1729,6 +1766,7 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
+    '''
     
     #確認overlay front size
     def test_case106_Check_Overlay_FontSize(self):
@@ -2395,7 +2433,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Exposure Time
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
-            self.assertEqual(ExposureTime,"1/60s",f"Exposure Time is {ExposureTime}, not 1/60s" )
+            self.assertEqual(ExposureTime,"1/800s",f"Exposure Time is {ExposureTime}, not 1/800s" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2430,7 +2468,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Gain Value
         GainValue = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
         try:
-            self.assertEqual(GainValue,"50%",f"Gain Value is {GainValue}, not 50%" )
+            self.assertEqual(GainValue,"40%",f"Gain Value is {GainValue}, not 40%" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
