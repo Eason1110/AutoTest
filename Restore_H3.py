@@ -1411,7 +1411,7 @@ class FactoryReset(unittest.TestCase):
 
         #檢查解析度，若false，則蒐集錯誤，後續程式碼會繼續執行
         try:
-            self.assertEqual(resolution,"2560x1920(4:3)",f"Resolution is {resolution}, not 2560x1920(4:3)")
+            self.assertEqual(resolution,"1920x1080(16:9)",f"Resolution is {resolution}, not 1920x1080(16:9)")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1453,7 +1453,7 @@ class FactoryReset(unittest.TestCase):
        
        #檢查stream format，若false，則蒐集錯誤，程式碼會繼續執行
         try:
-            self.assertEqual(StreamFormat,"H.264",f"StreamFormat is {StreamFormat}, not H.264")
+            self.assertEqual(StreamFormat,"H.265",f"StreamFormat is {StreamFormat}, not H.265")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1495,7 +1495,7 @@ class FactoryReset(unittest.TestCase):
        
        #檢查Frame Rate，若false，則蒐集錯誤，程式碼會繼續執行
         try:
-            self.assertEqual(FrameRate,"30",f"FrameRate is {FrameRate}, not 30")
+            self.assertEqual(FrameRate,"20",f"FrameRate is {FrameRate}, not 20")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1536,7 +1536,7 @@ class FactoryReset(unittest.TestCase):
 
         #判斷是否為alpr，有false就蒐集
         try:
-         self.assertEqual(URL_String, "alpr", f"URL Stream is {URL_String}, not alpr")
+         self.assertEqual(URL_String, "alpr333", f"URL Stream is {URL_String}, not alpr333")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1577,7 +1577,7 @@ class FactoryReset(unittest.TestCase):
         print(AudioFormat)
         #判斷是否為AAC
         try:
-            self.assertEqual(AudioFormat, "AAC", f"Audio Format is {AudioFormat}, not AAC")
+            self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1612,16 +1612,16 @@ class FactoryReset(unittest.TestCase):
             slider.click()
         time.sleep(1)#等待元素就位
         #定位Rate Control
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamCBR")))
-        button = self.driver.find_element(By.ID, "MainStreamCBR")
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "MainStreamVBR")))
+        button = self.driver.find_element(By.ID, "MainStreamVBR")
 
         try:
             bg_color = button.value_of_css_property("background-color")
             print(bg_color)
             if bg_color == "rgba(75, 93, 118, 1)":
-                print("Rate Control is CBR")
+                print("Rate Control is VBR")
             else:
-                self.errors.append("Rate Control is not CBR")
+                self.errors.append("Rate Control is not VBR")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1639,7 +1639,7 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
-    
+    '''
     #確認ALPR的Target Rate
     def test_case103_Check_ALPR_TargetRate(self):
         self.errors = []  # 一開始先建立 list
@@ -1678,6 +1678,18 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
+    '''
+    #確認ALPR stream的Video Quality
+    def test_case103_Check_ALPR_VideoQuality(self):
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #點擊evidence live
+        self.driver.find_element(By.ID, "SC_span_Third").click()
+        time.sleep(1)  # 等待value更新，DOM 更新有延遲，加一個等待就能解決：
+        #定位Target Rate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainVideoQuality_div")))
+        VideoQuality= self.driver.find_element(By.ID, "select_Stream_MainVideoQuality_div").get_attribute("data-text")
+        self.assertEqual(VideoQuality, "High", f" Video Quality is {VideoQuality}, not High")
 
     #確認ALPR的GOP Length
     def test_case104_Check_ALPR_GOP_Length(self):
@@ -1699,7 +1711,7 @@ class FactoryReset(unittest.TestCase):
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
         #判斷GOP
         try:
-            self.assertEqual(GOP_Length, "30", f"GOP Length is {GOP_Length}, not 30")
+            self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))    
@@ -1717,6 +1729,7 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))   
     
+    '''
     #確認ALPR的Entropy Coding
     def test_case105_Check_ALPR_EntropyCoding(self):
         self.errors = []  # 一開始先建立 list
@@ -1753,6 +1766,7 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
+    '''
     
     #確認overlay front size
     def test_case106_Check_Overlay_FontSize(self):
