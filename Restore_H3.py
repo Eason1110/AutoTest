@@ -1775,7 +1775,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_FontSize_div")))
         FontSize= self.driver.find_element(By.ID, "select_Overlay_FontSize_div").get_attribute("data-text")
-        self.assertEqual(FontSize,"Medium",f"Font Size is {FontSize}, not Medium")
+        self.assertEqual(FontSize,"Large",f"Font Size is {FontSize}, not Large")
     
      #確認overlay Font Color開關
     def test_case107_Check_Overlay_FontColor(self):
@@ -1784,7 +1784,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay_Font")))
         FontColor= self.driver.find_element(By.ID, "switch_Overlay_Font")
-        self.assertTrue(FontColor.is_selected(),"Front Color is not enabled")
+        self.assertFalse(FontColor.is_selected(),"Front Color is enabled")
     
     #確認overlay background Color開關
     def test_case108_Check_Overlay_BackgroundColor(self):
@@ -1793,7 +1793,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay_BackgroundColor")))
         BackgroundColor= self.driver.find_element(By.ID, "switch_Overlay_BackgroundColor")
-        self.assertTrue(BackgroundColor.is_selected(),"Background Color is not enabled")
+        self.assertFalse(BackgroundColor.is_selected(),"Background Color is enabled")
     
      #確認overlay Date and Time開關
     def test_case109_Check_Overlay_DateandTime_Switch(self):
@@ -1811,7 +1811,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_DateTimeFormat_div")))
         DateandTime_Format= self.driver.find_element(By.ID, "select_Overlay_DateTimeFormat_div").get_attribute("data-text")
-        self.assertEqual(DateandTime_Format,"Date and Time",f"format is {DateandTime_Format},not Date and Time")
+        self.assertEqual(DateandTime_Format,"Date",f"format is {DateandTime_Format},not Date")
         
     #確認overlay Date and Time的Position
     def test_case111_Check_Overlay_DateandTime_Position(self):
@@ -1820,7 +1820,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_DataTimePosition_div")))
         DateandTime_Position= self.driver.find_element(By.ID, "select_Overlay_DataTimePosition_div").get_attribute("data-text")
-        self.assertEqual(DateandTime_Position,"Bottom-Left",f"Date and Time Position is {DateandTime_Position},not Bottom-Left")
+        self.assertEqual(DateandTime_Position,"Bottom-Right",f"Date and Time Position is {DateandTime_Position},not Bottom-Right")
     
      #確認overlay Camera Name開關
     def test_case112_Check_Overlay_CameraName_Switch(self):
@@ -1838,7 +1838,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_CameraNamePosition_div")))
         CameraName_Position= self.driver.find_element(By.ID, "select_Overlay_CameraNamePosition_div").get_attribute("data-text")
-        self.assertEqual(CameraName_Position,"Bottom-Left",f"Camera Name Position is {CameraName_Position},not Bottom-Left")
+        self.assertEqual(CameraName_Position,"Bottom-Right",f"Camera Name Position is {CameraName_Position},not Bottom-Right")
     
     #確認overlay Font Color text1開關
     def test_case114_Check_Overlay_textOverlay_text1(self):
@@ -1847,7 +1847,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_1")))
         text1= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
-        self.assertFalse(text1.is_selected(),"text1 is enabled")
+        self.assertTrue(text1.is_selected(),"text1 is not enabled")
     
     #確認overlay Font Color開關
     def test_case115_Check_Overlay_textOverlay_text2(self):
@@ -1856,7 +1856,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
         text2= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
-        self.assertFalse(text2.is_selected(),"text2 is enabled")
+        self.assertTrue(text2.is_selected(),"text2 is not enabled")
     
     #確認overlay Font Color開關
     def test_case116_Check_Overlay_textOverlay_text3(self):
@@ -1865,7 +1865,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
         text3= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
-        self.assertFalse(text3.is_selected(),"text3 is enabled")
+        self.assertTrue(text3.is_selected(),"text3 is not enabled")
     
     #確認overlay Font Color開關
     def test_case117_Check_Overlay_textOverlay_text4(self):
@@ -1874,20 +1874,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
         text4= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
-        self.assertFalse(text4.is_selected(),"text4 is enabled")
-    
-     #到System Overlay頁面，等待所有元素就位
-    def go_to_Systme_Overlay_page(self):
-        #切換到system頁面
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
-        elem = self.driver.find_element(By.ID, "a_System")
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
-        elem.click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        #再切換到overlay頁面
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
-        self.driver.find_element(By.ID, "a_Overlay").click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        self.assertTrue(text4.is_selected(),"text4 is not enabled")
     
     def test_case118_Check_Overlay_textOverlay_text1_FreeText(self):
         self.errors = []  # 一開始先建立 list
@@ -1907,7 +1894,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_1_FreeText_input")))
         FreeText1= self.driver.find_element(By.ID, "Overlay_Text_1_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText1,"Free Text 1",f"Free Text is {FreeText1}, not Free Text 1")
+            self.assertEqual(FreeText1,"Free Text 111",f"Free Text is {FreeText1}, not Free Text 111")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -1943,7 +1930,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_2_FreeText_input")))
         FreeText2= self.driver.find_element(By.ID, "Overlay_Text_2_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText2,"Free Text 2",f"Free Text is {FreeText2}, not Free Text 2")
+            self.assertEqual(FreeText2,"Free Text 222",f"Free Text is {FreeText2}, not Free Text 222")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -1979,7 +1966,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_3_FreeText_input")))
         FreeText3= self.driver.find_element(By.ID, "Overlay_Text_3_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText3,"Free Text 3",f"Free Text is {FreeText3}, not Free Text 3")
+            self.assertEqual(FreeText3,"Free Text 333",f"Free Text is {FreeText3}, not Free Text 333")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2015,7 +2002,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_4_FreeText_input")))
         FreeText4= self.driver.find_element(By.ID, "Overlay_Text_4_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText4,"Free Text 4",f"Free Text is {FreeText4}, not Free Text 4")
+            self.assertEqual(FreeText4,"Free Text 444",f"Free Text is {FreeText4}, not Free Text 444")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2052,7 +2039,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_1_Position_div")))
         Position1= self.driver.find_element(By.ID, "select_Overlay_Text_1_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position1,"Bottom-Left",f"Position1 is {Position1}, not Bottom-Left")
+            self.assertEqual(Position1,"Bottom-Right",f"Position1 is {Position1}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2089,7 +2076,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_2_Position_div")))
         Position2= self.driver.find_element(By.ID, "select_Overlay_Text_2_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position2,"Bottom-Left",f"Position2 is {Position2}, not Bottom-Left")
+            self.assertEqual(Position2,"Bottom-Right",f"Position2 is {Position2}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2126,7 +2113,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_3_Position_div")))
         Position3= self.driver.find_element(By.ID, "select_Overlay_Text_3_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position3,"Bottom-Left",f"Position3 is {Position3}, not Bottom-Left")
+            self.assertEqual(Position3,"Bottom-Right",f"Position3 is {Position3}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2163,7 +2150,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_4_Position_div")))
         Position4= self.driver.find_element(By.ID, "select_Overlay_Text_4_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position4,"Bottom-Left",f"Position4 is {Position4}, not Bottom-Left")
+            self.assertEqual(Position4,"Bottom-Right",f"Position4 is {Position4}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2197,7 +2184,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Volume
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Audio_MicVolume_div")))
         Volume = self.driver.find_element(By.ID, "select_Audio_MicVolume_div").get_attribute("data-text")
-        self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
+        self.assertEqual(Volume,"60%",f"Volume is {Volume}, not 60%")
     
      #檢查basic的網路設定，檢查Type
     def test_case128_Check_Network_Basic_Type(self):
