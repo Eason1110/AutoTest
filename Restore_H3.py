@@ -2202,7 +2202,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Retry Interval
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "RetryInterval")))
         RetryInterval = self.driver.find_element(By.ID, "RetryInterval").get_attribute("value")
-        self.assertEqual(RetryInterval,"20s",f"Retry Interval is {RetryInterval}, not 20s")
+        self.assertEqual(RetryInterval,"25s",f"Retry Interval is {RetryInterval}, not 25s")
     
      #檢查basic的網路設定，檢查Fallback IP
     def test_case130_Check_Network_FallbackIP(self):
@@ -2211,7 +2211,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Fallback IP
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Basic_DefaultIP_div")))
         FallbackIP = self.driver.find_element(By.ID, "select_Basic_DefaultIP_div").get_attribute("data-text")
-        self.assertEqual(FallbackIP,"Use Static IP Address",f"Fallback IP {FallbackIP}, not Use Static IP Address")
+        self.assertEqual(FallbackIP,"Use Last Known IP Address From DHCP Server",f"Fallback IP {FallbackIP}, not Use Last Known IP Address From DHCP Server")
     
     #檢查advanced的網路設定，檢查WS Discovery
     def test_case131_Check_Network_WS_Discovery(self):
