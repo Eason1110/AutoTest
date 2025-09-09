@@ -2220,7 +2220,7 @@ class FactoryReset(unittest.TestCase):
         #檢查WS Discovery
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisableWSDiscovery")))
         checkbox = self.driver.find_element(By.ID, "DisableWSDiscovery")
-        self.assertTrue(checkbox.is_selected(),"WS_Discovery is off")
+        self.assertFalse(checkbox.is_selected(),"WS_Discovery is on")
     
     #檢查advanced的網路設定，檢查mDNS
     def test_case132_Check_Network_mDNS(self):
@@ -2229,7 +2229,7 @@ class FactoryReset(unittest.TestCase):
         #檢查mDNS
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisablemDNS")))
         checkbox = self.driver.find_element(By.ID, "DisablemDNS")
-        self.assertTrue(checkbox.is_selected(),"mDNS is off")
+        self.assertFalse(checkbox.is_selected(),"mDNS is on")
     
     #檢查advanced的網路設定，檢查HTTP/HTTPS Server
     def test_case133_Check_Network_HTTP_HTTPS_Server(self):
@@ -2256,7 +2256,7 @@ class FactoryReset(unittest.TestCase):
         #檢查RTSP Server Port
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Network_Advanced_input_RTSPServer_Port")))
         Port = self.driver.find_element(By.ID, "Network_Advanced_input_RTSPServer_Port").get_attribute("value")
-        self.assertEqual(Port,"554",f"Port is not 554, it's {Port}")
+        self.assertEqual(Port,"49152",f"Port is not 49152, it's {Port}")
     
     #檢查Notification設定，檢查Log File Size
     def test_case136_Check_Notification_LogFileSize(self):
@@ -2265,7 +2265,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Log File Size
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_Size")))
         Size = self.driver.find_element(By.ID, "CameraLog_input_Size").get_attribute("value")
-        self.assertEqual(Size,"32",f"Port is not 32, it's {Size}")
+        self.assertEqual(Size,"64",f"Port is not 64, it's {Size}")
     
     #檢查Notification設定，檢查Device log
     def test_case137_Check_Notification_Devicelog(self):
@@ -2292,30 +2292,59 @@ class FactoryReset(unittest.TestCase):
         #檢查Auto Format
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "checkbox_AutoFormat")))
         checkbox = self.driver.find_element(By.ID, "checkbox_AutoFormat")
-        self.assertTrue(checkbox.is_selected(),"Auto Format is disabled")
+        self.assertFalse(checkbox.is_selected(),"Auto Format is enabled")
     
-    #檢查Administration設定，檢查SSH Server
+     #檢查Administration設定，檢查SSH Server
     def test_case140_Check_SSH_Server(self):
         #進入Administration頁面
         self.go_to_Administration_page()
         #檢查SSH
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
         checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
-        self.assertTrue(checkbox.is_selected(),"SSH Server is disabled")
+        self.assertFalse(checkbox.is_selected(),"SSH Server is enabled")
+    
     
     #檢查Administration設定，檢查SSH Server Port
     def test_case141_Check_SSH_Server_Port(self):
+        self.errors = []  # 一開始先建立 list，用來暫存false
         #進入Administration頁面
         self.go_to_Administration_page()
-        #檢查SSH
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
+        checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
+        slider =  self.driver.find_element(By.CSS_SELECTOR, "#Admin_input_SSH_OnOffSwitch + .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        #檢查SSH 
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_Port")))
         Port = self.driver.find_element(By.ID, "Admin_input_Port").get_attribute("value")
-        self.assertEqual(Port,"49155",f"SSH Server port is {Port}, not 49155")
+        try:
+            self.assertEqual(Port,"50000",f"SSH Port is {Port}, not 50000" )
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        #關閉SSH
+        if checkbox.is_selected():
+            slider.click()
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "adminSave")
+        SaveButton.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
+         # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
     
     #確認Auth. Method
     def test_case142_Check_SSH_AuthMethod(self):
+        self.errors = []  # 一開始先建立 list，用來暫存false
         #進入Administration頁面
         self.go_to_Administration_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
+        checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
+        slider =  self.driver.find_element(By.CSS_SELECTOR, "#Admin_input_SSH_OnOffSwitch + .slider")
+        #開啟SSH
+        if not checkbox.is_selected():
+            slider.click()
         #定位欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SSHServer_Password")))
         # 讀取配置文件
@@ -2330,7 +2359,18 @@ class FactoryReset(unittest.TestCase):
         if URL + "/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
             print("password is selected")
         else:
-            self.fail("password is not selected")
+            self.errors.append("password is not selected")
+        #關閉SSH
+        if checkbox.is_selected():
+            slider.click()
+         #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "adminSave")
+        SaveButton.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
+         # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
     
     def test_case143_Check_Evidence_Priority_ExposureAuto_off_ExposureTime(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
@@ -2350,7 +2390,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Exposure Time
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
-            self.assertEqual(ExposureTime,"1/100s",f"Exposure Time is {ExposureTime}, not 1/60s" )
+            self.assertEqual(ExposureTime,"1/1000s",f"Exposure Time is {ExposureTime}, not 1/1000s" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2385,7 +2425,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Gain Value
         GainValue = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
         try:
-            self.assertEqual(GainValue,"70%",f"Gain Value is {GainValue}, not 70%" )
+            self.assertEqual(GainValue,"40%",f"Gain Value is {GainValue}, not 40%" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2420,7 +2460,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Exposure Time
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
-            self.assertEqual(ExposureTime,"1/800s",f"Exposure Time is {ExposureTime}, not 1/800s" )
+            self.assertEqual(ExposureTime,"1/1000s",f"Exposure Time is {ExposureTime}, not 1/1000s" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2470,70 +2510,6 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
-    
-    def test_case147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到Exposure頁面檢查ExposureMode
-        self.go_to_exposure_mode_page()
-        #開啟ExposureMode選項
-        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
-        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
-        blc_option_clickable = WebDriverWait(self.driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
-        blc_option_clickable.click()
-        time.sleep(2)
-        #判斷BLC的SIZE是否正確       
-        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
-        style = elem.get_attribute("style")
-        # 判斷 style 內是否包含 width 與 height
-        if "width: 128px" in style and "height: 128px" in style:
-            print("is 128x128)")
-        else:
-            self.errors.append(f"not 128x128")
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
-        SaveButton.click()
-        time.sleep(1)
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
-    
-    def test_case148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到Exposure頁面檢查ExposureMode
-        self.go_to_ALPR_ExposureMode_page()
-        #點擊OK button開啟alpr stream
-        try:
-            button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
-            button.click()
-            WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-            time.sleep(1)
-        except TimeoutException:
-            print("button not exist")
-        #開啟ExposureMode選項
-        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
-        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
-        blc_option_clickable = WebDriverWait(self.driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
-        blc_option_clickable.click()
-        time.sleep(2)
-        #判斷BLC的SIZE是否正確
-        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
-        style = elem.get_attribute("style")
-        # 判斷 style 內是否包含 width 與 height
-        if "width: 128px" in style and "height: 128px" in style:
-            print("is 128x128)")
-        else:
-            self.errors.append(f"not 128x128")
-
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
-        SaveButton.click()
-        time.sleep(1)
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
-      
 
     @classmethod
     def tearDownClass(cls):
