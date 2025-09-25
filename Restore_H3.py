@@ -1244,17 +1244,6 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
         self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
-    
-    '''
-    #確認Evidence Stream的Entropy Coding
-    def test_case085_Check_Evidence_EntropyCoding(self):
-        #進入stream config頁面
-        self.go_to_stream_config_page()
-        #定位Entropy Coding
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
-        EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
-        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
-    '''
 
     #確認Evidence Live的Resolution
     def test_case086_Check_Evidence_Live_Resolution(self):
@@ -1364,19 +1353,6 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainGOPLength_div")))
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
         self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
-    
-    '''
-    #確認Evidence Live的Entropy Coding
-    def test_case095_Check_Evidence_Live_EntropyCoding(self):
-        #進入stream config頁面
-        self.go_to_stream_config_page()
-         #點擊evidence live
-        self.driver.find_element(By.ID, "SC_span_Second").click()
-        #定位Entropy Coding
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
-        EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
-        self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC") 
-    '''
 
    #確認ALPR stream開關
     def test_case096_Check_ALPR_Stream_Switch(self):
@@ -1639,46 +1615,7 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
             raise AssertionError("\n".join(self.errors))
-    '''
-    #確認ALPR的Target Rate
-    def test_case103_Check_ALPR_TargetRate(self):
-        self.errors = []  # 一開始先建立 list
-        #進入stream config頁面
-        self.go_to_stream_config_page()
-        #點擊ALPR
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
-        self.driver.find_element(By.ID, "SC_span_Third").click()
-        #開啟ALPR stream，預設是關閉
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
-        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
-        if not checkbox.is_selected():
-            slider.click()
-        time.sleep(1)#等待元素就位
-        #定位Target Rate
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "input_Stream_MainRange")))
-        TargetRate= self.driver.find_element(By.ID, "input_Stream_MainRange").get_attribute("value")
-        #判斷target rate
-        try:
-            self.assertEqual(TargetRate, "25600kbps", f"Target Rate is {TargetRate}, not 25600kbps")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))
-
-         #關閉ALPR stream並save
-        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
-        if checkbox.is_selected():
-             slider.click()
-        #點擊儲存按鈕
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
-        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
-        time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        # 最後統一檢查是否有錯
-        if self.errors:
-            raise AssertionError("\n".join(self.errors))
-    '''
+    
     #確認ALPR stream的Video Quality
     def test_case103_Check_ALPR_VideoQuality(self):
         #進入stream config頁面
@@ -1729,45 +1666,6 @@ class FactoryReset(unittest.TestCase):
         if self.errors:
             raise AssertionError("\n".join(self.errors))   
     
-    '''
-    #確認ALPR的Entropy Coding
-    def test_case105_Check_ALPR_EntropyCoding(self):
-        self.errors = []  # 一開始先建立 list
-        #進入stream config頁面
-        self.go_to_stream_config_page()
-         #點擊evidence live
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "SC_span_Third")))
-        self.driver.find_element(By.ID, "SC_span_Third").click()
-        #開啟ALPR stream，預設是關閉
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_StreamSwitch")))
-        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
-        if not checkbox.is_selected():
-            slider.click()
-        time.sleep(1)#等待元素就位
-        #定位Entropy Coding
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_EntropyCoding_div")))
-        EntropyCoding= self.driver.find_element(By.ID, "select_Stream_EntropyCoding_div").get_attribute("data-text")
-        try:
-            self.assertEqual(EntropyCoding, "CABAC", f"Entropy Coding is {EntropyCoding}, not CABAC")
-        except AssertionError as e:
-            print("Assertion failed:", e)
-            self.errors.append(str(e))       
-        #關閉ALPR stream並save
-        checkbox = self.driver.find_element(By.ID, "switch_StreamSwitch")
-        slider = self.driver.find_element(By.CSS_SELECTOR, "#div_switch_StreamSwitch .slider")
-        if checkbox.is_selected():
-             slider.click()
-        #點擊儲存按鈕
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "SaveButton")))
-        self.driver.find_element(By.CLASS_NAME, "SaveButton").click()
-        time.sleep(1)
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        # 最後統一檢查是否有錯
-        if self.errors:
-            raise AssertionError("\n".join(self.errors))
-    '''
-    
     #確認overlay front size
     def test_case106_Check_Overlay_FontSize(self):
         #進入overlay頁面
@@ -1775,7 +1673,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_FontSize_div")))
         FontSize= self.driver.find_element(By.ID, "select_Overlay_FontSize_div").get_attribute("data-text")
-        self.assertEqual(FontSize,"Medium",f"Font Size is {FontSize}, not Medium")
+        self.assertEqual(FontSize,"Large",f"Font Size is {FontSize}, not Large")
     
      #確認overlay Font Color開關
     def test_case107_Check_Overlay_FontColor(self):
@@ -1784,7 +1682,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay_Font")))
         FontColor= self.driver.find_element(By.ID, "switch_Overlay_Font")
-        self.assertTrue(FontColor.is_selected(),"Front Color is not enabled")
+        self.assertFalse(FontColor.is_selected(),"Front Color is enabled")
     
     #確認overlay background Color開關
     def test_case108_Check_Overlay_BackgroundColor(self):
@@ -1793,7 +1691,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "switch_Overlay_BackgroundColor")))
         BackgroundColor= self.driver.find_element(By.ID, "switch_Overlay_BackgroundColor")
-        self.assertTrue(BackgroundColor.is_selected(),"Background Color is not enabled")
+        self.assertFalse(BackgroundColor.is_selected(),"Background Color is enabled")
     
      #確認overlay Date and Time開關
     def test_case109_Check_Overlay_DateandTime_Switch(self):
@@ -1811,7 +1709,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_DateTimeFormat_div")))
         DateandTime_Format= self.driver.find_element(By.ID, "select_Overlay_DateTimeFormat_div").get_attribute("data-text")
-        self.assertEqual(DateandTime_Format,"Date and Time",f"format is {DateandTime_Format},not Date and Time")
+        self.assertEqual(DateandTime_Format,"Date",f"format is {DateandTime_Format},not Date")
         
     #確認overlay Date and Time的Position
     def test_case111_Check_Overlay_DateandTime_Position(self):
@@ -1820,7 +1718,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_DataTimePosition_div")))
         DateandTime_Position= self.driver.find_element(By.ID, "select_Overlay_DataTimePosition_div").get_attribute("data-text")
-        self.assertEqual(DateandTime_Position,"Bottom-Left",f"Date and Time Position is {DateandTime_Position},not Bottom-Left")
+        self.assertEqual(DateandTime_Position,"Bottom-Right",f"Date and Time Position is {DateandTime_Position},not Bottom-Right")
     
      #確認overlay Camera Name開關
     def test_case112_Check_Overlay_CameraName_Switch(self):
@@ -1838,7 +1736,7 @@ class FactoryReset(unittest.TestCase):
         #檢查
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_CameraNamePosition_div")))
         CameraName_Position= self.driver.find_element(By.ID, "select_Overlay_CameraNamePosition_div").get_attribute("data-text")
-        self.assertEqual(CameraName_Position,"Bottom-Left",f"Camera Name Position is {CameraName_Position},not Bottom-Left")
+        self.assertEqual(CameraName_Position,"Bottom-Right",f"Camera Name Position is {CameraName_Position},not Bottom-Right")
     
     #確認overlay Font Color text1開關
     def test_case114_Check_Overlay_textOverlay_text1(self):
@@ -1847,7 +1745,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_1")))
         text1= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
-        self.assertFalse(text1.is_selected(),"text1 is enabled")
+        self.assertTrue(text1.is_selected(),"text1 is not enabled")
     
     #確認overlay Font Color開關
     def test_case115_Check_Overlay_textOverlay_text2(self):
@@ -1856,7 +1754,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
         text2= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
-        self.assertFalse(text2.is_selected(),"text2 is enabled")
+        self.assertTrue(text2.is_selected(),"text2 is not enabled")
     
     #確認overlay Font Color開關
     def test_case116_Check_Overlay_textOverlay_text3(self):
@@ -1865,7 +1763,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
         text3= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
-        self.assertFalse(text3.is_selected(),"text3 is enabled")
+        self.assertTrue(text3.is_selected(),"text3 is not enabled")
     
     #確認overlay Font Color開關
     def test_case117_Check_Overlay_textOverlay_text4(self):
@@ -1874,20 +1772,7 @@ class FactoryReset(unittest.TestCase):
         #檢查開關
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
         text4= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
-        self.assertFalse(text4.is_selected(),"text4 is enabled")
-    
-     #到System Overlay頁面，等待所有元素就位
-    def go_to_Systme_Overlay_page(self):
-        #切換到system頁面
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "a_System")))
-        elem = self.driver.find_element(By.ID, "a_System")
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_System")))
-        elem.click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-        #再切換到overlay頁面
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "a_Overlay")))
-        self.driver.find_element(By.ID, "a_Overlay").click()
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        self.assertTrue(text4.is_selected(),"text4 is not enabled")
     
     def test_case118_Check_Overlay_textOverlay_text1_FreeText(self):
         self.errors = []  # 一開始先建立 list
@@ -1907,7 +1792,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_1_FreeText_input")))
         FreeText1= self.driver.find_element(By.ID, "Overlay_Text_1_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText1,"Free Text 1",f"Free Text is {FreeText1}, not Free Text 1")
+            self.assertEqual(FreeText1,"Free Text 111",f"Free Text is {FreeText1}, not Free Text 111")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -1943,7 +1828,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_2_FreeText_input")))
         FreeText2= self.driver.find_element(By.ID, "Overlay_Text_2_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText2,"Free Text 2",f"Free Text is {FreeText2}, not Free Text 2")
+            self.assertEqual(FreeText2,"Free Text 222",f"Free Text is {FreeText2}, not Free Text 222")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -1979,7 +1864,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_3_FreeText_input")))
         FreeText3= self.driver.find_element(By.ID, "Overlay_Text_3_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText3,"Free Text 3",f"Free Text is {FreeText3}, not Free Text 3")
+            self.assertEqual(FreeText3,"Free Text 333",f"Free Text is {FreeText3}, not Free Text 333")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2015,7 +1900,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_Text_4_FreeText_input")))
         FreeText4= self.driver.find_element(By.ID, "Overlay_Text_4_FreeText_input").get_attribute("value")
         try:
-            self.assertEqual(FreeText4,"Free Text 4",f"Free Text is {FreeText4}, not Free Text 4")
+            self.assertEqual(FreeText4,"Free Text 444",f"Free Text is {FreeText4}, not Free Text 444")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2052,7 +1937,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_1_Position_div")))
         Position1= self.driver.find_element(By.ID, "select_Overlay_Text_1_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position1,"Bottom-Left",f"Position1 is {Position1}, not Bottom-Left")
+            self.assertEqual(Position1,"Bottom-Right",f"Position1 is {Position1}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2089,7 +1974,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_2_Position_div")))
         Position2= self.driver.find_element(By.ID, "select_Overlay_Text_2_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position2,"Bottom-Left",f"Position2 is {Position2}, not Bottom-Left")
+            self.assertEqual(Position2,"Bottom-Right",f"Position2 is {Position2}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2126,7 +2011,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_3_Position_div")))
         Position3= self.driver.find_element(By.ID, "select_Overlay_Text_3_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position3,"Bottom-Left",f"Position3 is {Position3}, not Bottom-Left")
+            self.assertEqual(Position3,"Bottom-Right",f"Position3 is {Position3}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2163,7 +2048,7 @@ class FactoryReset(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Overlay_Text_4_Position_div")))
         Position4= self.driver.find_element(By.ID, "select_Overlay_Text_4_Position_div").get_attribute("data-text")
         try:
-            self.assertEqual(Position4,"Bottom-Left",f"Position4 is {Position4}, not Bottom-Left")
+            self.assertEqual(Position4,"Bottom-Right",f"Position4 is {Position4}, not Bottom-Right")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))  
@@ -2197,7 +2082,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Volume
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Audio_MicVolume_div")))
         Volume = self.driver.find_element(By.ID, "select_Audio_MicVolume_div").get_attribute("data-text")
-        self.assertEqual(Volume,"50%",f"Volume is {Volume}, not 50%")
+        self.assertEqual(Volume,"60%",f"Volume is {Volume}, not 60%")
     
      #檢查basic的網路設定，檢查Type
     def test_case128_Check_Network_Basic_Type(self):
@@ -2215,7 +2100,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Retry Interval
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "RetryInterval")))
         RetryInterval = self.driver.find_element(By.ID, "RetryInterval").get_attribute("value")
-        self.assertEqual(RetryInterval,"20s",f"Retry Interval is {RetryInterval}, not 20s")
+        self.assertEqual(RetryInterval,"25s",f"Retry Interval is {RetryInterval}, not 25s")
     
      #檢查basic的網路設定，檢查Fallback IP
     def test_case130_Check_Network_FallbackIP(self):
@@ -2224,7 +2109,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Fallback IP
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Basic_DefaultIP_div")))
         FallbackIP = self.driver.find_element(By.ID, "select_Basic_DefaultIP_div").get_attribute("data-text")
-        self.assertEqual(FallbackIP,"Use Static IP Address",f"Fallback IP {FallbackIP}, not Use Static IP Address")
+        self.assertEqual(FallbackIP,"Use Last Known IP Address From DHCP Server",f"Fallback IP {FallbackIP}, not Use Last Known IP Address From DHCP Server")
     
     #檢查advanced的網路設定，檢查WS Discovery
     def test_case131_Check_Network_WS_Discovery(self):
@@ -2233,7 +2118,7 @@ class FactoryReset(unittest.TestCase):
         #檢查WS Discovery
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisableWSDiscovery")))
         checkbox = self.driver.find_element(By.ID, "DisableWSDiscovery")
-        self.assertTrue(checkbox.is_selected(),"WS_Discovery is off")
+        self.assertFalse(checkbox.is_selected(),"WS_Discovery is on")
     
     #檢查advanced的網路設定，檢查mDNS
     def test_case132_Check_Network_mDNS(self):
@@ -2242,7 +2127,7 @@ class FactoryReset(unittest.TestCase):
         #檢查mDNS
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "DisablemDNS")))
         checkbox = self.driver.find_element(By.ID, "DisablemDNS")
-        self.assertTrue(checkbox.is_selected(),"mDNS is off")
+        self.assertFalse(checkbox.is_selected(),"mDNS is on")
     
     #檢查advanced的網路設定，檢查HTTP/HTTPS Server
     def test_case133_Check_Network_HTTP_HTTPS_Server(self):
@@ -2269,7 +2154,7 @@ class FactoryReset(unittest.TestCase):
         #檢查RTSP Server Port
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Network_Advanced_input_RTSPServer_Port")))
         Port = self.driver.find_element(By.ID, "Network_Advanced_input_RTSPServer_Port").get_attribute("value")
-        self.assertEqual(Port,"554",f"Port is not 554, it's {Port}")
+        self.assertEqual(Port,"49152",f"Port is not 49152, it's {Port}")
     
     #檢查Notification設定，檢查Log File Size
     def test_case136_Check_Notification_LogFileSize(self):
@@ -2278,7 +2163,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Log File Size
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "CameraLog_input_Size")))
         Size = self.driver.find_element(By.ID, "CameraLog_input_Size").get_attribute("value")
-        self.assertEqual(Size,"32",f"Port is not 32, it's {Size}")
+        self.assertEqual(Size,"64",f"Port is not 64, it's {Size}")
     
     #檢查Notification設定，檢查Device log
     def test_case137_Check_Notification_Devicelog(self):
@@ -2305,30 +2190,59 @@ class FactoryReset(unittest.TestCase):
         #檢查Auto Format
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "checkbox_AutoFormat")))
         checkbox = self.driver.find_element(By.ID, "checkbox_AutoFormat")
-        self.assertTrue(checkbox.is_selected(),"Auto Format is disabled")
+        self.assertFalse(checkbox.is_selected(),"Auto Format is enabled")
     
-    #檢查Administration設定，檢查SSH Server
+     #檢查Administration設定，檢查SSH Server
     def test_case140_Check_SSH_Server(self):
         #進入Administration頁面
         self.go_to_Administration_page()
         #檢查SSH
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
         checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
-        self.assertTrue(checkbox.is_selected(),"SSH Server is disabled")
+        self.assertFalse(checkbox.is_selected(),"SSH Server is enabled")
+    
     
     #檢查Administration設定，檢查SSH Server Port
     def test_case141_Check_SSH_Server_Port(self):
+        self.errors = []  # 一開始先建立 list，用來暫存false
         #進入Administration頁面
         self.go_to_Administration_page()
-        #檢查SSH
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
+        checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
+        slider =  self.driver.find_element(By.CSS_SELECTOR, "#Admin_input_SSH_OnOffSwitch + .slider")
+        if not checkbox.is_selected():
+            slider.click()
+        #檢查SSH 
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_Port")))
         Port = self.driver.find_element(By.ID, "Admin_input_Port").get_attribute("value")
-        self.assertEqual(Port,"49155",f"SSH Server port is {Port}, not 49155")
+        try:
+            self.assertEqual(Port,"50000",f"SSH Port is {Port}, not 50000" )
+        except AssertionError as e:
+            print("Assertion failed:", e)
+            self.errors.append(str(e))
+        #關閉SSH
+        if checkbox.is_selected():
+            slider.click()
+        #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "adminSave")
+        SaveButton.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
+         # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
     
     #確認Auth. Method
     def test_case142_Check_SSH_AuthMethod(self):
+        self.errors = []  # 一開始先建立 list，用來暫存false
         #進入Administration頁面
         self.go_to_Administration_page()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Admin_input_SSH_OnOffSwitch")))
+        checkbox = self.driver.find_element(By.ID, "Admin_input_SSH_OnOffSwitch")
+        slider =  self.driver.find_element(By.CSS_SELECTOR, "#Admin_input_SSH_OnOffSwitch + .slider")
+        #開啟SSH
+        if not checkbox.is_selected():
+            slider.click()
         #定位欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SSHServer_Password")))
         # 讀取配置文件
@@ -2343,7 +2257,18 @@ class FactoryReset(unittest.TestCase):
         if URL + "/from_temp/res/img/Content/System_Device/bt-storage-check-2-pre.png" in src_value:
             print("password is selected")
         else:
-            self.fail("password is not selected")
+            self.errors.append("password is not selected")
+        #關閉SSH
+        if checkbox.is_selected():
+            slider.click()
+         #儲存設定
+        SaveButton =  self.driver.find_element(By.ID, "adminSave")
+        SaveButton.click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
+         # 最後統一檢查是否有錯
+        if self.errors:
+         raise AssertionError("\n".join(self.errors))
     
     def test_case143_Check_Evidence_Priority_ExposureAuto_off_ExposureTime(self):
         self.errors = []  # 一開始先建立 list，用來暫存false
@@ -2363,7 +2288,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Exposure Time
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
-            self.assertEqual(ExposureTime,"1/100s",f"Exposure Time is {ExposureTime}, not 1/60s" )
+            self.assertEqual(ExposureTime,"1/1000s",f"Exposure Time is {ExposureTime}, not 1/1000s" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2398,7 +2323,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Gain Value
         GainValue = self.driver.find_element(By.ID, "select_AS_GainValue_div").get_attribute("data-text")
         try:
-            self.assertEqual(GainValue,"70%",f"Gain Value is {GainValue}, not 70%" )
+            self.assertEqual(GainValue,"40%",f"Gain Value is {GainValue}, not 40%" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2433,7 +2358,7 @@ class FactoryReset(unittest.TestCase):
         #檢查Exposure Time
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
-            self.assertEqual(ExposureTime,"1/800s",f"Exposure Time is {ExposureTime}, not 1/800s" )
+            self.assertEqual(ExposureTime,"1/1000s",f"Exposure Time is {ExposureTime}, not 1/1000s" )
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -2483,70 +2408,6 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
-    
-    def test_case147_Check_Evidence_ExposureMode_BLC_Width_Height(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到Exposure頁面檢查ExposureMode
-        self.go_to_exposure_mode_page()
-        #開啟ExposureMode選項
-        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
-        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
-        blc_option_clickable = WebDriverWait(self.driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
-        blc_option_clickable.click()
-        time.sleep(2)
-        #判斷BLC的SIZE是否正確       
-        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
-        style = elem.get_attribute("style")
-        # 判斷 style 內是否包含 width 與 height
-        if "width: 128px" in style and "height: 128px" in style:
-            print("is 128x128)")
-        else:
-            self.errors.append(f"not 128x128")
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
-        SaveButton.click()
-        time.sleep(1)
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
-    
-    def test_case148_Check_ALPR_ExposureMode_BLC_Width_Height(self):
-        self.errors = []  # 一開始先建立 list，用來暫存false
-        #到Exposure頁面檢查ExposureMode
-        self.go_to_ALPR_ExposureMode_page()
-        #點擊OK button開啟alpr stream
-        try:
-            button = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.ID, "ExMode_btnEnableStream")))
-            button.click()
-            WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
-            time.sleep(1)
-        except TimeoutException:
-            print("button not exist")
-        #開啟ExposureMode選項
-        self.driver.find_element(By.ID, "select_ExposureMode_ExposureMode_Arrow").click()
-        time.sleep(1)# 再次等待，確保元素可點擊，然後點擊
-        blc_option_clickable = WebDriverWait(self.driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[@data-text='BLC']")))
-        blc_option_clickable.click()
-        time.sleep(2)
-        #判斷BLC的SIZE是否正確
-        elem = self.driver.find_element(By.ID, "ExMode_dragg1")
-        style = elem.get_attribute("style")
-        # 判斷 style 內是否包含 width 與 height
-        if "width: 128px" in style and "height: 128px" in style:
-            print("is 128x128)")
-        else:
-            self.errors.append(f"not 128x128")
-
-        #儲存設定
-        SaveButton =  self.driver.find_element(By.ID, "exposureModeSave")
-        SaveButton.click()
-        time.sleep(1)
-        # 最後統一檢查是否有錯
-        if self.errors:
-         raise AssertionError("\n".join(self.errors))
-      
 
     @classmethod
     def tearDownClass(cls):
