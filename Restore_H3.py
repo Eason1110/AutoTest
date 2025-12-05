@@ -12,7 +12,7 @@ import configparser
 import time
 
 
-class FactoryReset(unittest.TestCase):
+class Restore(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -2414,4 +2414,4 @@ class FactoryReset(unittest.TestCase):
         cls.driver.quit()
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HTMLTestRunner.HTMLTestRunner(output='D:/AutoTest/test_reports'))
+    unittest.main(testRunner=HTMLTestRunner.HTMLTestRunner(output='D:/AutoTest/test_reports', tested_by="DQA-FW"))

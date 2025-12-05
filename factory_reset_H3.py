@@ -1125,7 +1125,7 @@ class FactoryReset(unittest.TestCase):
         #定位Daylight Saving欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
         DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
+        self.assertFalse(DaylightSaving.is_selected(),"Daylight saving is enabled")
     
     #確認Clock Sync	
     def test_case074_Check_ClockSync(self):
@@ -1477,7 +1477,7 @@ class FactoryReset(unittest.TestCase):
        
        #檢查Frame Rate，若false，則蒐集錯誤，程式碼會繼續執行
         try:
-            self.assertEqual(FrameRate,"30",f"FrameRate is {FrameRate}, not 30")
+            self.assertEqual(FrameRate,"15",f"FrameRate is {FrameRate}, not 15")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
