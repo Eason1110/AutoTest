@@ -2385,7 +2385,7 @@ class FactoryReset(unittest.TestCase):
         slider = self.driver.find_element(By.CSS_SELECTOR, "#AS_input_ExposureAuto + .slider")
         if checkbox.is_selected():
             slider.click()
-        #檢查Exposure Time
+        #檢查Exposure Time  
         ExposureTime = self.driver.find_element(By.ID, "select_AS_ExposureTime_div").get_attribute("data-text")
         try:
             self.assertEqual(ExposureTime,"1/60s",f"Exposure Time is {ExposureTime}, not 1/60s" )

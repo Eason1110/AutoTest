@@ -255,15 +255,77 @@ class FactoryReset(unittest.TestCase):
         time.sleep(5)
     
     
-    #確認Daylight Saving
-    def test_case073_Check_DaylightSaving(self):
-        #進入system頁面
-        self.go_to_system_page()
-        #定位Daylight Saving欄位
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
-        DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertFalse(DaylightSaving.is_selected(),"Daylight saving is enabled")
+    #確認overlay Font Color text1開關
+    def test_case114_Check_Overlay_textOverlay_text1(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_1")))
+        text1= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_1")
+        self.assertFalse(text1.is_selected(),"text1 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case115_Check_Overlay_textOverlay_text2(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_2")))
+        text2= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_2")
+        self.assertFalse(text2.is_selected(),"text2 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case116_Check_Overlay_textOverlay_text3(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_3")))
+        text3= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_3")
+        self.assertFalse(text3.is_selected(),"text3 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case117_Check_Overlay_textOverlay_text4(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_4")))
+        text4= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_4")
+        self.assertFalse(text4.is_selected(),"text4 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case117_1_Check_Overlay_textOverlay_text5(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_5")))
+        text5= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_5")
+        self.assertFalse(text5.is_selected(),"text5 is enabled")
+    
+    #確認overlay Font Color開關
+    def test_case117_2_Check_Overlay_textOverlay_text6(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_6")))
+        text6= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_6")
+        self.assertFalse(text6.is_selected(),"text5 is enabled")
+    
+     #確認overlay Font Color開關
+    def test_case117_3_Check_Overlay_textOverlay_text7(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_7")))
+        text7= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_7")
+        self.assertFalse(text7.is_selected(),"text7 is enabled")
 
+     #確認overlay Font Color開關
+    def test_case117_4_Check_Overlay_textOverlay_text8(self):
+        #進入overlay頁面
+        self.go_to_Systme_Overlay_page()
+        #檢查開關
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Overlay_input_checkbox_Text_8")))
+        text8= self.driver.find_element(By.ID, "Overlay_input_checkbox_Text_8")
+        self.assertFalse(text8.is_selected(),"text8 is enabled")
     
 
 

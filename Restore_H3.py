@@ -1139,7 +1139,7 @@ class Restore(unittest.TestCase):
         #定位Daylight Saving欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
         DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertFalse(DaylightSaving.is_selected(),"Daylight saving is enabled")
+        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
     
     #確認Clock Sync	
     def test_case074_Check_ClockSync(self):
