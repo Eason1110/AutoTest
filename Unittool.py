@@ -455,8 +455,8 @@ class App(tk.Tk):
         output_content.append("else:\n")
         output_content.append("    current_script_dir = os.path.dirname(os.path.abspath(__file__))\n")
         output_content.append("\n")
-        output_content.append("     html_test_runner_dir = os.path.join(current_script_dir, '_internal')\n")
-        output_content.append("     sys.path.insert(0, html_test_runner_dir)\n")
+        output_content.append("html_test_runner_dir = os.path.join(current_script_dir, '_internal')\n")
+        output_content.append("sys.path.insert(0, html_test_runner_dir)\n")
         output_content.append("\n")
         output_content.append("try:\n")
         output_content.append("    import HTMLTestRunner\n")
@@ -493,6 +493,7 @@ class App(tk.Tk):
             output_content.append(f"        runner = HTMLTestRunner.HTMLTestRunner(\n")
             output_content.append(f"            verbosity=2,\n")
             output_content.append(f"            title=f'Test Report for {current_class_name} ({mod_name})',\n")
+            output_content.append(f"            description=cases_description\n")
             output_content.append(f"        )\n")
             output_content.append(f"        runner.run(suite)\n")
             output_content.append(f"    print(f'Test report saved to: {{report_path}}')\n\n")
@@ -525,9 +526,19 @@ class App(tk.Tk):
         self.testplan_files_in_result.clear()
         
         for f_path in excel_file_paths:
+            base_name, ext = os.path.splitext(os.path.basename(f_path))
+            ext = ext.lower()
             dest_path = os.path.join(result_dir, os.path.basename(f_path))
             try:
-                shutil.copy(f_path, dest_path)
+                if ext == ".xls":
+                    dest_path = os.path.join(result_dir, f"{base_name}.xlsx")
+                    self.convert_xls_to_xlsx(f_path, dest_path)
+                elif ext == ".xlsx":
+                    shutil.copy(f_path, dest_path)
+                else:
+                    self.show_status_message(f"Unsupported Excel file type: {os.path.basename(f_path)}", "warning")
+                    continue
+
                 self.testplan_files_in_result.append(dest_path)
                 self.show_status_message(f"Successfully loaded and copied Testplan: {os.path.basename(f_path)}", "success")
             except Exception as e:
@@ -538,6 +549,107 @@ class App(tk.Tk):
             self.open_report_folder_btn.config(state=tk.NORMAL)
         else:
             self.show_status_message("No Excel Testplan files selected.", "warning")
+
+
+    def convert_xls_to_xlsx(self, source_path, dest_path):
+        if os.sys.platform != "win32":
+            raise RuntimeError("Legacy .xls conversion requires Microsoft Excel on Windows. Please save it as .xlsx first.")
+
+        script = r"""
+$ErrorActionPreference = 'Stop'
+$inputPath = [System.IO.Path]::GetFullPath($args[0])
+$outputPath = [System.IO.Path]::GetFullPath($args[1])
+$excel = $null
+$workbook = $null
+try {
+    $excel = New-Object -ComObject Excel.Application
+    $excel.Visible = $false
+    $excel.DisplayAlerts = $false
+    $workbook = $excel.Workbooks.Open($inputPath)
+    $workbook.SaveAs($outputPath, 51)
+}
+finally {
+    if ($workbook -ne $null) {
+        $workbook.Close($false)
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($workbook) | Out-Null
+    }
+    if ($excel -ne $null) {
+        $excel.Quit()
+        [System.Runtime.InteropServices.Marshal]::ReleaseComObject($excel) | Out-Null
+    }
+    [GC]::Collect()
+    [GC]::WaitForPendingFinalizers()
+}
+"""
+        result = subprocess.run(
+            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script, source_path, dest_path],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        if result.returncode != 0:
+            error_msg = result.stderr.strip() or result.stdout.strip() or "Unknown conversion error"
+            raise RuntimeError(f"Failed to convert .xls to .xlsx: {error_msg}")
+
+        if not os.path.exists(dest_path):
+            raise RuntimeError("Failed to convert .xls to .xlsx: output file was not created.")
+
+
+    def get_testcase_cell_text(self, cell):
+        value = cell.value
+        if value is None:
+            return ""
+        if isinstance(value, float) and value.is_integer():
+            return str(int(value))
+        return str(value).strip()
+
+
+    def get_testcase_lookup_keys(self, testcase_name):
+        value = str(testcase_name).strip()
+        if not value:
+            return []
+
+        keys = {value.lower()}
+        compact_value = re.sub(r"\s+", "", value)
+        keys.add(compact_value.lower())
+
+        numeric_match = re.fullmatch(r"0*(\d+)(?:\.0)?", compact_value)
+        if numeric_match:
+            case_number = numeric_match.group(1)
+            keys.add(case_number)
+            keys.add(case_number.zfill(3))
+            keys.add(case_number.zfill(4))
+            keys.add(f"test_case{case_number}".lower())
+            keys.add(f"test_case{case_number.zfill(3)}".lower())
+            keys.add(f"test_case{case_number.zfill(4)}".lower())
+            return list(keys)
+
+        test_case_match = re.search(r"(test_case)(\d+)", compact_value, re.IGNORECASE)
+        if test_case_match:
+            digits = test_case_match.group(2)
+            case_number = digits.lstrip("0") or "0"
+            keys.add(digits)
+            keys.add(case_number)
+            keys.add(case_number.zfill(3))
+            keys.add(case_number.zfill(4))
+            keys.add(f"test_case{digits}".lower())
+            keys.add(f"test_case{case_number}".lower())
+            keys.add(f"test_case{case_number.zfill(3)}".lower())
+            keys.add(f"test_case{case_number.zfill(4)}".lower())
+
+        return list(keys)
+
+
+    def add_result_lookup(self, result_lookup, testcase_name, result):
+        for key in self.get_testcase_lookup_keys(testcase_name):
+            result_lookup[key] = result
+
+
+    def find_html_result(self, result_lookup, testcase_name):
+        for key in self.get_testcase_lookup_keys(testcase_name):
+            if key in result_lookup:
+                return result_lookup[key]
+        return None
 
 
     def write_results_to_excel(self):
@@ -569,6 +681,7 @@ class App(tk.Tk):
                 return
 
             all_html_results = {}
+            html_result_lookup = {}
             html_files = [f for f in os.listdir(html_dir) if f.endswith(".html")]
             if not html_files:
                 self.show_status_message("No HTML report files found in the selected folder.", "warning")
@@ -597,7 +710,8 @@ class App(tk.Tk):
                     soup = BeautifulSoup(content, 'html.parser')
                     results = self.parse_html_report(soup)
                     for item in results:
-                        all_html_results[item['name']] = item['result'] 
+                        all_html_results[item['name']] = item['result']
+                        self.add_result_lookup(html_result_lookup, item['name'], item['result'])
                 except Exception as e:
                     self.show_status_message(f"Error parsing HTML file '{html_file}': {e}", "warning")
             
@@ -620,10 +734,10 @@ class App(tk.Tk):
                             continue
 
                         testcase_name_cell = sheet[f"{read_col_str}{current_excel_row_num}"]
-                        testcase_name = str(testcase_name_cell.value).strip() if testcase_name_cell.value else ""
+                        testcase_name = self.get_testcase_cell_text(testcase_name_cell)
+                        result_to_write = self.find_html_result(html_result_lookup, testcase_name)
 
-                        if testcase_name in all_html_results:
-                            result_to_write = all_html_results[testcase_name]
+                        if result_to_write:
                             write_cell = sheet[f"{write_col_str}{current_excel_row_num}"]
                             write_cell.value = result_to_write
 

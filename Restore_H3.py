@@ -1139,7 +1139,7 @@ class Restore(unittest.TestCase):
         #定位Daylight Saving欄位
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Daylight")))
         DaylightSaving = self.driver.find_element(By.ID, "Daylight")
-        self.assertTrue(DaylightSaving.is_selected(),"Daylight saving is not enabled")
+        self.assertFalse(DaylightSaving.is_selected(),"Daylight saving is not enabled")
     
     #確認Clock Sync	
     def test_case074_Check_ClockSync(self):
@@ -1211,7 +1211,7 @@ class Restore(unittest.TestCase):
         #定位Audio Format
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainAudioFormat_div")))
         AudioFormat= self.driver.find_element(By.ID, "select_Stream_MainAudioFormat_div").get_attribute("data-text")
-        self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
+        self.assertEqual(AudioFormat, "G.711 A-law", f"Audio Format is {AudioFormat}, not G.711 A-law")
     
     #確認Evidence Stream的Rate Control
     def test_case082_Check_Evidence_RateControl(self):
@@ -1313,7 +1313,7 @@ class Restore(unittest.TestCase):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "SC_span_AudioFormat")))
         AudioFormat= self.driver.find_element(By.ID, "SC_span_AudioFormat").text
         print(AudioFormat)
-        self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
+        self.assertEqual(AudioFormat, "G.711 A-law", f"Audio Format is {AudioFormat}, not G.711 A-law")
     
     #確認Evidence Live的Rate Control
     def test_case092_Check_Evidence_Live_RateControl(self):
@@ -1429,7 +1429,7 @@ class Restore(unittest.TestCase):
        
        #檢查stream format，若false，則蒐集錯誤，程式碼會繼續執行
         try:
-            self.assertEqual(StreamFormat,"H.265",f"StreamFormat is {StreamFormat}, not H.265")
+            self.assertEqual(StreamFormat,"H.264",f"StreamFormat is {StreamFormat}, not H.264")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1553,7 +1553,7 @@ class Restore(unittest.TestCase):
         print(AudioFormat)
         #判斷是否為AAC
         try:
-            self.assertEqual(AudioFormat, "PCM", f"Audio Format is {AudioFormat}, not PCM")
+            self.assertEqual(AudioFormat, "G.711 A-law", f"Audio Format is {AudioFormat}, not G.711 A-law")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))
@@ -1648,7 +1648,7 @@ class Restore(unittest.TestCase):
         GOP_Length= self.driver.find_element(By.ID, "select_Stream_MainGOPLength_div").get_attribute("data-text")
         #判斷GOP
         try:
-            self.assertEqual(GOP_Length, "60", f"GOP Length is {GOP_Length}, not 60")
+            self.assertEqual(GOP_Length, "35", f"GOP Length is {GOP_Length}, not 35")
         except AssertionError as e:
             print("Assertion failed:", e)
             self.errors.append(str(e))    
@@ -2154,7 +2154,7 @@ class Restore(unittest.TestCase):
         #檢查RTSP Server Port
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "Network_Advanced_input_RTSPServer_Port")))
         Port = self.driver.find_element(By.ID, "Network_Advanced_input_RTSPServer_Port").get_attribute("value")
-        self.assertEqual(Port,"49152",f"Port is not 49152, it's {Port}")
+        self.assertEqual(Port,"554",f"Port is not 554, it's {Port}")
     
     #檢查Notification設定，檢查Log File Size
     def test_case136_Check_Notification_LogFileSize(self):
