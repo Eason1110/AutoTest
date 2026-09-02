@@ -2502,7 +2502,41 @@ class FactoryReset(unittest.TestCase):
         # 最後統一檢查是否有錯
         if self.errors:
          raise AssertionError("\n".join(self.errors))
-      
+           
+    def test_case149_Check_Evidence_FrameRate(self):
+        #進入image config頁面
+        self.go_to_image_config_page()
+        #定位Power Line Frequency
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_PowerLineFrequency_div")))
+        self.driver.find_element(By.ID, "select_ImagePara_PowerLineFrequency_div").click()
+        #定位50Hz
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//li[@data-val='50']")))
+        self.driver.find_element(By.XPATH,"//li[@data-val='50']").click()#點擊50Hz
+        #定位Save All
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "imageConfigsSave")))
+        self.driver.find_element(By.ID, "imageConfigsSave").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
+        #進入stream config頁面
+        self.go_to_stream_config_page()
+        #定位FrameRate
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_Stream_MainFrameRate_div")))
+        FrameRate= self.driver.find_element(By.ID, "select_Stream_MainFrameRate_div").get_attribute("data-text")
+        self.assertEqual(FrameRate, "25", f"Stream Format is {FrameRate}, not 25")
+        #進入image config頁面
+        self.go_to_image_config_page()
+        #定位Power Line Frequency
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "select_ImagePara_PowerLineFrequency_div")))
+        self.driver.find_element(By.ID, "select_ImagePara_PowerLineFrequency_div").click()
+        #定位60Hz
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH,"//li[@data-val='60']")))
+        self.driver.find_element(By.XPATH,"//li[@data-val='60']").click()#點擊60Hz
+        #定位Save All
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "imageConfigsSave")))
+        self.driver.find_element(By.ID, "imageConfigsSave").click()
+        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, "maskLoading")))
+        time.sleep(1)
+
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()
